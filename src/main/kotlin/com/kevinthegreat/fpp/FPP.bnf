@@ -1,0 +1,214 @@
+{
+  parserClass="com.kevinthegreat.fpp.parser.FPPParser"
+  extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
+  psiClassPrefix="FPP"
+  psiImplClassSuffix="Impl"
+  psiPackage="com.kevinthegreat.fpp.psi"
+  psiImplPackage="com.kevinthegreat.fpp.psi.impl"
+
+  elementTypeHolderClass="com.kevinthegreat.fpp.psi.FPPTypes"
+  elementTypeClass="com.kevinthegreat.fpp.psi.FPPElementType"
+  tokenTypeClass="com.kevinthegreat.fpp.psi.FPPTokenType"
+
+  tokens=[
+    F32="F32"
+    F64="F64"
+    I16="I16"
+    I32="I32"
+    I64="I64"
+    I8="I8"
+    U16="U16"
+    U32="U32"
+    U64="U64"
+    U8="U8"
+    ACTION="action"
+    ACTIVE="active"
+    ACTIVITY="activity"
+    ALWAYS="always"
+    ARRAY="array"
+    ASSERT="assert"
+    ASYNC="async"
+    AT="at"
+    BASE="base"
+    BLOCK="block"
+    BOOL="bool"
+    CHANGE="change"
+    CHOICE="choice"
+    COMMAND="command"
+    COMPONENT="component"
+    CONNECTIONS="connections"
+    CONSTANT="constant"
+    CONTAINER="container"
+    CPU="cpu"
+    DEFAULT="default"
+    DIAGNOSTIC="diagnostic"
+    DO="do"
+    DROP="drop"
+    ELSE="else"
+    ENTER="enter"
+    ENTRY="entry"
+    ENUM="enum"
+    EVENT="event"
+    EXIT="exit"
+    EXTERNAL="external"
+    FALSE="false"
+    FATAL="fatal"
+    FORMAT="format"
+    GET="get"
+    GROUP="group"
+    GUARD="guard"
+    GUARDED="guarded"
+    HEALTH="health"
+    HIGH="high"
+    HOOK="hook"
+    ID="id"
+    IF="if"
+    IMPORT="import"
+    INCLUDE="include"
+    INITIAL="initial"
+    INPUT="input"
+    INSTANCE="instance"
+    INTERFACE="interface"
+    INTERNAL="internal"
+    LOCATE="locate"
+    LOW="low"
+    MACHINE="machine"
+    MATCH="match"
+    MODULE="module"
+    OMIT="omit"
+    ON="on"
+    OPCODE="opcode"
+    ORANGE="orange"
+    OUTPUT="output"
+    PACKET="packet"
+    PACKETS="packets"
+    PARAM="param"
+    PASSIVE="passive"
+    PHASE="phase"
+    PORT="port"
+    PRIORITY="priority"
+    PRIVATE="private"
+    PRODUCT="product"
+    QUEUE="queue"
+    QUEUED="queued"
+    RECORD="record"
+    RECV="recv"
+    RED="red"
+    REF="ref"
+    REG="reg"
+    REQUEST="request"
+    RESP="resp"
+    SAVE="save"
+    SEND="send"
+    SERIAL="serial"
+    SET="set"
+    SEVERITY="severity"
+    SIGNAL="signal"
+    SIZE="size"
+    STACK="stack"
+    STATE="state"
+    STRING="string"
+    STRUCT="struct"
+    SYNC="sync"
+    TELEMETRY="telemetry"
+    TEXT="text"
+    THROTTLE="throttle"
+    TIME="time"
+    TOPOLOGY="topology"
+    TRUE="true"
+    TYPE="type"
+    UNMATCHED="unmatched"
+    UPDATE="update"
+    WARNING="warning"
+    WITH="with"
+    YELLOW="yellow"
+
+    LEFT_PAREN='('
+    RIGHT_PAREN=')'
+    MUL='*'
+    ADD='+'
+    COMMA=','
+    SUB='-'
+    ARROW='->'
+    DOT='.'
+    DIV='/'
+    COLON=':'
+    SEMICOLON=';'
+    ASSIGN='='
+    LEFT_BRACKET='['
+    RIGHT_BRACKET=']'
+    LEFT_BRACE='{'
+    RIGHT_BRACE='}'
+
+    IDENTIFIER="regexp:[$a-zA-Z_]\w*"
+    END_OF_LINE="regexp:(\r?\n)+"
+    COMMENT="regexp:#[^\r\n]*"
+    WHITESPACE="regexp: +"
+  ]
+}
+
+// 5.9. Module Definitions
+module_definition ::= MODULE IDENTIFIER LEFT_BRACE module_member_sequence RIGHT_BRACE
+module_member_sequence ::= (module_member (SEMICOLON | END_OF_LINE)*)*
+module_member ::= component_definition
+//                 | component_instance_definition
+//                 | constant_definition
+//                 | module_definition
+//                 | port_definition
+//                 | port_interface_definition
+//                 | state_machine_definition
+//                 | struct_definition
+//                 | topology_definition
+//                 | location_specifier
+//                 | abstract_type_definition
+//                 | alias_type_definition
+//                 | array_definition
+//                 | enum_definition
+//                 | include_specifier
+
+// 5.4. Component Definitions
+component_definition ::= component_kind COMPONENT IDENTIFIER LEFT_BRACE component_member_sequence RIGHT_BRACE
+component_kind ::= ACTIVE | PASSIVE | QUEUED
+component_member_sequence ::= (component_member (SEMICOLON | END_OF_LINE)*)*
+component_member ::= command_specifier
+//component_member ::= constant_definition
+//                  | state_machine_definition
+//                  | struct_definition
+//                  | command_specifier
+//                  | container_specifier
+//                  | parameter_specifier
+//                  | port_instance_specifier
+//                  | record_specifier
+//                  | state_machine_instance_specifier
+//                  | telemetry_channel_specifier
+//                  | abstract_type_definition
+//                  | alias_type_definition
+//                  | array_definition
+//                  | enum_definition
+//                  | event_specifier
+//                  | include_specifier
+//                  | internal_port_specifier
+//                  | interface_import_specifier
+
+// 7.1. Command Specifiers
+command_specifier ::= command_kind COMMAND IDENTIFIER [ LEFT_PAREN param_list RIGHT_PAREN ] [ OPCODE expression ] [ PRIORITY expression ] [ queue_full_behavior ]
+command_kind ::= ASYNC | GUARDED | SYNC
+queue_full_behavior ::= ASSERT | BLOCK | DROP | HOOK
+
+// 11. Formal Parameter Lists
+param_list ::= (formal_parameter (COMMA | END_OF_LINE)*)*
+formal_parameter ::= [ REF ] IDENTIFIER COLON type_name
+
+// 9. Type Names
+type_name ::= primitive_integer_type_name
+              | floating_point_type_name
+              | BOOL
+              | string_type_name
+              | qualified_identifier_type_name
+primitive_integer_type_name ::= U8 | U16 | U32 | U64 | I8 | I16 | I32 | I64
+floating_point_type_name ::= F32 | F64
+string_type_name ::= STRING [ SIZE expression ]
+qualified_identifier_type_name ::= qualified_identifier
+
+// 15.1. Qualified Identifiers
+qualified_identifier ::= IDENTIFIER (DOT IDENTIFIER)*
