@@ -33,4 +33,9 @@
                 language="FPP"
                 implementationClass="com.kevinthegreat.fpp.FPPParserDefinition"/>
     </extensions>
+    <extensions defaultExtensionNs="com.intellij">
+        <lang.syntaxHighlighterFactory
+                language="FPP"
+                implementationClass="com.kevinthegreat.fpp.highlighter.FPPSyntaxHighlighterFactory"/>
+    </extensions>
 </idea-plugin>
