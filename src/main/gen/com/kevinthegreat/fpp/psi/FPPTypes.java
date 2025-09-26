@@ -112,6 +112,8 @@ public interface FPPTypes {
   IElementType PASSIVE = new FPPTokenType("passive");
   IElementType PHASE = new FPPTokenType("phase");
   IElementType PORT = new FPPTokenType("port");
+  IElementType POST_ANNOTATION = new FPPTokenType("POST_ANNOTATION");
+  IElementType PRE_ANNOTATION = new FPPTokenType("PRE_ANNOTATION");
   IElementType PRIORITY = new FPPTokenType("priority");
   IElementType PRIVATE = new FPPTokenType("private");
   IElementType PRODUCT = new FPPTokenType("product");

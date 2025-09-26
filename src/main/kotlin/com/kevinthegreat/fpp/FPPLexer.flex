@@ -26,6 +26,8 @@ import static com.kevinthegreat.fpp.psi.FPPTypes.*;
 IDENTIFIER      = [$a-zA-Z_]\w*
 END_OF_LINE     = (\r?\n)
 COMMENT         = "#" [^\r\n]*
+PRE_ANNOTATION  = "@" [^\r\n]*
+POST_ANNOTATION = "@<" [^\r\n]*
 WHITESPACE      = [ ]
 
 %%
@@ -170,10 +172,13 @@ WHITESPACE      = [ ]
     {END_OF_LINE}+      { return END_OF_LINE; }
     // 3.5. Comments
     {COMMENT}           { yybegin(COMMENT); }
+    // 13.2. Annotations
+    {PRE_ANNOTATION}    { yybegin(COMMENT); return PRE_ANNOTATION; }
+    {POST_ANNOTATION}   { yybegin(COMMENT); return POST_ANNOTATION; }
     // 3.6. Whitespace and Non-Printable Characters
     {WHITESPACE}+       {}
     // 3.7. Explicit Line Continuations
-    "\\" {END_OF_LINE}   {}
+    "\\" {END_OF_LINE}  {}
 
     .    { return TokenType.BAD_CHARACTER; }
 }

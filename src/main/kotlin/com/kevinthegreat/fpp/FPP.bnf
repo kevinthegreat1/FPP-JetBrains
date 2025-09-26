@@ -142,7 +142,11 @@
 
     IDENTIFIER="regexp:[$a-zA-Z_]\w*"
     END_OF_LINE="regexp:(\r?\n)+"
+    // 3.5. Comments
     COMMENT="regexp:#[^\r\n]*"
+    // 13.2. Annotations
+    PRE_ANNOTATION="regexp:@[^\r\n]*"
+    POST_ANNOTATION="regexp:@<[^\r\n]*"
     WHITESPACE="regexp: +"
   ]
 }
