@@ -173,8 +173,8 @@ WHITESPACE      = [ ]
     // 3.5. Comments
     {COMMENT}           { yybegin(COMMENT); }
     // 13.2. Annotations
-    {PRE_ANNOTATION}    { yybegin(COMMENT); return PRE_ANNOTATION; }
     {POST_ANNOTATION}   { yybegin(COMMENT); return POST_ANNOTATION; }
+    {PRE_ANNOTATION}    { yybegin(COMMENT); return PRE_ANNOTATION; }
     // 3.6. Whitespace and Non-Printable Characters
     {WHITESPACE}+       {}
     // 3.7. Explicit Line Continuations
