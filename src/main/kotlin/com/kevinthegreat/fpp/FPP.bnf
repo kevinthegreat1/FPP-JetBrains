@@ -151,24 +151,8 @@
   ]
 }
 
-// 5.9. Module Definitions
-module_definition ::= MODULE IDENTIFIER LEFT_BRACE module_member_sequence RIGHT_BRACE
-module_member_sequence ::= (module_member (SEMICOLON | END_OF_LINE)*)*
-module_member ::= component_definition
-//                 | component_instance_definition
-//                 | constant_definition
-//                 | module_definition
-//                 | port_definition
-//                 | port_interface_definition
-//                 | state_machine_definition
-//                 | struct_definition
-//                 | topology_definition
-//                 | location_specifier
-//                 | abstract_type_definition
-//                 | alias_type_definition
-//                 | array_definition
-//                 | enum_definition
-//                 | include_specifier
+// 14.1. Translation Units
+fpp_file ::= translation_unit
 
 // 5.4. Component Definitions
 component_definition ::= component_kind COMPONENT IDENTIFIER LEFT_BRACE component_member_sequence RIGHT_BRACE
@@ -194,14 +178,29 @@ component_member ::= command_specifier
 //                  | internal_port_specifier
 //                  | interface_import_specifier
 
+// 5.9. Module Definitions
+module_definition ::= MODULE IDENTIFIER LEFT_BRACE module_member_sequence RIGHT_BRACE
+module_member_sequence ::= (module_member (SEMICOLON | END_OF_LINE)*)*
+module_member ::= component_definition
+//                 | component_instance_definition
+//                 | constant_definition
+                 | module_definition
+//                 | port_definition
+//                 | port_interface_definition
+//                 | state_machine_definition
+//                 | struct_definition
+//                 | topology_definition
+//                 | location_specifier
+//                 | abstract_type_definition
+//                 | alias_type_definition
+//                 | array_definition
+//                 | enum_definition
+//                 | include_specifier
+
 // 7.1. Command Specifiers
 command_specifier ::= command_kind COMMAND IDENTIFIER [ LEFT_PAREN param_list RIGHT_PAREN ] [ OPCODE expression ] [ PRIORITY expression ] [ queue_full_behavior ]
 command_kind ::= ASYNC | GUARDED | SYNC
 queue_full_behavior ::= ASSERT | BLOCK | DROP | HOOK
-
-// 11. Formal Parameter Lists
-param_list ::= (formal_parameter (COMMA | END_OF_LINE)*)*
-formal_parameter ::= [ REF ] IDENTIFIER COLON type_name
 
 // 9. Type Names
 type_name ::= primitive_integer_type_name
@@ -213,6 +212,14 @@ primitive_integer_type_name ::= U8 | U16 | U32 | U64 | I8 | I16 | I32 | I64
 floating_point_type_name ::= F32 | F64
 string_type_name ::= STRING [ SIZE expression ]
 qualified_identifier_type_name ::= qualified_identifier
+
+// 11. Formal Parameter Lists
+param_list ::= (formal_parameter (COMMA | END_OF_LINE)*)*
+formal_parameter ::= [ REF ] IDENTIFIER COLON type_name
+
+// 14.1. Translation Units
+translation_unit ::= (translation_unit_member (SEMICOLON | END_OF_LINE)*)*
+translation_unit_member ::= module_member
 
 // 15.1. Qualified Identifiers
 qualified_identifier ::= IDENTIFIER (DOT IDENTIFIER)*

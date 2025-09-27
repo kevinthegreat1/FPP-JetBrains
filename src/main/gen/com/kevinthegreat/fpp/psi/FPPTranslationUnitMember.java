@@ -5,12 +5,9 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface FPPModuleMember extends PsiElement {
+public interface FPPTranslationUnitMember extends PsiElement {
 
-  @Nullable
-  FPPComponentDefinition getComponentDefinition();
-
-  @Nullable
-  FPPModuleDefinition getModuleDefinition();
+  @NotNull
+  FPPModuleMember getModuleMember();
 
 }

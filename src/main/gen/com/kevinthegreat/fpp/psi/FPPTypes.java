@@ -16,6 +16,7 @@ public interface FPPTypes {
   IElementType COMPONENT_MEMBER_SEQUENCE = new FPPElementType("COMPONENT_MEMBER_SEQUENCE");
   IElementType FLOATING_POINT_TYPE_NAME = new FPPElementType("FLOATING_POINT_TYPE_NAME");
   IElementType FORMAL_PARAMETER = new FPPElementType("FORMAL_PARAMETER");
+  IElementType MODULE_DEFINITION = new FPPElementType("MODULE_DEFINITION");
   IElementType MODULE_MEMBER = new FPPElementType("MODULE_MEMBER");
   IElementType MODULE_MEMBER_SEQUENCE = new FPPElementType("MODULE_MEMBER_SEQUENCE");
   IElementType PARAM_LIST = new FPPElementType("PARAM_LIST");
@@ -24,6 +25,8 @@ public interface FPPTypes {
   IElementType QUALIFIED_IDENTIFIER_TYPE_NAME = new FPPElementType("QUALIFIED_IDENTIFIER_TYPE_NAME");
   IElementType QUEUE_FULL_BEHAVIOR = new FPPElementType("QUEUE_FULL_BEHAVIOR");
   IElementType STRING_TYPE_NAME = new FPPElementType("STRING_TYPE_NAME");
+  IElementType TRANSLATION_UNIT = new FPPElementType("TRANSLATION_UNIT");
+  IElementType TRANSLATION_UNIT_MEMBER = new FPPElementType("TRANSLATION_UNIT_MEMBER");
   IElementType TYPE_NAME = new FPPElementType("TYPE_NAME");
 
   IElementType ACTION = new FPPTokenType("action");
@@ -187,6 +190,9 @@ public interface FPPTypes {
       else if (type == FORMAL_PARAMETER) {
         return new FPPFormalParameterImpl(node);
       }
+      else if (type == MODULE_DEFINITION) {
+        return new FPPModuleDefinitionImpl(node);
+      }
       else if (type == MODULE_MEMBER) {
         return new FPPModuleMemberImpl(node);
       }
@@ -210,6 +216,12 @@ public interface FPPTypes {
       }
       else if (type == STRING_TYPE_NAME) {
         return new FPPStringTypeNameImpl(node);
+      }
+      else if (type == TRANSLATION_UNIT) {
+        return new FPPTranslationUnitImpl(node);
+      }
+      else if (type == TRANSLATION_UNIT_MEMBER) {
+        return new FPPTranslationUnitMemberImpl(node);
       }
       else if (type == TYPE_NAME) {
         return new FPPTypeNameImpl(node);

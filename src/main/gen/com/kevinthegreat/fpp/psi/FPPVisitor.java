@@ -39,6 +39,10 @@ public class FPPVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitModuleDefinition(@NotNull FPPModuleDefinition o) {
+    visitPsiElement(o);
+  }
+
   public void visitModuleMember(@NotNull FPPModuleMember o) {
     visitPsiElement(o);
   }
@@ -68,6 +72,14 @@ public class FPPVisitor extends PsiElementVisitor {
   }
 
   public void visitStringTypeName(@NotNull FPPStringTypeName o) {
+    visitPsiElement(o);
+  }
+
+  public void visitTranslationUnit(@NotNull FPPTranslationUnit o) {
+    visitPsiElement(o);
+  }
+
+  public void visitTranslationUnitMember(@NotNull FPPTranslationUnitMember o) {
     visitPsiElement(o);
   }
 

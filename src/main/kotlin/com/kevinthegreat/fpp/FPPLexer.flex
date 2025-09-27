@@ -19,7 +19,7 @@ import static com.kevinthegreat.fpp.psi.FPPTypes.*;
 
 %state YYINITIAL
 // 3.5. Comments
-%state COMMENT
+%state COMMENT_STATE
 // 3.8. Automatic Suppression of Newlines
 %state AFTER_EOL_SUPPRESSOR
 
@@ -160,38 +160,43 @@ WHITESPACE      = [ ]
     "["  { yybegin(AFTER_EOL_SUPPRESSOR); return LEFT_BRACKET; }
     "{"  { yybegin(AFTER_EOL_SUPPRESSOR); return LEFT_BRACE; }
     // 3.2. Symbols
-    ")"  { return RIGHT_PAREN; }
-    "."  { return DOT; }
-    "]"  { return RIGHT_BRACKET; }
-    "}"  { return RIGHT_BRACE; }
+    ")" { return RIGHT_PAREN; }
+    "." { return DOT; }
+    "]" { return RIGHT_BRACKET; }
+    "}" { return RIGHT_BRACE; }
 
     // 3.3. Identifiers
-    {IDENTIFIER}    { return IDENTIFIER; }
+    {IDENTIFIER}        { return IDENTIFIER; }
     // 3.4. End-of-Line Tokens
     // 3.9. Collapsing of Newlines
     {END_OF_LINE}+      { return END_OF_LINE; }
     // 3.5. Comments
-    {COMMENT}           { yybegin(COMMENT); }
+    {COMMENT}           { yybegin(COMMENT_STATE); return COMMENT; }
     // 13.2. Annotations
-    {POST_ANNOTATION}   { yybegin(COMMENT); return POST_ANNOTATION; }
-    {PRE_ANNOTATION}    { yybegin(COMMENT); return PRE_ANNOTATION; }
+    {POST_ANNOTATION}   { yybegin(COMMENT_STATE); return POST_ANNOTATION; }
+    {PRE_ANNOTATION}    { yybegin(COMMENT_STATE); return PRE_ANNOTATION; }
     // 3.6. Whitespace and Non-Printable Characters
     {WHITESPACE}+       {}
     // 3.7. Explicit Line Continuations
     "\\" {END_OF_LINE}  {}
 
-    .    { return TokenType.BAD_CHARACTER; }
+    .   { return TokenType.BAD_CHARACTER; }
 }
 
 // 3.5. Comments
-<COMMENT> {
+<COMMENT_STATE> {
     {END_OF_LINE}+  { yybegin(YYINITIAL); return END_OF_LINE; }
     .               {}
 }
 
 // 3.8. Automatic Suppression of Newlines
 <AFTER_EOL_SUPPRESSOR> {
-    {WHITESPACE}+   {}
-    {END_OF_LINE}+  { yybegin(YYINITIAL); }
-    .               { yybegin(YYINITIAL); yypushback(1); }
+    ({WHITESPACE}|{END_OF_LINE})+   {}
+    // 3.5. Comments
+    {COMMENT}                       { return COMMENT; }
+    // 13.2. Annotations
+    {POST_ANNOTATION}               { return POST_ANNOTATION; }
+    {PRE_ANNOTATION}                { return PRE_ANNOTATION; }
+    // Anything else
+    .                               { yybegin(YYINITIAL); yypushback(1); }
 }

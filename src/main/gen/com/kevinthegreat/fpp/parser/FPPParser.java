@@ -32,7 +32,7 @@ public class FPPParser implements PsiParser, LightPsiParser {
   }
 
   static boolean parse_root_(IElementType root_, PsiBuilder builder_, int level_) {
-    return module_definition(builder_, level_ + 1);
+    return fpp_file(builder_, level_ + 1);
   }
 
   /* ********************************************************** */
@@ -222,8 +222,14 @@ public class FPPParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // translation_unit
+  static boolean fpp_file(PsiBuilder builder_, int level_) {
+    return translation_unit(builder_, level_ + 1);
+  }
+
+  /* ********************************************************** */
   // MODULE IDENTIFIER LEFT_BRACE module_member_sequence RIGHT_BRACE
-  static boolean module_definition(PsiBuilder builder_, int level_) {
+  public static boolean module_definition(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "module_definition")) return false;
     if (!nextTokenIs(builder_, MODULE)) return false;
     boolean result_;
@@ -231,17 +237,21 @@ public class FPPParser implements PsiParser, LightPsiParser {
     result_ = consumeTokens(builder_, 0, MODULE, IDENTIFIER, LEFT_BRACE);
     result_ = result_ && module_member_sequence(builder_, level_ + 1);
     result_ = result_ && consumeToken(builder_, RIGHT_BRACE);
-    exit_section_(builder_, marker_, null, result_);
+    exit_section_(builder_, marker_, MODULE_DEFINITION, result_);
     return result_;
   }
 
   /* ********************************************************** */
   // component_definition
+  // //                 | component_instance_definition
+  // //                 | constant_definition
+  //                  | module_definition
   public static boolean module_member(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "module_member")) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_, level_, _NONE_, MODULE_MEMBER, "<module member>");
     result_ = component_definition(builder_, level_ + 1);
+    if (!result_) result_ = module_definition(builder_, level_ + 1);
     exit_section_(builder_, level_, marker_, result_, false, null);
     return result_;
   }
@@ -432,6 +442,62 @@ public class FPPParser implements PsiParser, LightPsiParser {
     if (!recursion_guard_(builder_, level_, "string_type_name_1")) return false;
     parseTokens(builder_, 0, SIZE, EXPRESSION);
     return true;
+  }
+
+  /* ********************************************************** */
+  // (translation_unit_member (SEMICOLON | END_OF_LINE)*)*
+  public static boolean translation_unit(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "translation_unit")) return false;
+    Marker marker_ = enter_section_(builder_, level_, _NONE_, TRANSLATION_UNIT, "<translation unit>");
+    while (true) {
+      int pos_ = current_position_(builder_);
+      if (!translation_unit_0(builder_, level_ + 1)) break;
+      if (!empty_element_parsed_guard_(builder_, "translation_unit", pos_)) break;
+    }
+    exit_section_(builder_, level_, marker_, true, false, null);
+    return true;
+  }
+
+  // translation_unit_member (SEMICOLON | END_OF_LINE)*
+  private static boolean translation_unit_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "translation_unit_0")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = translation_unit_member(builder_, level_ + 1);
+    result_ = result_ && translation_unit_0_1(builder_, level_ + 1);
+    exit_section_(builder_, marker_, null, result_);
+    return result_;
+  }
+
+  // (SEMICOLON | END_OF_LINE)*
+  private static boolean translation_unit_0_1(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "translation_unit_0_1")) return false;
+    while (true) {
+      int pos_ = current_position_(builder_);
+      if (!translation_unit_0_1_0(builder_, level_ + 1)) break;
+      if (!empty_element_parsed_guard_(builder_, "translation_unit_0_1", pos_)) break;
+    }
+    return true;
+  }
+
+  // SEMICOLON | END_OF_LINE
+  private static boolean translation_unit_0_1_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "translation_unit_0_1_0")) return false;
+    boolean result_;
+    result_ = consumeToken(builder_, SEMICOLON);
+    if (!result_) result_ = consumeToken(builder_, END_OF_LINE);
+    return result_;
+  }
+
+  /* ********************************************************** */
+  // module_member
+  public static boolean translation_unit_member(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "translation_unit_member")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_, level_, _NONE_, TRANSLATION_UNIT_MEMBER, "<translation unit member>");
+    result_ = module_member(builder_, level_ + 1);
+    exit_section_(builder_, level_, marker_, result_, false, null);
+    return result_;
   }
 
   /* ********************************************************** */

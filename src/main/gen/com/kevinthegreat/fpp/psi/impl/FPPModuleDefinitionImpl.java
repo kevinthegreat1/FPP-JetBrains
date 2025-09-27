@@ -11,14 +11,14 @@ import static com.kevinthegreat.fpp.psi.FPPTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.kevinthegreat.fpp.psi.*;
 
-public class FPPModuleMemberImpl extends ASTWrapperPsiElement implements FPPModuleMember {
+public class FPPModuleDefinitionImpl extends ASTWrapperPsiElement implements FPPModuleDefinition {
 
-  public FPPModuleMemberImpl(@NotNull ASTNode node) {
+  public FPPModuleDefinitionImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull FPPVisitor visitor) {
-    visitor.visitModuleMember(this);
+    visitor.visitModuleDefinition(this);
   }
 
   @Override
@@ -28,15 +28,15 @@ public class FPPModuleMemberImpl extends ASTWrapperPsiElement implements FPPModu
   }
 
   @Override
-  @Nullable
-  public FPPComponentDefinition getComponentDefinition() {
-    return findChildByClass(FPPComponentDefinition.class);
+  @NotNull
+  public FPPModuleMemberSequence getModuleMemberSequence() {
+    return findNotNullChildByClass(FPPModuleMemberSequence.class);
   }
 
   @Override
-  @Nullable
-  public FPPModuleDefinition getModuleDefinition() {
-    return findChildByClass(FPPModuleDefinition.class);
+  @NotNull
+  public PsiElement getIdentifier() {
+    return findNotNullChildByType(IDENTIFIER);
   }
 
 }
