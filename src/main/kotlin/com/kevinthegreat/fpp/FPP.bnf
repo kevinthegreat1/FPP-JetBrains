@@ -11,6 +11,7 @@
   tokenTypeClass="com.kevinthegreat.fpp.psi.FPPTokenType"
 
   tokens=[
+    // 3.1. Reserved Words
     F32="F32"
     F64="F64"
     I16="I16"
@@ -140,7 +141,9 @@
     LEFT_BRACE='{'
     RIGHT_BRACE='}'
 
+    // 3.3. Identifiers
     IDENTIFIER="regexp:[$a-zA-Z_]\w*"
+    // 3.4. End-of-Line Tokens
     END_OF_LINE="regexp:(\r?\n)+"
     // 3.5. Comments
     COMMENT="regexp:#[^\r\n]*"
