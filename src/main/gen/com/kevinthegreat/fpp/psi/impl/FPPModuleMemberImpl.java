@@ -39,4 +39,10 @@ public class FPPModuleMemberImpl extends ASTWrapperPsiElement implements FPPModu
     return findChildByClass(FPPModuleDefinition.class);
   }
 
+  @Override
+  @Nullable
+  public FPPPortDefinition getPortDefinition() {
+    return findChildByClass(FPPPortDefinition.class);
+  }
+
 }

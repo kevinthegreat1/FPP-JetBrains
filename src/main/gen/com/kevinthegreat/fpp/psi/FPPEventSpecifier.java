@@ -5,10 +5,10 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface FPPCommandSpecifier extends PsiElement {
+public interface FPPEventSpecifier extends PsiElement {
 
   @NotNull
-  FPPCommandKind getCommandKind();
+  FPPEventSeverity getEventSeverity();
 
   @NotNull
   List<FPPExpression> getExpressionList();
@@ -16,10 +16,10 @@ public interface FPPCommandSpecifier extends PsiElement {
   @Nullable
   FPPParamList getParamList();
 
-  @Nullable
-  FPPQueueFullBehavior getQueueFullBehavior();
-
   @NotNull
   PsiElement getIdentifier();
+
+  @NotNull
+  PsiElement getStringLiteral();
 
 }

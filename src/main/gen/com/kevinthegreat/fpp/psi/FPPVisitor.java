@@ -7,6 +7,22 @@ import com.intellij.psi.PsiElement;
 
 public class FPPVisitor extends PsiElementVisitor {
 
+  public void visitArithmeticExpression(@NotNull FPPArithmeticExpression o) {
+    visitPsiElement(o);
+  }
+
+  public void visitArithmeticExpressionFactor(@NotNull FPPArithmeticExpressionFactor o) {
+    visitPsiElement(o);
+  }
+
+  public void visitArithmeticExpressionPrimary(@NotNull FPPArithmeticExpressionPrimary o) {
+    visitPsiElement(o);
+  }
+
+  public void visitArithmeticExpressionTerm(@NotNull FPPArithmeticExpressionTerm o) {
+    visitPsiElement(o);
+  }
+
   public void visitCommandKind(@NotNull FPPCommandKind o) {
     visitPsiElement(o);
   }
@@ -31,11 +47,27 @@ public class FPPVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitEventSeverity(@NotNull FPPEventSeverity o) {
+    visitPsiElement(o);
+  }
+
+  public void visitEventSpecifier(@NotNull FPPEventSpecifier o) {
+    visitPsiElement(o);
+  }
+
+  public void visitExpression(@NotNull FPPExpression o) {
+    visitPsiElement(o);
+  }
+
   public void visitFloatingPointTypeName(@NotNull FPPFloatingPointTypeName o) {
     visitPsiElement(o);
   }
 
   public void visitFormalParameter(@NotNull FPPFormalParameter o) {
+    visitPsiElement(o);
+  }
+
+  public void visitGeneralPortKind(@NotNull FPPGeneralPortKind o) {
     visitPsiElement(o);
   }
 
@@ -55,6 +87,18 @@ public class FPPVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitPortDefinition(@NotNull FPPPortDefinition o) {
+    visitPsiElement(o);
+  }
+
+  public void visitPortInstanceSpecifier(@NotNull FPPPortInstanceSpecifier o) {
+    visitPsiElement(o);
+  }
+
+  public void visitPortInstanceType(@NotNull FPPPortInstanceType o) {
+    visitPsiElement(o);
+  }
+
   public void visitPrimitiveIntegerTypeName(@NotNull FPPPrimitiveIntegerTypeName o) {
     visitPsiElement(o);
   }
@@ -71,7 +115,31 @@ public class FPPVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitSpecialPortInputKind(@NotNull FPPSpecialPortInputKind o) {
+    visitPsiElement(o);
+  }
+
+  public void visitSpecialPortKind(@NotNull FPPSpecialPortKind o) {
+    visitPsiElement(o);
+  }
+
   public void visitStringTypeName(@NotNull FPPStringTypeName o) {
+    visitPsiElement(o);
+  }
+
+  public void visitTelemetryChannelSpecifier(@NotNull FPPTelemetryChannelSpecifier o) {
+    visitPsiElement(o);
+  }
+
+  public void visitTelemetryLimit(@NotNull FPPTelemetryLimit o) {
+    visitPsiElement(o);
+  }
+
+  public void visitTelemetryLimitSequence(@NotNull FPPTelemetryLimitSequence o) {
+    visitPsiElement(o);
+  }
+
+  public void visitTelemetryUpdate(@NotNull FPPTelemetryUpdate o) {
     visitPsiElement(o);
   }
 

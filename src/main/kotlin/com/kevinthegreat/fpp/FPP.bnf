@@ -148,6 +148,15 @@
     PRE_ANNOTATION="regexp:@[^\r\n]*"
     POST_ANNOTATION="regexp:@<[^\r\n]*"
     WHITESPACE="regexp: +"
+
+    // 10.4. Boolean Literals
+    BOOLEAN_LITERAL
+    // 10.6. Floating-Point Literals
+    FLOATING_POINT_LITERAL
+    // 10.8. Integer Literals
+    INTEGER_LITERAL
+    // 10.10. String Literals
+    STRING_LITERAL
   ]
 }
 
@@ -165,15 +174,15 @@ component_member ::= command_specifier
 //                  | command_specifier
 //                  | container_specifier
 //                  | parameter_specifier
-//                  | port_instance_specifier
+                  | port_instance_specifier
 //                  | record_specifier
 //                  | state_machine_instance_specifier
-//                  | telemetry_channel_specifier
+                  | telemetry_channel_specifier
 //                  | abstract_type_definition
 //                  | alias_type_definition
 //                  | array_definition
 //                  | enum_definition
-//                  | event_specifier
+                  | event_specifier
 //                  | include_specifier
 //                  | internal_port_specifier
 //                  | interface_import_specifier
@@ -185,7 +194,7 @@ module_member ::= component_definition
 //                 | component_instance_definition
 //                 | constant_definition
                  | module_definition
-//                 | port_definition
+                 | port_definition
 //                 | port_interface_definition
 //                 | state_machine_definition
 //                 | struct_definition
@@ -196,11 +205,52 @@ module_member ::= component_definition
 //                 | array_definition
 //                 | enum_definition
 //                 | include_specifier
+// 5.10. Port Definitions
+port_definition ::= PORT IDENTIFIER [ LEFT_PAREN param_list RIGHT_PAREN ] [ ARROW type_name ]
 
 // 7.1. Command Specifiers
 command_specifier ::= command_kind COMMAND IDENTIFIER [ LEFT_PAREN param_list RIGHT_PAREN ] [ OPCODE expression ] [ PRIORITY expression ] [ queue_full_behavior ]
 command_kind ::= ASYNC | GUARDED | SYNC
+// 7.5. Event Specifiers
+event_specifier ::= EVENT IDENTIFIER [ LEFT_PAREN param_list RIGHT_PAREN ] SEVERITY event_severity [ ID expression ] FORMAT STRING_LITERAL [ THROTTLE expression ]
+event_severity ::= ACTIVITY HIGH
+            | ACTIVITY LOW
+            | COMMAND
+            | DIAGNOSTIC
+            | FATAL
+            | WARNING HIGH
+            | WARNING LOW
+// 7.12. Port Instance Specifiers
+port_instance_specifier ::= general_port_kind PORT IDENTIFIER COLON [ LEFT_BRACKET expression RIGHT_BRACKET ] port_instance_type [ PRIORITY expression ] [ queue_full_behavior ]
+                            | [ special_port_input_kind ] special_port_kind PORT IDENTIFIER [ PRIORITY expression ] [ queue_full_behavior ]
+general_port_kind ::= ASYNC INPUT
+                        | GUARDED INPUT
+                        | OUTPUT
+                        | SYNC INPUT
+port_instance_type ::= qualified_identifier
+                        | SERIAL
 queue_full_behavior ::= ASSERT | BLOCK | DROP | HOOK
+special_port_input_kind ::= ASYNC | GUARDED | SYNC
+special_port_kind ::= COMMAND RECV
+                        | COMMAND REG
+                        | COMMAND RESP
+                        | EVENT
+                        | PARAM GET
+                        | PARAM SET
+                        | PRODUCT GET
+                        | PRODUCT RECV
+                        | PRODUCT REQUEST
+                        | PRODUCT SEND
+                        | TELEMETRY
+                        | TEXT EVENT
+                        | TIME GET
+// 7.16. Telemetry Channel Specifiers
+telemetry_channel_specifier ::= TELEMETRY IDENTIFIER COLON type_name [ ID expression ] [ UPDATE telemetry_update ] [ FORMAT STRING_LITERAL ] [ LOW LEFT_BRACE telemetry_limit_sequence RIGHT_BRACE ] [ HIGH LEFT_BRACE telemetry_limit_sequence RIGHT_BRACE ]
+telemetry_update ::= ALWAYS | ON CHANGE
+telemetry_limit_sequence ::= (telemetry_limit (COMMA | END_OF_LINE)*)*
+telemetry_limit ::= RED expression
+                    | ORANGE expression
+                    | YELLOW expression
 
 // 9. Type Names
 type_name ::= primitive_integer_type_name
@@ -212,6 +262,18 @@ primitive_integer_type_name ::= U8 | U16 | U32 | U64 | I8 | I16 | I32 | I64
 floating_point_type_name ::= F32 | F64
 string_type_name ::= STRING [ SIZE expression ]
 qualified_identifier_type_name ::= qualified_identifier
+
+// 10. Expressions
+expression ::= arithmetic_expression
+// 10.1. Arithmetic Expressions
+arithmetic_expression ::= arithmetic_expression_term ( ( ADD | SUB ) arithmetic_expression_term )*
+arithmetic_expression_term ::= arithmetic_expression_factor ( ( MUL | DIV ) arithmetic_expression_factor )*
+arithmetic_expression_factor ::= SUB arithmetic_expression_factor
+                                | arithmetic_expression_primary
+arithmetic_expression_primary ::= INTEGER_LITERAL
+                                | FLOATING_POINT_LITERAL
+                                | qualified_identifier
+                                | LEFT_PAREN expression RIGHT_PAREN
 
 // 11. Formal Parameter Lists
 param_list ::= (formal_parameter (COMMA | END_OF_LINE)*)*

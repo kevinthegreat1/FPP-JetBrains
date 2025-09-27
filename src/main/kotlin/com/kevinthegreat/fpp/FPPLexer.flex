@@ -30,6 +30,18 @@ PRE_ANNOTATION  = "@" [^\r\n]*
 POST_ANNOTATION = "@<" [^\r\n]*
 WHITESPACE      = [ ]
 
+// 10.4. Boolean Literals
+BOOLEAN_LITERAL = "true" | "false"
+// 10.6. Floating-Point Literals
+FLOATING_POINT_LITERAL = [+-]?[0-9]*(\.[0-9]*)?([eE][+-]?[0-9]+)?
+// 10.8. Integer Literals
+INTEGER_LITERAL = [+-]?(0[xX][0-9a-fA-F]+|\d+)
+// 10.10. String Literals
+SINGLE_LINE_STRING_LITERAL = "\"" ( [^\"\\\n] | "\\" [^\n] )* "\""
+MULTILINE_STRING_LITERAL = "\"\"\"" ( [^\"\\] | "\\" . )* "\"\"\""
+STRING_LITERAL = {SINGLE_LINE_STRING_LITERAL} | {MULTILINE_STRING_LITERAL}
+
+
 %%
 <YYINITIAL> {
     // 3.1. Reserved Words
@@ -179,6 +191,15 @@ WHITESPACE      = [ ]
     {WHITESPACE}+       {}
     // 3.7. Explicit Line Continuations
     "\\" {END_OF_LINE}  {}
+
+    // 10.4. Boolean Literals
+    {BOOLEAN_LITERAL}           { return BOOLEAN_LITERAL; }
+    // 10.6. Floating-Point Literals
+    {FLOATING_POINT_LITERAL}    { return FLOATING_POINT_LITERAL; }
+    // 10.8. Integer Literals
+    {INTEGER_LITERAL}           { return INTEGER_LITERAL; }
+    // 10.10. String Literals
+    {STRING_LITERAL}            { return STRING_LITERAL; }
 
     .   { return TokenType.BAD_CHARACTER; }
 }

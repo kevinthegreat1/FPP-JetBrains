@@ -5,19 +5,25 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface FPPCommandSpecifier extends PsiElement {
-
-  @NotNull
-  FPPCommandKind getCommandKind();
+public interface FPPPortInstanceSpecifier extends PsiElement {
 
   @NotNull
   List<FPPExpression> getExpressionList();
 
   @Nullable
-  FPPParamList getParamList();
+  FPPGeneralPortKind getGeneralPortKind();
+
+  @Nullable
+  FPPPortInstanceType getPortInstanceType();
 
   @Nullable
   FPPQueueFullBehavior getQueueFullBehavior();
+
+  @Nullable
+  FPPSpecialPortInputKind getSpecialPortInputKind();
+
+  @Nullable
+  FPPSpecialPortKind getSpecialPortKind();
 
   @NotNull
   PsiElement getIdentifier();

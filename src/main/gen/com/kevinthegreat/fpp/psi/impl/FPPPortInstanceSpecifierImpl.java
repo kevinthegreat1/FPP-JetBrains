@@ -11,14 +11,14 @@ import static com.kevinthegreat.fpp.psi.FPPTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.kevinthegreat.fpp.psi.*;
 
-public class FPPCommandSpecifierImpl extends ASTWrapperPsiElement implements FPPCommandSpecifier {
+public class FPPPortInstanceSpecifierImpl extends ASTWrapperPsiElement implements FPPPortInstanceSpecifier {
 
-  public FPPCommandSpecifierImpl(@NotNull ASTNode node) {
+  public FPPPortInstanceSpecifierImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull FPPVisitor visitor) {
-    visitor.visitCommandSpecifier(this);
+    visitor.visitPortInstanceSpecifier(this);
   }
 
   @Override
@@ -29,26 +29,38 @@ public class FPPCommandSpecifierImpl extends ASTWrapperPsiElement implements FPP
 
   @Override
   @NotNull
-  public FPPCommandKind getCommandKind() {
-    return findNotNullChildByClass(FPPCommandKind.class);
-  }
-
-  @Override
-  @NotNull
   public List<FPPExpression> getExpressionList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, FPPExpression.class);
   }
 
   @Override
   @Nullable
-  public FPPParamList getParamList() {
-    return findChildByClass(FPPParamList.class);
+  public FPPGeneralPortKind getGeneralPortKind() {
+    return findChildByClass(FPPGeneralPortKind.class);
+  }
+
+  @Override
+  @Nullable
+  public FPPPortInstanceType getPortInstanceType() {
+    return findChildByClass(FPPPortInstanceType.class);
   }
 
   @Override
   @Nullable
   public FPPQueueFullBehavior getQueueFullBehavior() {
     return findChildByClass(FPPQueueFullBehavior.class);
+  }
+
+  @Override
+  @Nullable
+  public FPPSpecialPortInputKind getSpecialPortInputKind() {
+    return findChildByClass(FPPSpecialPortInputKind.class);
+  }
+
+  @Override
+  @Nullable
+  public FPPSpecialPortKind getSpecialPortKind() {
+    return findChildByClass(FPPSpecialPortKind.class);
   }
 
   @Override

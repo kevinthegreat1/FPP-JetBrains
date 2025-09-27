@@ -11,14 +11,14 @@ import static com.kevinthegreat.fpp.psi.FPPTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.kevinthegreat.fpp.psi.*;
 
-public class FPPComponentMemberImpl extends ASTWrapperPsiElement implements FPPComponentMember {
+public class FPPArithmeticExpressionPrimaryImpl extends ASTWrapperPsiElement implements FPPArithmeticExpressionPrimary {
 
-  public FPPComponentMemberImpl(@NotNull ASTNode node) {
+  public FPPArithmeticExpressionPrimaryImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull FPPVisitor visitor) {
-    visitor.visitComponentMember(this);
+    visitor.visitArithmeticExpressionPrimary(this);
   }
 
   @Override
@@ -29,26 +29,26 @@ public class FPPComponentMemberImpl extends ASTWrapperPsiElement implements FPPC
 
   @Override
   @Nullable
-  public FPPCommandSpecifier getCommandSpecifier() {
-    return findChildByClass(FPPCommandSpecifier.class);
+  public FPPExpression getExpression() {
+    return findChildByClass(FPPExpression.class);
   }
 
   @Override
   @Nullable
-  public FPPEventSpecifier getEventSpecifier() {
-    return findChildByClass(FPPEventSpecifier.class);
+  public FPPQualifiedIdentifier getQualifiedIdentifier() {
+    return findChildByClass(FPPQualifiedIdentifier.class);
   }
 
   @Override
   @Nullable
-  public FPPPortInstanceSpecifier getPortInstanceSpecifier() {
-    return findChildByClass(FPPPortInstanceSpecifier.class);
+  public PsiElement getFloatingPointLiteral() {
+    return findChildByType(FLOATING_POINT_LITERAL);
   }
 
   @Override
   @Nullable
-  public FPPTelemetryChannelSpecifier getTelemetryChannelSpecifier() {
-    return findChildByClass(FPPTelemetryChannelSpecifier.class);
+  public PsiElement getIntegerLiteral() {
+    return findChildByType(INTEGER_LITERAL);
   }
 
 }

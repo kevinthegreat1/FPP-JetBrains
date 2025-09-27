@@ -5,15 +5,15 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface FPPModuleMember extends PsiElement {
+public interface FPPPortDefinition extends PsiElement {
 
   @Nullable
-  FPPComponentDefinition getComponentDefinition();
+  FPPParamList getParamList();
 
   @Nullable
-  FPPModuleDefinition getModuleDefinition();
+  FPPTypeName getTypeName();
 
-  @Nullable
-  FPPPortDefinition getPortDefinition();
+  @NotNull
+  PsiElement getIdentifier();
 
 }

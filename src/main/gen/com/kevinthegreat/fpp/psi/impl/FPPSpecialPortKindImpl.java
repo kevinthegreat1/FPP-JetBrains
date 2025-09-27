@@ -11,26 +11,20 @@ import static com.kevinthegreat.fpp.psi.FPPTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.kevinthegreat.fpp.psi.*;
 
-public class FPPStringTypeNameImpl extends ASTWrapperPsiElement implements FPPStringTypeName {
+public class FPPSpecialPortKindImpl extends ASTWrapperPsiElement implements FPPSpecialPortKind {
 
-  public FPPStringTypeNameImpl(@NotNull ASTNode node) {
+  public FPPSpecialPortKindImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull FPPVisitor visitor) {
-    visitor.visitStringTypeName(this);
+    visitor.visitSpecialPortKind(this);
   }
 
   @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof FPPVisitor) accept((FPPVisitor)visitor);
     else super.accept(visitor);
-  }
-
-  @Override
-  @Nullable
-  public FPPExpression getExpression() {
-    return findChildByClass(FPPExpression.class);
   }
 
 }

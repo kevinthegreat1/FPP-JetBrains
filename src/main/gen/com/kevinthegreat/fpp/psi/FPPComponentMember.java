@@ -7,7 +7,16 @@ import com.intellij.psi.PsiElement;
 
 public interface FPPComponentMember extends PsiElement {
 
-  @NotNull
+  @Nullable
   FPPCommandSpecifier getCommandSpecifier();
+
+  @Nullable
+  FPPEventSpecifier getEventSpecifier();
+
+  @Nullable
+  FPPPortInstanceSpecifier getPortInstanceSpecifier();
+
+  @Nullable
+  FPPTelemetryChannelSpecifier getTelemetryChannelSpecifier();
 
 }

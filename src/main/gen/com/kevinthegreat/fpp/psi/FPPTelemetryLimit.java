@@ -5,9 +5,9 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface FPPStringTypeName extends PsiElement {
+public interface FPPTelemetryLimit extends PsiElement {
 
-  @Nullable
+  @NotNull
   FPPExpression getExpression();
 
 }

@@ -11,14 +11,14 @@ import static com.kevinthegreat.fpp.psi.FPPTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.kevinthegreat.fpp.psi.*;
 
-public class FPPCommandSpecifierImpl extends ASTWrapperPsiElement implements FPPCommandSpecifier {
+public class FPPTelemetryChannelSpecifierImpl extends ASTWrapperPsiElement implements FPPTelemetryChannelSpecifier {
 
-  public FPPCommandSpecifierImpl(@NotNull ASTNode node) {
+  public FPPTelemetryChannelSpecifierImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull FPPVisitor visitor) {
-    visitor.visitCommandSpecifier(this);
+    visitor.visitTelemetryChannelSpecifier(this);
   }
 
   @Override
@@ -28,33 +28,39 @@ public class FPPCommandSpecifierImpl extends ASTWrapperPsiElement implements FPP
   }
 
   @Override
-  @NotNull
-  public FPPCommandKind getCommandKind() {
-    return findNotNullChildByClass(FPPCommandKind.class);
+  @Nullable
+  public FPPExpression getExpression() {
+    return findChildByClass(FPPExpression.class);
   }
 
   @Override
   @NotNull
-  public List<FPPExpression> getExpressionList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, FPPExpression.class);
+  public List<FPPTelemetryLimitSequence> getTelemetryLimitSequenceList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, FPPTelemetryLimitSequence.class);
   }
 
   @Override
   @Nullable
-  public FPPParamList getParamList() {
-    return findChildByClass(FPPParamList.class);
+  public FPPTelemetryUpdate getTelemetryUpdate() {
+    return findChildByClass(FPPTelemetryUpdate.class);
   }
 
   @Override
-  @Nullable
-  public FPPQueueFullBehavior getQueueFullBehavior() {
-    return findChildByClass(FPPQueueFullBehavior.class);
+  @NotNull
+  public FPPTypeName getTypeName() {
+    return findNotNullChildByClass(FPPTypeName.class);
   }
 
   @Override
   @NotNull
   public PsiElement getIdentifier() {
     return findNotNullChildByType(IDENTIFIER);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getStringLiteral() {
+    return findChildByType(STRING_LITERAL);
   }
 
 }
