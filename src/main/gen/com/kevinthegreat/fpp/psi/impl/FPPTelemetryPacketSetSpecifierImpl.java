@@ -11,14 +11,14 @@ import static com.kevinthegreat.fpp.psi.FPPTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.kevinthegreat.fpp.psi.*;
 
-public class FPPPortInterfaceMemberImpl extends ASTWrapperPsiElement implements FPPPortInterfaceMember {
+public class FPPTelemetryPacketSetSpecifierImpl extends ASTWrapperPsiElement implements FPPTelemetryPacketSetSpecifier {
 
-  public FPPPortInterfaceMemberImpl(@NotNull ASTNode node) {
+  public FPPTelemetryPacketSetSpecifierImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull FPPVisitor visitor) {
-    visitor.visitPortInterfaceMember(this);
+    visitor.visitTelemetryPacketSetSpecifier(this);
   }
 
   @Override
@@ -29,14 +29,20 @@ public class FPPPortInterfaceMemberImpl extends ASTWrapperPsiElement implements 
 
   @Override
   @Nullable
-  public FPPInterfaceImportSpecifier getInterfaceImportSpecifier() {
-    return findChildByClass(FPPInterfaceImportSpecifier.class);
+  public FPPTelemetryChannelIdentifierSequence getTelemetryChannelIdentifierSequence() {
+    return findChildByClass(FPPTelemetryChannelIdentifierSequence.class);
   }
 
   @Override
-  @Nullable
-  public FPPPortInstanceSpecifier getPortInstanceSpecifier() {
-    return findChildByClass(FPPPortInstanceSpecifier.class);
+  @NotNull
+  public FPPTelemetryPacketGroupMemberSequence getTelemetryPacketGroupMemberSequence() {
+    return findNotNullChildByClass(FPPTelemetryPacketGroupMemberSequence.class);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getIdentifier() {
+    return findNotNullChildByType(IDENTIFIER);
   }
 
 }

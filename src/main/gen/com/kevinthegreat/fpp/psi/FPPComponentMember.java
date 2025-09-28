@@ -23,13 +23,34 @@ public interface FPPComponentMember extends PsiElement {
   FPPConstantDefinition getConstantDefinition();
 
   @Nullable
+  FPPContainerSpecifier getContainerSpecifier();
+
+  @Nullable
   FPPEnumDefinition getEnumDefinition();
 
   @Nullable
   FPPEventSpecifier getEventSpecifier();
 
   @Nullable
+  FPPIncludeSpecifier getIncludeSpecifier();
+
+  @Nullable
+  FPPInterfaceImportSpecifier getInterfaceImportSpecifier();
+
+  @Nullable
+  FPPInternalPortSpecifier getInternalPortSpecifier();
+
+  @Nullable
+  FPPParameterSpecifier getParameterSpecifier();
+
+  @Nullable
   FPPPortInstanceSpecifier getPortInstanceSpecifier();
+
+  @Nullable
+  FPPRecordSpecifier getRecordSpecifier();
+
+  @Nullable
+  FPPStateMachineInstanceSpecifier getStateMachineInstanceSpecifier();
 
   @Nullable
   FPPStructDefinition getStructDefinition();

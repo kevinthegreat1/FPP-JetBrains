@@ -7,7 +7,19 @@ import com.intellij.psi.PsiElement;
 
 public interface FPPTopologyMember extends PsiElement {
 
-  @NotNull
-  FPPComponentInstanceDefinition getComponentInstanceDefinition();
+  @Nullable
+  FPPComponentInstanceSpecifier getComponentInstanceSpecifier();
+
+  @Nullable
+  FPPConnectionGraphSpecifier getConnectionGraphSpecifier();
+
+  @Nullable
+  FPPIncludeSpecifier getIncludeSpecifier();
+
+  @Nullable
+  FPPTelemetryPacketSetSpecifier getTelemetryPacketSetSpecifier();
+
+  @Nullable
+  FPPTopologyImportSpecifier getTopologyImportSpecifier();
 
 }

@@ -180,20 +180,20 @@ component_member ::= constant_definition
 //                  | state_machine_definition
                   | struct_definition
                   | command_specifier
-//                  | container_specifier
-//                  | parameter_specifier
+                  | container_specifier
+                  | parameter_specifier
                   | port_instance_specifier
-//                  | record_specifier
-//                  | state_machine_instance_specifier
+                  | record_specifier
+                  | state_machine_instance_specifier
                   | telemetry_channel_specifier
                   | abstract_type_definition
                   | alias_type_definition
                   | array_definition
                   | enum_definition
                   | event_specifier
-//                  | include_specifier
-//                  | internal_port_specifier
-//                  | interface_import_specifier
+                  | include_specifier
+                  | internal_port_specifier
+                  | interface_import_specifier
 // 5.5. Component Instance Definitions
 component_instance_definition ::= INSTANCE IDENTIFIER COLON qualified_identifier BASE ID expression [ TYPE STRING_LITERAL ] [ AT STRING_LITERAL ] [ QUEUE SIZE expression ] [ STACK SIZE expression ] [ PRIORITY expression ] [ CPU expression ] [ LEFT_BRACE init_specifier_sequence RIGHT_BRACE ]
 init_specifier_sequence ::= (init_specifier (SEMICOLON | END_OF_LINE)*)*
@@ -216,19 +216,19 @@ module_member ::= component_definition
 //                 | state_machine_definition
                  | struct_definition
                  | topology_definition
-//                 | location_specifier
+                 | location_specifier
                  | abstract_type_definition
                  | alias_type_definition
                  | array_definition
                  | enum_definition
-//                 | include_specifier
+                 | include_specifier
 // 5.10. Port Definitions
 port_definition ::= PORT IDENTIFIER [ LEFT_PAREN param_list RIGHT_PAREN ] [ ARROW type_name ]
 // 5.11. Port Interface Definitions
 port_interface_definition ::= INTERFACE IDENTIFIER LEFT_BRACE port_interface_member_sequence RIGHT_BRACE
 port_interface_member_sequence ::= (port_interface_member (SEMICOLON | END_OF_LINE)*)*
 port_interface_member ::= port_instance_specifier
-//                        | interface_import_specifier
+                        | interface_import_specifier
 // 5.12. State Machine Definitions
 //state_machine_definition ::= STATE MACHINE IDENTIFIER [ LEFT_BRACE state_machine_member_sequence RIGHT_BRACE ]
 //state_machine_member_sequence ::= (state_machine_member (SEMICOLON | END_OF_LINE)*)*
@@ -245,15 +245,34 @@ struct_type_member ::= IDENTIFIER COLON [ LEFT_BRACKET expression RIGHT_BRACKET 
 // 5.14. Topology Definitions
 topology_definition ::= TOPOLOGY IDENTIFIER LEFT_BRACE topology_member_sequence RIGHT_BRACE
 topology_member_sequence ::= (topology_member (SEMICOLON | END_OF_LINE)*)*
-topology_member ::= component_instance_definition
-//                    | connection_graph_specifier
-//                    | telemetry_packet_set_specifier
-//                    | topology_import_specifier
-//                    | include_specifier
+topology_member ::= component_instance_specifier
+                    | connection_graph_specifier
+                    | telemetry_packet_set_specifier
+                    | topology_import_specifier
+                    | include_specifier
 
 // 7.1. Command Specifiers
 command_specifier ::= command_kind COMMAND IDENTIFIER [ LEFT_PAREN param_list RIGHT_PAREN ] [ OPCODE expression ] [ PRIORITY expression ] [ queue_full_behavior ]
 command_kind ::= ASYNC | GUARDED | SYNC
+// 7.2. Component Instance Specifiers
+component_instance_specifier ::= [ PRIVATE ] INSTANCE qualified_identifier
+// 7.3. Connection Graph Specifiers
+connection_graph_specifier ::= direct_graph_specifier
+                                | pattern_graph_specifier
+direct_graph_specifier ::= CONNECTIONS IDENTIFIER LEFT_BRACE connection_sequence RIGHT_BRACE
+connection_sequence ::= (connection (COMMA | END_OF_LINE)*)*
+connection ::= [ UNMATCHED ] port_instance_identifier [ LEFT_BRACKET expression RIGHT_BRACKET ] ARROW port_instance_identifier [ LEFT_BRACKET expression RIGHT_BRACKET ]
+pattern_graph_specifier ::= pattern_kind CONNECTIONS INSTANCE qualified_identifier [ LEFT_BRACE instance_sequence RIGHT_BRACE ]
+pattern_kind ::= COMMAND
+                | EVENT
+                | HEALTH
+                | PARAM
+                | TELEMETRY
+                | TEXT EVENT
+                | TIME
+instance_sequence ::= (qualified_identifier (COMMA | END_OF_LINE)*)*
+// 7.4. Container Specifiers
+container_specifier ::= PRODUCT IDENTIFIER [ ID expression ] [ DEFAULT PRIORITY expression ]
 // 7.5. Event Specifiers
 event_specifier ::= EVENT IDENTIFIER [ LEFT_PAREN param_list RIGHT_PAREN ] SEVERITY event_severity [ ID expression ] FORMAT STRING_LITERAL [ THROTTLE expression ]
 event_severity ::= ACTIVITY HIGH
@@ -263,8 +282,31 @@ event_severity ::= ACTIVITY HIGH
             | FATAL
             | WARNING HIGH
             | WARNING LOW
+// 7.6. Include Specifiers
+include_specifier ::= INCLUDE STRING_LITERAL
 // 7.7. Init Specifiers
 init_specifier ::= PHASE expression STRING_LITERAL
+// 7.8. Interface Import Specifiers
+interface_import_specifier ::= IMPORT qualified_identifier
+// 7.9. Internal Port Specifiers
+internal_port_specifier ::= INTERNAL PORT IDENTIFIER [ LEFT_PAREN param_list RIGHT_PAREN ] [ PRIORITY expression ] [ queue_full_behavior ]
+// 7.10. Location Specifiers
+location_specifier ::= component_instance_location_specifier
+                        | component_location_specifier
+                        | constant_location_specifier
+                        | port_location_specifier
+                        | state_machine_location_specifier
+                        | topology_location_specifier
+                        | type_location_specifier
+component_instance_location_specifier ::= LOCATE INSTANCE qualified_identifier AT STRING_LITERAL
+component_location_specifier ::= LOCATE COMPONENT qualified_identifier AT STRING_LITERAL
+constant_location_specifier ::= LOCATE CONSTANT qualified_identifier AT STRING_LITERAL
+port_location_specifier ::= LOCATE PORT qualified_identifier AT STRING_LITERAL
+state_machine_location_specifier ::= LOCATE STATE MACHINE qualified_identifier AT STRING_LITERAL
+topology_location_specifier ::= LOCATE TOPOLOGY qualified_identifier AT STRING_LITERAL
+type_location_specifier ::= LOCATE TYPE qualified_identifier AT STRING_LITERAL
+// 7.11. Parameter Specifiers
+parameter_specifier ::= [ EXTERNAL ] PARAM IDENTIFIER COLON type_name [ DEFAULT expression ] [ ID expression ] [ SET OPCODE expression ] [ SAVE OPCODE expression ]
 // 7.12. Port Instance Specifiers
 port_instance_specifier ::= general_port_kind PORT IDENTIFIER COLON [ LEFT_BRACKET expression RIGHT_BRACKET ] port_instance_type [ PRIORITY expression ] [ queue_full_behavior ]
                             | [ special_port_input_kind ] special_port_kind PORT IDENTIFIER [ PRIORITY expression ] [ queue_full_behavior ]
@@ -289,6 +331,12 @@ special_port_kind ::= COMMAND RECV
                         | TELEMETRY
                         | TEXT EVENT
                         | TIME GET
+// 7.13. Port Matching Specifiers
+port_matching_specifier ::= MATCH IDENTIFIER WITH IDENTIFIER
+// 7.14. Record Specifiers
+record_specifier ::= PRODUCT RECORD IDENTIFIER COLON type_name [ ARRAY ] [ ID expression ]
+// 7.15. State Machine Instance Specifiers
+state_machine_instance_specifier ::= STATE MACHINE INSTANCE IDENTIFIER COLON qualified_identifier [ PRIORITY expression ] [ queue_full_behavior ]
 // 7.16. Telemetry Channel Specifiers
 telemetry_channel_specifier ::= TELEMETRY IDENTIFIER COLON type_name [ ID expression ] [ UPDATE telemetry_update ] [ FORMAT STRING_LITERAL ] [ LOW LEFT_BRACE telemetry_limit_sequence RIGHT_BRACE ] [ HIGH LEFT_BRACE telemetry_limit_sequence RIGHT_BRACE ]
 telemetry_update ::= ALWAYS | ON CHANGE
@@ -296,6 +344,25 @@ telemetry_limit_sequence ::= (telemetry_limit (COMMA | END_OF_LINE)*)*
 telemetry_limit ::= RED expression
                     | ORANGE expression
                     | YELLOW expression
+// 7.17. Telemetry Packet Set Specifiers
+telemetry_packet_set_specifier ::= TELEMETRY PACKETS IDENTIFIER LEFT_BRACE telemetry_packet_group_member_sequence RIGHT_BRACE [ OMIT LEFT_BRACE telemetry_channel_identifier_sequence RIGHT_BRACE ]
+telemetry_packet_group_member_sequence ::= (telemetry_packet_group_member (COMMA | END_OF_LINE)*)*
+telemetry_packet_group_member ::= include_specifier
+                                | telemetry_packet_specifier
+telemetry_channel_identifier_sequence ::= (telemetry_channel_identifier (COMMA | END_OF_LINE)*)*
+// 7.18. Telemetry Packet Specifiers
+telemetry_packet_specifier ::= PACKET IDENTIFIER [ ID expression ] GROUP expression LEFT_BRACE telemetry_packet_member_sequence RIGHT_BRACE
+telemetry_packet_member_sequence ::= (telemetry_packet_member (COMMA | END_OF_LINE)*)*
+telemetry_packet_member ::= non_annotatable_include_specifier
+                            | telemetry_channel_identifier
+non_annotatable_include_specifier ::= include_specifier
+// 7.19. Topology Import Specifiers
+topology_import_specifier ::= IMPORT qualified_identifier
+
+// 8.1. Port Instance Identifiers
+port_instance_identifier ::= IDENTIFIER (DOT IDENTIFIER)+
+// 8.2. Telemetry Channel Identifiers
+telemetry_channel_identifier ::= IDENTIFIER (DOT IDENTIFIER)+
 
 // 9. Type Names
 type_name ::= primitive_integer_type_name

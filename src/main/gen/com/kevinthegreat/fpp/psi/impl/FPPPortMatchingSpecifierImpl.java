@@ -11,32 +11,20 @@ import static com.kevinthegreat.fpp.psi.FPPTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.kevinthegreat.fpp.psi.*;
 
-public class FPPPortInterfaceMemberImpl extends ASTWrapperPsiElement implements FPPPortInterfaceMember {
+public class FPPPortMatchingSpecifierImpl extends ASTWrapperPsiElement implements FPPPortMatchingSpecifier {
 
-  public FPPPortInterfaceMemberImpl(@NotNull ASTNode node) {
+  public FPPPortMatchingSpecifierImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull FPPVisitor visitor) {
-    visitor.visitPortInterfaceMember(this);
+    visitor.visitPortMatchingSpecifier(this);
   }
 
   @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof FPPVisitor) accept((FPPVisitor)visitor);
     else super.accept(visitor);
-  }
-
-  @Override
-  @Nullable
-  public FPPInterfaceImportSpecifier getInterfaceImportSpecifier() {
-    return findChildByClass(FPPInterfaceImportSpecifier.class);
-  }
-
-  @Override
-  @Nullable
-  public FPPPortInstanceSpecifier getPortInstanceSpecifier() {
-    return findChildByClass(FPPPortInstanceSpecifier.class);
   }
 
 }

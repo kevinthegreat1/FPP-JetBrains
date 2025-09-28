@@ -474,6 +474,41 @@ public class FPPParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // LOCATE INSTANCE qualified_identifier AT STRING_LITERAL
+  public static boolean component_instance_location_specifier(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "component_instance_location_specifier")) return false;
+    if (!nextTokenIs(builder_, LOCATE)) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeTokens(builder_, 0, LOCATE, INSTANCE);
+    result_ = result_ && qualified_identifier(builder_, level_ + 1);
+    result_ = result_ && consumeTokens(builder_, 0, AT, STRING_LITERAL);
+    exit_section_(builder_, marker_, COMPONENT_INSTANCE_LOCATION_SPECIFIER, result_);
+    return result_;
+  }
+
+  /* ********************************************************** */
+  // [ PRIVATE ] INSTANCE qualified_identifier
+  public static boolean component_instance_specifier(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "component_instance_specifier")) return false;
+    if (!nextTokenIs(builder_, "<component instance specifier>", INSTANCE, PRIVATE)) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_, level_, _NONE_, COMPONENT_INSTANCE_SPECIFIER, "<component instance specifier>");
+    result_ = component_instance_specifier_0(builder_, level_ + 1);
+    result_ = result_ && consumeToken(builder_, INSTANCE);
+    result_ = result_ && qualified_identifier(builder_, level_ + 1);
+    exit_section_(builder_, level_, marker_, result_, false, null);
+    return result_;
+  }
+
+  // [ PRIVATE ]
+  private static boolean component_instance_specifier_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "component_instance_specifier_0")) return false;
+    consumeToken(builder_, PRIVATE);
+    return true;
+  }
+
+  /* ********************************************************** */
   // ACTIVE | PASSIVE | QUEUED
   public static boolean component_kind(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "component_kind")) return false;
@@ -487,21 +522,38 @@ public class FPPParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // LOCATE COMPONENT qualified_identifier AT STRING_LITERAL
+  public static boolean component_location_specifier(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "component_location_specifier")) return false;
+    if (!nextTokenIs(builder_, LOCATE)) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeTokens(builder_, 0, LOCATE, COMPONENT);
+    result_ = result_ && qualified_identifier(builder_, level_ + 1);
+    result_ = result_ && consumeTokens(builder_, 0, AT, STRING_LITERAL);
+    exit_section_(builder_, marker_, COMPONENT_LOCATION_SPECIFIER, result_);
+    return result_;
+  }
+
+  /* ********************************************************** */
   // constant_definition
   // //                  | state_machine_definition
   //                   | struct_definition
   //                   | command_specifier
-  // //                  | container_specifier
-  // //                  | parameter_specifier
+  //                   | container_specifier
+  //                   | parameter_specifier
   //                   | port_instance_specifier
-  // //                  | record_specifier
-  // //                  | state_machine_instance_specifier
+  //                   | record_specifier
+  //                   | state_machine_instance_specifier
   //                   | telemetry_channel_specifier
   //                   | abstract_type_definition
   //                   | alias_type_definition
   //                   | array_definition
   //                   | enum_definition
   //                   | event_specifier
+  //                   | include_specifier
+  //                   | internal_port_specifier
+  //                   | interface_import_specifier
   public static boolean component_member(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "component_member")) return false;
     boolean result_;
@@ -509,13 +561,20 @@ public class FPPParser implements PsiParser, LightPsiParser {
     result_ = constant_definition(builder_, level_ + 1);
     if (!result_) result_ = struct_definition(builder_, level_ + 1);
     if (!result_) result_ = command_specifier(builder_, level_ + 1);
+    if (!result_) result_ = container_specifier(builder_, level_ + 1);
+    if (!result_) result_ = parameter_specifier(builder_, level_ + 1);
     if (!result_) result_ = port_instance_specifier(builder_, level_ + 1);
+    if (!result_) result_ = record_specifier(builder_, level_ + 1);
+    if (!result_) result_ = state_machine_instance_specifier(builder_, level_ + 1);
     if (!result_) result_ = telemetry_channel_specifier(builder_, level_ + 1);
     if (!result_) result_ = abstract_type_definition(builder_, level_ + 1);
     if (!result_) result_ = alias_type_definition(builder_, level_ + 1);
     if (!result_) result_ = array_definition(builder_, level_ + 1);
     if (!result_) result_ = enum_definition(builder_, level_ + 1);
     if (!result_) result_ = event_specifier(builder_, level_ + 1);
+    if (!result_) result_ = include_specifier(builder_, level_ + 1);
+    if (!result_) result_ = internal_port_specifier(builder_, level_ + 1);
+    if (!result_) result_ = interface_import_specifier(builder_, level_ + 1);
     exit_section_(builder_, level_, marker_, result_, false, null);
     return result_;
   }
@@ -566,6 +625,126 @@ public class FPPParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // [ UNMATCHED ] port_instance_identifier [ LEFT_BRACKET expression RIGHT_BRACKET ] ARROW port_instance_identifier [ LEFT_BRACKET expression RIGHT_BRACKET ]
+  public static boolean connection(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "connection")) return false;
+    if (!nextTokenIs(builder_, "<connection>", IDENTIFIER, UNMATCHED)) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_, level_, _NONE_, CONNECTION, "<connection>");
+    result_ = connection_0(builder_, level_ + 1);
+    result_ = result_ && port_instance_identifier(builder_, level_ + 1);
+    result_ = result_ && connection_2(builder_, level_ + 1);
+    result_ = result_ && consumeToken(builder_, ARROW);
+    result_ = result_ && port_instance_identifier(builder_, level_ + 1);
+    result_ = result_ && connection_5(builder_, level_ + 1);
+    exit_section_(builder_, level_, marker_, result_, false, null);
+    return result_;
+  }
+
+  // [ UNMATCHED ]
+  private static boolean connection_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "connection_0")) return false;
+    consumeToken(builder_, UNMATCHED);
+    return true;
+  }
+
+  // [ LEFT_BRACKET expression RIGHT_BRACKET ]
+  private static boolean connection_2(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "connection_2")) return false;
+    connection_2_0(builder_, level_ + 1);
+    return true;
+  }
+
+  // LEFT_BRACKET expression RIGHT_BRACKET
+  private static boolean connection_2_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "connection_2_0")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeToken(builder_, LEFT_BRACKET);
+    result_ = result_ && expression(builder_, level_ + 1);
+    result_ = result_ && consumeToken(builder_, RIGHT_BRACKET);
+    exit_section_(builder_, marker_, null, result_);
+    return result_;
+  }
+
+  // [ LEFT_BRACKET expression RIGHT_BRACKET ]
+  private static boolean connection_5(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "connection_5")) return false;
+    connection_5_0(builder_, level_ + 1);
+    return true;
+  }
+
+  // LEFT_BRACKET expression RIGHT_BRACKET
+  private static boolean connection_5_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "connection_5_0")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeToken(builder_, LEFT_BRACKET);
+    result_ = result_ && expression(builder_, level_ + 1);
+    result_ = result_ && consumeToken(builder_, RIGHT_BRACKET);
+    exit_section_(builder_, marker_, null, result_);
+    return result_;
+  }
+
+  /* ********************************************************** */
+  // direct_graph_specifier
+  //                                 | pattern_graph_specifier
+  public static boolean connection_graph_specifier(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "connection_graph_specifier")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_, level_, _NONE_, CONNECTION_GRAPH_SPECIFIER, "<connection graph specifier>");
+    result_ = direct_graph_specifier(builder_, level_ + 1);
+    if (!result_) result_ = pattern_graph_specifier(builder_, level_ + 1);
+    exit_section_(builder_, level_, marker_, result_, false, null);
+    return result_;
+  }
+
+  /* ********************************************************** */
+  // (connection (COMMA | END_OF_LINE)*)*
+  public static boolean connection_sequence(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "connection_sequence")) return false;
+    Marker marker_ = enter_section_(builder_, level_, _NONE_, CONNECTION_SEQUENCE, "<connection sequence>");
+    while (true) {
+      int pos_ = current_position_(builder_);
+      if (!connection_sequence_0(builder_, level_ + 1)) break;
+      if (!empty_element_parsed_guard_(builder_, "connection_sequence", pos_)) break;
+    }
+    exit_section_(builder_, level_, marker_, true, false, null);
+    return true;
+  }
+
+  // connection (COMMA | END_OF_LINE)*
+  private static boolean connection_sequence_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "connection_sequence_0")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = connection(builder_, level_ + 1);
+    result_ = result_ && connection_sequence_0_1(builder_, level_ + 1);
+    exit_section_(builder_, marker_, null, result_);
+    return result_;
+  }
+
+  // (COMMA | END_OF_LINE)*
+  private static boolean connection_sequence_0_1(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "connection_sequence_0_1")) return false;
+    while (true) {
+      int pos_ = current_position_(builder_);
+      if (!connection_sequence_0_1_0(builder_, level_ + 1)) break;
+      if (!empty_element_parsed_guard_(builder_, "connection_sequence_0_1", pos_)) break;
+    }
+    return true;
+  }
+
+  // COMMA | END_OF_LINE
+  private static boolean connection_sequence_0_1_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "connection_sequence_0_1_0")) return false;
+    boolean result_;
+    result_ = consumeToken(builder_, COMMA);
+    if (!result_) result_ = consumeToken(builder_, END_OF_LINE);
+    return result_;
+  }
+
+  /* ********************************************************** */
   // CONSTANT IDENTIFIER ASSIGN expression
   public static boolean constant_definition(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "constant_definition")) return false;
@@ -575,6 +754,84 @@ public class FPPParser implements PsiParser, LightPsiParser {
     result_ = consumeTokens(builder_, 0, CONSTANT, IDENTIFIER, ASSIGN);
     result_ = result_ && expression(builder_, level_ + 1);
     exit_section_(builder_, marker_, CONSTANT_DEFINITION, result_);
+    return result_;
+  }
+
+  /* ********************************************************** */
+  // LOCATE CONSTANT qualified_identifier AT STRING_LITERAL
+  public static boolean constant_location_specifier(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "constant_location_specifier")) return false;
+    if (!nextTokenIs(builder_, LOCATE)) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeTokens(builder_, 0, LOCATE, CONSTANT);
+    result_ = result_ && qualified_identifier(builder_, level_ + 1);
+    result_ = result_ && consumeTokens(builder_, 0, AT, STRING_LITERAL);
+    exit_section_(builder_, marker_, CONSTANT_LOCATION_SPECIFIER, result_);
+    return result_;
+  }
+
+  /* ********************************************************** */
+  // PRODUCT IDENTIFIER [ ID expression ] [ DEFAULT PRIORITY expression ]
+  public static boolean container_specifier(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "container_specifier")) return false;
+    if (!nextTokenIs(builder_, PRODUCT)) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeTokens(builder_, 0, PRODUCT, IDENTIFIER);
+    result_ = result_ && container_specifier_2(builder_, level_ + 1);
+    result_ = result_ && container_specifier_3(builder_, level_ + 1);
+    exit_section_(builder_, marker_, CONTAINER_SPECIFIER, result_);
+    return result_;
+  }
+
+  // [ ID expression ]
+  private static boolean container_specifier_2(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "container_specifier_2")) return false;
+    container_specifier_2_0(builder_, level_ + 1);
+    return true;
+  }
+
+  // ID expression
+  private static boolean container_specifier_2_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "container_specifier_2_0")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeToken(builder_, ID);
+    result_ = result_ && expression(builder_, level_ + 1);
+    exit_section_(builder_, marker_, null, result_);
+    return result_;
+  }
+
+  // [ DEFAULT PRIORITY expression ]
+  private static boolean container_specifier_3(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "container_specifier_3")) return false;
+    container_specifier_3_0(builder_, level_ + 1);
+    return true;
+  }
+
+  // DEFAULT PRIORITY expression
+  private static boolean container_specifier_3_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "container_specifier_3_0")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeTokens(builder_, 0, DEFAULT, PRIORITY);
+    result_ = result_ && expression(builder_, level_ + 1);
+    exit_section_(builder_, marker_, null, result_);
+    return result_;
+  }
+
+  /* ********************************************************** */
+  // CONNECTIONS IDENTIFIER LEFT_BRACE connection_sequence RIGHT_BRACE
+  public static boolean direct_graph_specifier(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "direct_graph_specifier")) return false;
+    if (!nextTokenIs(builder_, CONNECTIONS)) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeTokens(builder_, 0, CONNECTIONS, IDENTIFIER, LEFT_BRACE);
+    result_ = result_ && connection_sequence(builder_, level_ + 1);
+    result_ = result_ && consumeToken(builder_, RIGHT_BRACE);
+    exit_section_(builder_, marker_, DIRECT_GRAPH_SPECIFIER, result_);
     return result_;
   }
 
@@ -872,6 +1129,18 @@ public class FPPParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // INCLUDE STRING_LITERAL
+  public static boolean include_specifier(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "include_specifier")) return false;
+    if (!nextTokenIs(builder_, INCLUDE)) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeTokens(builder_, 0, INCLUDE, STRING_LITERAL);
+    exit_section_(builder_, marker_, INCLUDE_SPECIFIER, result_);
+    return result_;
+  }
+
+  /* ********************************************************** */
   // PHASE expression STRING_LITERAL
   public static boolean init_specifier(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "init_specifier")) return false;
@@ -931,6 +1200,147 @@ public class FPPParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // (qualified_identifier (COMMA | END_OF_LINE)*)*
+  public static boolean instance_sequence(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "instance_sequence")) return false;
+    Marker marker_ = enter_section_(builder_, level_, _NONE_, INSTANCE_SEQUENCE, "<instance sequence>");
+    while (true) {
+      int pos_ = current_position_(builder_);
+      if (!instance_sequence_0(builder_, level_ + 1)) break;
+      if (!empty_element_parsed_guard_(builder_, "instance_sequence", pos_)) break;
+    }
+    exit_section_(builder_, level_, marker_, true, false, null);
+    return true;
+  }
+
+  // qualified_identifier (COMMA | END_OF_LINE)*
+  private static boolean instance_sequence_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "instance_sequence_0")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = qualified_identifier(builder_, level_ + 1);
+    result_ = result_ && instance_sequence_0_1(builder_, level_ + 1);
+    exit_section_(builder_, marker_, null, result_);
+    return result_;
+  }
+
+  // (COMMA | END_OF_LINE)*
+  private static boolean instance_sequence_0_1(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "instance_sequence_0_1")) return false;
+    while (true) {
+      int pos_ = current_position_(builder_);
+      if (!instance_sequence_0_1_0(builder_, level_ + 1)) break;
+      if (!empty_element_parsed_guard_(builder_, "instance_sequence_0_1", pos_)) break;
+    }
+    return true;
+  }
+
+  // COMMA | END_OF_LINE
+  private static boolean instance_sequence_0_1_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "instance_sequence_0_1_0")) return false;
+    boolean result_;
+    result_ = consumeToken(builder_, COMMA);
+    if (!result_) result_ = consumeToken(builder_, END_OF_LINE);
+    return result_;
+  }
+
+  /* ********************************************************** */
+  // IMPORT qualified_identifier
+  public static boolean interface_import_specifier(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "interface_import_specifier")) return false;
+    if (!nextTokenIs(builder_, IMPORT)) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeToken(builder_, IMPORT);
+    result_ = result_ && qualified_identifier(builder_, level_ + 1);
+    exit_section_(builder_, marker_, INTERFACE_IMPORT_SPECIFIER, result_);
+    return result_;
+  }
+
+  /* ********************************************************** */
+  // INTERNAL PORT IDENTIFIER [ LEFT_PAREN param_list RIGHT_PAREN ] [ PRIORITY expression ] [ queue_full_behavior ]
+  public static boolean internal_port_specifier(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "internal_port_specifier")) return false;
+    if (!nextTokenIs(builder_, INTERNAL)) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeTokens(builder_, 0, INTERNAL, PORT, IDENTIFIER);
+    result_ = result_ && internal_port_specifier_3(builder_, level_ + 1);
+    result_ = result_ && internal_port_specifier_4(builder_, level_ + 1);
+    result_ = result_ && internal_port_specifier_5(builder_, level_ + 1);
+    exit_section_(builder_, marker_, INTERNAL_PORT_SPECIFIER, result_);
+    return result_;
+  }
+
+  // [ LEFT_PAREN param_list RIGHT_PAREN ]
+  private static boolean internal_port_specifier_3(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "internal_port_specifier_3")) return false;
+    internal_port_specifier_3_0(builder_, level_ + 1);
+    return true;
+  }
+
+  // LEFT_PAREN param_list RIGHT_PAREN
+  private static boolean internal_port_specifier_3_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "internal_port_specifier_3_0")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeToken(builder_, LEFT_PAREN);
+    result_ = result_ && param_list(builder_, level_ + 1);
+    result_ = result_ && consumeToken(builder_, RIGHT_PAREN);
+    exit_section_(builder_, marker_, null, result_);
+    return result_;
+  }
+
+  // [ PRIORITY expression ]
+  private static boolean internal_port_specifier_4(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "internal_port_specifier_4")) return false;
+    internal_port_specifier_4_0(builder_, level_ + 1);
+    return true;
+  }
+
+  // PRIORITY expression
+  private static boolean internal_port_specifier_4_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "internal_port_specifier_4_0")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeToken(builder_, PRIORITY);
+    result_ = result_ && expression(builder_, level_ + 1);
+    exit_section_(builder_, marker_, null, result_);
+    return result_;
+  }
+
+  // [ queue_full_behavior ]
+  private static boolean internal_port_specifier_5(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "internal_port_specifier_5")) return false;
+    queue_full_behavior(builder_, level_ + 1);
+    return true;
+  }
+
+  /* ********************************************************** */
+  // component_instance_location_specifier
+  //                         | component_location_specifier
+  //                         | constant_location_specifier
+  //                         | port_location_specifier
+  //                         | state_machine_location_specifier
+  //                         | topology_location_specifier
+  //                         | type_location_specifier
+  public static boolean location_specifier(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "location_specifier")) return false;
+    if (!nextTokenIs(builder_, LOCATE)) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = component_instance_location_specifier(builder_, level_ + 1);
+    if (!result_) result_ = component_location_specifier(builder_, level_ + 1);
+    if (!result_) result_ = constant_location_specifier(builder_, level_ + 1);
+    if (!result_) result_ = port_location_specifier(builder_, level_ + 1);
+    if (!result_) result_ = state_machine_location_specifier(builder_, level_ + 1);
+    if (!result_) result_ = topology_location_specifier(builder_, level_ + 1);
+    if (!result_) result_ = type_location_specifier(builder_, level_ + 1);
+    exit_section_(builder_, marker_, LOCATION_SPECIFIER, result_);
+    return result_;
+  }
+
+  /* ********************************************************** */
   // MODULE IDENTIFIER LEFT_BRACE module_member_sequence RIGHT_BRACE
   public static boolean module_definition(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "module_definition")) return false;
@@ -954,11 +1364,12 @@ public class FPPParser implements PsiParser, LightPsiParser {
   // //                 | state_machine_definition
   //                  | struct_definition
   //                  | topology_definition
-  // //                 | location_specifier
+  //                  | location_specifier
   //                  | abstract_type_definition
   //                  | alias_type_definition
   //                  | array_definition
   //                  | enum_definition
+  //                  | include_specifier
   public static boolean module_member(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "module_member")) return false;
     boolean result_;
@@ -971,10 +1382,12 @@ public class FPPParser implements PsiParser, LightPsiParser {
     if (!result_) result_ = port_interface_definition(builder_, level_ + 1);
     if (!result_) result_ = struct_definition(builder_, level_ + 1);
     if (!result_) result_ = topology_definition(builder_, level_ + 1);
+    if (!result_) result_ = location_specifier(builder_, level_ + 1);
     if (!result_) result_ = abstract_type_definition(builder_, level_ + 1);
     if (!result_) result_ = alias_type_definition(builder_, level_ + 1);
     if (!result_) result_ = array_definition(builder_, level_ + 1);
     if (!result_) result_ = enum_definition(builder_, level_ + 1);
+    if (!result_) result_ = include_specifier(builder_, level_ + 1);
     exit_section_(builder_, level_, marker_, result_, false, null);
     return result_;
   }
@@ -1025,6 +1438,18 @@ public class FPPParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // include_specifier
+  public static boolean non_annotatable_include_specifier(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "non_annotatable_include_specifier")) return false;
+    if (!nextTokenIs(builder_, INCLUDE)) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = include_specifier(builder_, level_ + 1);
+    exit_section_(builder_, marker_, NON_ANNOTATABLE_INCLUDE_SPECIFIER, result_);
+    return result_;
+  }
+
+  /* ********************************************************** */
   // (formal_parameter (COMMA | END_OF_LINE)*)*
   public static boolean param_list(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "param_list")) return false;
@@ -1066,6 +1491,159 @@ public class FPPParser implements PsiParser, LightPsiParser {
     boolean result_;
     result_ = consumeToken(builder_, COMMA);
     if (!result_) result_ = consumeToken(builder_, END_OF_LINE);
+    return result_;
+  }
+
+  /* ********************************************************** */
+  // [ EXTERNAL ] PARAM IDENTIFIER COLON type_name [ DEFAULT expression ] [ ID expression ] [ SET OPCODE expression ] [ SAVE OPCODE expression ]
+  public static boolean parameter_specifier(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "parameter_specifier")) return false;
+    if (!nextTokenIs(builder_, "<parameter specifier>", EXTERNAL, PARAM)) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_, level_, _NONE_, PARAMETER_SPECIFIER, "<parameter specifier>");
+    result_ = parameter_specifier_0(builder_, level_ + 1);
+    result_ = result_ && consumeTokens(builder_, 0, PARAM, IDENTIFIER, COLON);
+    result_ = result_ && type_name(builder_, level_ + 1);
+    result_ = result_ && parameter_specifier_5(builder_, level_ + 1);
+    result_ = result_ && parameter_specifier_6(builder_, level_ + 1);
+    result_ = result_ && parameter_specifier_7(builder_, level_ + 1);
+    result_ = result_ && parameter_specifier_8(builder_, level_ + 1);
+    exit_section_(builder_, level_, marker_, result_, false, null);
+    return result_;
+  }
+
+  // [ EXTERNAL ]
+  private static boolean parameter_specifier_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "parameter_specifier_0")) return false;
+    consumeToken(builder_, EXTERNAL);
+    return true;
+  }
+
+  // [ DEFAULT expression ]
+  private static boolean parameter_specifier_5(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "parameter_specifier_5")) return false;
+    parameter_specifier_5_0(builder_, level_ + 1);
+    return true;
+  }
+
+  // DEFAULT expression
+  private static boolean parameter_specifier_5_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "parameter_specifier_5_0")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeToken(builder_, DEFAULT);
+    result_ = result_ && expression(builder_, level_ + 1);
+    exit_section_(builder_, marker_, null, result_);
+    return result_;
+  }
+
+  // [ ID expression ]
+  private static boolean parameter_specifier_6(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "parameter_specifier_6")) return false;
+    parameter_specifier_6_0(builder_, level_ + 1);
+    return true;
+  }
+
+  // ID expression
+  private static boolean parameter_specifier_6_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "parameter_specifier_6_0")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeToken(builder_, ID);
+    result_ = result_ && expression(builder_, level_ + 1);
+    exit_section_(builder_, marker_, null, result_);
+    return result_;
+  }
+
+  // [ SET OPCODE expression ]
+  private static boolean parameter_specifier_7(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "parameter_specifier_7")) return false;
+    parameter_specifier_7_0(builder_, level_ + 1);
+    return true;
+  }
+
+  // SET OPCODE expression
+  private static boolean parameter_specifier_7_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "parameter_specifier_7_0")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeTokens(builder_, 0, SET, OPCODE);
+    result_ = result_ && expression(builder_, level_ + 1);
+    exit_section_(builder_, marker_, null, result_);
+    return result_;
+  }
+
+  // [ SAVE OPCODE expression ]
+  private static boolean parameter_specifier_8(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "parameter_specifier_8")) return false;
+    parameter_specifier_8_0(builder_, level_ + 1);
+    return true;
+  }
+
+  // SAVE OPCODE expression
+  private static boolean parameter_specifier_8_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "parameter_specifier_8_0")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeTokens(builder_, 0, SAVE, OPCODE);
+    result_ = result_ && expression(builder_, level_ + 1);
+    exit_section_(builder_, marker_, null, result_);
+    return result_;
+  }
+
+  /* ********************************************************** */
+  // pattern_kind CONNECTIONS INSTANCE qualified_identifier [ LEFT_BRACE instance_sequence RIGHT_BRACE ]
+  public static boolean pattern_graph_specifier(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "pattern_graph_specifier")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_, level_, _NONE_, PATTERN_GRAPH_SPECIFIER, "<pattern graph specifier>");
+    result_ = pattern_kind(builder_, level_ + 1);
+    result_ = result_ && consumeTokens(builder_, 0, CONNECTIONS, INSTANCE);
+    result_ = result_ && qualified_identifier(builder_, level_ + 1);
+    result_ = result_ && pattern_graph_specifier_4(builder_, level_ + 1);
+    exit_section_(builder_, level_, marker_, result_, false, null);
+    return result_;
+  }
+
+  // [ LEFT_BRACE instance_sequence RIGHT_BRACE ]
+  private static boolean pattern_graph_specifier_4(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "pattern_graph_specifier_4")) return false;
+    pattern_graph_specifier_4_0(builder_, level_ + 1);
+    return true;
+  }
+
+  // LEFT_BRACE instance_sequence RIGHT_BRACE
+  private static boolean pattern_graph_specifier_4_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "pattern_graph_specifier_4_0")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeToken(builder_, LEFT_BRACE);
+    result_ = result_ && instance_sequence(builder_, level_ + 1);
+    result_ = result_ && consumeToken(builder_, RIGHT_BRACE);
+    exit_section_(builder_, marker_, null, result_);
+    return result_;
+  }
+
+  /* ********************************************************** */
+  // COMMAND
+  //                 | EVENT
+  //                 | HEALTH
+  //                 | PARAM
+  //                 | TELEMETRY
+  //                 | TEXT EVENT
+  //                 | TIME
+  public static boolean pattern_kind(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "pattern_kind")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_, level_, _NONE_, PATTERN_KIND, "<pattern kind>");
+    result_ = consumeToken(builder_, COMMAND);
+    if (!result_) result_ = consumeToken(builder_, EVENT);
+    if (!result_) result_ = consumeToken(builder_, HEALTH);
+    if (!result_) result_ = consumeToken(builder_, PARAM);
+    if (!result_) result_ = consumeToken(builder_, TELEMETRY);
+    if (!result_) result_ = parseTokens(builder_, 0, TEXT, EVENT);
+    if (!result_) result_ = consumeToken(builder_, TIME);
+    exit_section_(builder_, level_, marker_, result_, false, null);
     return result_;
   }
 
@@ -1116,6 +1694,44 @@ public class FPPParser implements PsiParser, LightPsiParser {
     Marker marker_ = enter_section_(builder_);
     result_ = consumeToken(builder_, ARROW);
     result_ = result_ && type_name(builder_, level_ + 1);
+    exit_section_(builder_, marker_, null, result_);
+    return result_;
+  }
+
+  /* ********************************************************** */
+  // IDENTIFIER (DOT IDENTIFIER)+
+  public static boolean port_instance_identifier(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "port_instance_identifier")) return false;
+    if (!nextTokenIs(builder_, IDENTIFIER)) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeToken(builder_, IDENTIFIER);
+    result_ = result_ && port_instance_identifier_1(builder_, level_ + 1);
+    exit_section_(builder_, marker_, PORT_INSTANCE_IDENTIFIER, result_);
+    return result_;
+  }
+
+  // (DOT IDENTIFIER)+
+  private static boolean port_instance_identifier_1(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "port_instance_identifier_1")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = port_instance_identifier_1_0(builder_, level_ + 1);
+    while (result_) {
+      int pos_ = current_position_(builder_);
+      if (!port_instance_identifier_1_0(builder_, level_ + 1)) break;
+      if (!empty_element_parsed_guard_(builder_, "port_instance_identifier_1", pos_)) break;
+    }
+    exit_section_(builder_, marker_, null, result_);
+    return result_;
+  }
+
+  // DOT IDENTIFIER
+  private static boolean port_instance_identifier_1_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "port_instance_identifier_1_0")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeTokens(builder_, 0, DOT, IDENTIFIER);
     exit_section_(builder_, marker_, null, result_);
     return result_;
   }
@@ -1268,11 +1884,13 @@ public class FPPParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // port_instance_specifier
+  //                         | interface_import_specifier
   public static boolean port_interface_member(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "port_interface_member")) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_, level_, _NONE_, PORT_INTERFACE_MEMBER, "<port interface member>");
     result_ = port_instance_specifier(builder_, level_ + 1);
+    if (!result_) result_ = interface_import_specifier(builder_, level_ + 1);
     exit_section_(builder_, level_, marker_, result_, false, null);
     return result_;
   }
@@ -1319,6 +1937,32 @@ public class FPPParser implements PsiParser, LightPsiParser {
     boolean result_;
     result_ = consumeToken(builder_, SEMICOLON);
     if (!result_) result_ = consumeToken(builder_, END_OF_LINE);
+    return result_;
+  }
+
+  /* ********************************************************** */
+  // LOCATE PORT qualified_identifier AT STRING_LITERAL
+  public static boolean port_location_specifier(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "port_location_specifier")) return false;
+    if (!nextTokenIs(builder_, LOCATE)) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeTokens(builder_, 0, LOCATE, PORT);
+    result_ = result_ && qualified_identifier(builder_, level_ + 1);
+    result_ = result_ && consumeTokens(builder_, 0, AT, STRING_LITERAL);
+    exit_section_(builder_, marker_, PORT_LOCATION_SPECIFIER, result_);
+    return result_;
+  }
+
+  /* ********************************************************** */
+  // MATCH IDENTIFIER WITH IDENTIFIER
+  public static boolean port_matching_specifier(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "port_matching_specifier")) return false;
+    if (!nextTokenIs(builder_, MATCH)) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeTokens(builder_, 0, MATCH, IDENTIFIER, WITH, IDENTIFIER);
+    exit_section_(builder_, marker_, PORT_MATCHING_SPECIFIER, result_);
     return result_;
   }
 
@@ -1401,6 +2045,46 @@ public class FPPParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // PRODUCT RECORD IDENTIFIER COLON type_name [ ARRAY ] [ ID expression ]
+  public static boolean record_specifier(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "record_specifier")) return false;
+    if (!nextTokenIs(builder_, PRODUCT)) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeTokens(builder_, 0, PRODUCT, RECORD, IDENTIFIER, COLON);
+    result_ = result_ && type_name(builder_, level_ + 1);
+    result_ = result_ && record_specifier_5(builder_, level_ + 1);
+    result_ = result_ && record_specifier_6(builder_, level_ + 1);
+    exit_section_(builder_, marker_, RECORD_SPECIFIER, result_);
+    return result_;
+  }
+
+  // [ ARRAY ]
+  private static boolean record_specifier_5(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "record_specifier_5")) return false;
+    consumeToken(builder_, ARRAY);
+    return true;
+  }
+
+  // [ ID expression ]
+  private static boolean record_specifier_6(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "record_specifier_6")) return false;
+    record_specifier_6_0(builder_, level_ + 1);
+    return true;
+  }
+
+  // ID expression
+  private static boolean record_specifier_6_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "record_specifier_6_0")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeToken(builder_, ID);
+    result_ = result_ && expression(builder_, level_ + 1);
+    exit_section_(builder_, marker_, null, result_);
+    return result_;
+  }
+
+  /* ********************************************************** */
   // ASYNC | GUARDED | SYNC
   public static boolean special_port_input_kind(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "special_port_input_kind")) return false;
@@ -1445,6 +2129,60 @@ public class FPPParser implements PsiParser, LightPsiParser {
     if (!result_) result_ = parseTokens(builder_, 0, TEXT, EVENT);
     if (!result_) result_ = parseTokens(builder_, 0, TIME, GET);
     exit_section_(builder_, level_, marker_, result_, false, null);
+    return result_;
+  }
+
+  /* ********************************************************** */
+  // STATE MACHINE INSTANCE IDENTIFIER COLON qualified_identifier [ PRIORITY expression ] [ queue_full_behavior ]
+  public static boolean state_machine_instance_specifier(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "state_machine_instance_specifier")) return false;
+    if (!nextTokenIs(builder_, STATE)) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeTokens(builder_, 0, STATE, MACHINE, INSTANCE, IDENTIFIER, COLON);
+    result_ = result_ && qualified_identifier(builder_, level_ + 1);
+    result_ = result_ && state_machine_instance_specifier_6(builder_, level_ + 1);
+    result_ = result_ && state_machine_instance_specifier_7(builder_, level_ + 1);
+    exit_section_(builder_, marker_, STATE_MACHINE_INSTANCE_SPECIFIER, result_);
+    return result_;
+  }
+
+  // [ PRIORITY expression ]
+  private static boolean state_machine_instance_specifier_6(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "state_machine_instance_specifier_6")) return false;
+    state_machine_instance_specifier_6_0(builder_, level_ + 1);
+    return true;
+  }
+
+  // PRIORITY expression
+  private static boolean state_machine_instance_specifier_6_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "state_machine_instance_specifier_6_0")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeToken(builder_, PRIORITY);
+    result_ = result_ && expression(builder_, level_ + 1);
+    exit_section_(builder_, marker_, null, result_);
+    return result_;
+  }
+
+  // [ queue_full_behavior ]
+  private static boolean state_machine_instance_specifier_7(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "state_machine_instance_specifier_7")) return false;
+    queue_full_behavior(builder_, level_ + 1);
+    return true;
+  }
+
+  /* ********************************************************** */
+  // LOCATE STATE MACHINE qualified_identifier AT STRING_LITERAL
+  public static boolean state_machine_location_specifier(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "state_machine_location_specifier")) return false;
+    if (!nextTokenIs(builder_, LOCATE)) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeTokens(builder_, 0, LOCATE, STATE, MACHINE);
+    result_ = result_ && qualified_identifier(builder_, level_ + 1);
+    result_ = result_ && consumeTokens(builder_, 0, AT, STRING_LITERAL);
+    exit_section_(builder_, marker_, STATE_MACHINE_LOCATION_SPECIFIER, result_);
     return result_;
   }
 
@@ -1592,6 +2330,89 @@ public class FPPParser implements PsiParser, LightPsiParser {
   // COMMA | END_OF_LINE
   private static boolean struct_type_member_sequence_0_1_0(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "struct_type_member_sequence_0_1_0")) return false;
+    boolean result_;
+    result_ = consumeToken(builder_, COMMA);
+    if (!result_) result_ = consumeToken(builder_, END_OF_LINE);
+    return result_;
+  }
+
+  /* ********************************************************** */
+  // IDENTIFIER (DOT IDENTIFIER)+
+  public static boolean telemetry_channel_identifier(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "telemetry_channel_identifier")) return false;
+    if (!nextTokenIs(builder_, IDENTIFIER)) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeToken(builder_, IDENTIFIER);
+    result_ = result_ && telemetry_channel_identifier_1(builder_, level_ + 1);
+    exit_section_(builder_, marker_, TELEMETRY_CHANNEL_IDENTIFIER, result_);
+    return result_;
+  }
+
+  // (DOT IDENTIFIER)+
+  private static boolean telemetry_channel_identifier_1(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "telemetry_channel_identifier_1")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = telemetry_channel_identifier_1_0(builder_, level_ + 1);
+    while (result_) {
+      int pos_ = current_position_(builder_);
+      if (!telemetry_channel_identifier_1_0(builder_, level_ + 1)) break;
+      if (!empty_element_parsed_guard_(builder_, "telemetry_channel_identifier_1", pos_)) break;
+    }
+    exit_section_(builder_, marker_, null, result_);
+    return result_;
+  }
+
+  // DOT IDENTIFIER
+  private static boolean telemetry_channel_identifier_1_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "telemetry_channel_identifier_1_0")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeTokens(builder_, 0, DOT, IDENTIFIER);
+    exit_section_(builder_, marker_, null, result_);
+    return result_;
+  }
+
+  /* ********************************************************** */
+  // (telemetry_channel_identifier (COMMA | END_OF_LINE)*)*
+  public static boolean telemetry_channel_identifier_sequence(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "telemetry_channel_identifier_sequence")) return false;
+    Marker marker_ = enter_section_(builder_, level_, _NONE_, TELEMETRY_CHANNEL_IDENTIFIER_SEQUENCE, "<telemetry channel identifier sequence>");
+    while (true) {
+      int pos_ = current_position_(builder_);
+      if (!telemetry_channel_identifier_sequence_0(builder_, level_ + 1)) break;
+      if (!empty_element_parsed_guard_(builder_, "telemetry_channel_identifier_sequence", pos_)) break;
+    }
+    exit_section_(builder_, level_, marker_, true, false, null);
+    return true;
+  }
+
+  // telemetry_channel_identifier (COMMA | END_OF_LINE)*
+  private static boolean telemetry_channel_identifier_sequence_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "telemetry_channel_identifier_sequence_0")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = telemetry_channel_identifier(builder_, level_ + 1);
+    result_ = result_ && telemetry_channel_identifier_sequence_0_1(builder_, level_ + 1);
+    exit_section_(builder_, marker_, null, result_);
+    return result_;
+  }
+
+  // (COMMA | END_OF_LINE)*
+  private static boolean telemetry_channel_identifier_sequence_0_1(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "telemetry_channel_identifier_sequence_0_1")) return false;
+    while (true) {
+      int pos_ = current_position_(builder_);
+      if (!telemetry_channel_identifier_sequence_0_1_0(builder_, level_ + 1)) break;
+      if (!empty_element_parsed_guard_(builder_, "telemetry_channel_identifier_sequence_0_1", pos_)) break;
+    }
+    return true;
+  }
+
+  // COMMA | END_OF_LINE
+  private static boolean telemetry_channel_identifier_sequence_0_1_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "telemetry_channel_identifier_sequence_0_1_0")) return false;
     boolean result_;
     result_ = consumeToken(builder_, COMMA);
     if (!result_) result_ = consumeToken(builder_, END_OF_LINE);
@@ -1791,6 +2612,194 @@ public class FPPParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // include_specifier
+  //                                 | telemetry_packet_specifier
+  public static boolean telemetry_packet_group_member(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "telemetry_packet_group_member")) return false;
+    if (!nextTokenIs(builder_, "<telemetry packet group member>", INCLUDE, PACKET)) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_, level_, _NONE_, TELEMETRY_PACKET_GROUP_MEMBER, "<telemetry packet group member>");
+    result_ = include_specifier(builder_, level_ + 1);
+    if (!result_) result_ = telemetry_packet_specifier(builder_, level_ + 1);
+    exit_section_(builder_, level_, marker_, result_, false, null);
+    return result_;
+  }
+
+  /* ********************************************************** */
+  // (telemetry_packet_group_member (COMMA | END_OF_LINE)*)*
+  public static boolean telemetry_packet_group_member_sequence(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "telemetry_packet_group_member_sequence")) return false;
+    Marker marker_ = enter_section_(builder_, level_, _NONE_, TELEMETRY_PACKET_GROUP_MEMBER_SEQUENCE, "<telemetry packet group member sequence>");
+    while (true) {
+      int pos_ = current_position_(builder_);
+      if (!telemetry_packet_group_member_sequence_0(builder_, level_ + 1)) break;
+      if (!empty_element_parsed_guard_(builder_, "telemetry_packet_group_member_sequence", pos_)) break;
+    }
+    exit_section_(builder_, level_, marker_, true, false, null);
+    return true;
+  }
+
+  // telemetry_packet_group_member (COMMA | END_OF_LINE)*
+  private static boolean telemetry_packet_group_member_sequence_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "telemetry_packet_group_member_sequence_0")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = telemetry_packet_group_member(builder_, level_ + 1);
+    result_ = result_ && telemetry_packet_group_member_sequence_0_1(builder_, level_ + 1);
+    exit_section_(builder_, marker_, null, result_);
+    return result_;
+  }
+
+  // (COMMA | END_OF_LINE)*
+  private static boolean telemetry_packet_group_member_sequence_0_1(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "telemetry_packet_group_member_sequence_0_1")) return false;
+    while (true) {
+      int pos_ = current_position_(builder_);
+      if (!telemetry_packet_group_member_sequence_0_1_0(builder_, level_ + 1)) break;
+      if (!empty_element_parsed_guard_(builder_, "telemetry_packet_group_member_sequence_0_1", pos_)) break;
+    }
+    return true;
+  }
+
+  // COMMA | END_OF_LINE
+  private static boolean telemetry_packet_group_member_sequence_0_1_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "telemetry_packet_group_member_sequence_0_1_0")) return false;
+    boolean result_;
+    result_ = consumeToken(builder_, COMMA);
+    if (!result_) result_ = consumeToken(builder_, END_OF_LINE);
+    return result_;
+  }
+
+  /* ********************************************************** */
+  // non_annotatable_include_specifier
+  //                             | telemetry_channel_identifier
+  public static boolean telemetry_packet_member(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "telemetry_packet_member")) return false;
+    if (!nextTokenIs(builder_, "<telemetry packet member>", IDENTIFIER, INCLUDE)) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_, level_, _NONE_, TELEMETRY_PACKET_MEMBER, "<telemetry packet member>");
+    result_ = non_annotatable_include_specifier(builder_, level_ + 1);
+    if (!result_) result_ = telemetry_channel_identifier(builder_, level_ + 1);
+    exit_section_(builder_, level_, marker_, result_, false, null);
+    return result_;
+  }
+
+  /* ********************************************************** */
+  // (telemetry_packet_member (COMMA | END_OF_LINE)*)*
+  public static boolean telemetry_packet_member_sequence(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "telemetry_packet_member_sequence")) return false;
+    Marker marker_ = enter_section_(builder_, level_, _NONE_, TELEMETRY_PACKET_MEMBER_SEQUENCE, "<telemetry packet member sequence>");
+    while (true) {
+      int pos_ = current_position_(builder_);
+      if (!telemetry_packet_member_sequence_0(builder_, level_ + 1)) break;
+      if (!empty_element_parsed_guard_(builder_, "telemetry_packet_member_sequence", pos_)) break;
+    }
+    exit_section_(builder_, level_, marker_, true, false, null);
+    return true;
+  }
+
+  // telemetry_packet_member (COMMA | END_OF_LINE)*
+  private static boolean telemetry_packet_member_sequence_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "telemetry_packet_member_sequence_0")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = telemetry_packet_member(builder_, level_ + 1);
+    result_ = result_ && telemetry_packet_member_sequence_0_1(builder_, level_ + 1);
+    exit_section_(builder_, marker_, null, result_);
+    return result_;
+  }
+
+  // (COMMA | END_OF_LINE)*
+  private static boolean telemetry_packet_member_sequence_0_1(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "telemetry_packet_member_sequence_0_1")) return false;
+    while (true) {
+      int pos_ = current_position_(builder_);
+      if (!telemetry_packet_member_sequence_0_1_0(builder_, level_ + 1)) break;
+      if (!empty_element_parsed_guard_(builder_, "telemetry_packet_member_sequence_0_1", pos_)) break;
+    }
+    return true;
+  }
+
+  // COMMA | END_OF_LINE
+  private static boolean telemetry_packet_member_sequence_0_1_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "telemetry_packet_member_sequence_0_1_0")) return false;
+    boolean result_;
+    result_ = consumeToken(builder_, COMMA);
+    if (!result_) result_ = consumeToken(builder_, END_OF_LINE);
+    return result_;
+  }
+
+  /* ********************************************************** */
+  // TELEMETRY PACKETS IDENTIFIER LEFT_BRACE telemetry_packet_group_member_sequence RIGHT_BRACE [ OMIT LEFT_BRACE telemetry_channel_identifier_sequence RIGHT_BRACE ]
+  public static boolean telemetry_packet_set_specifier(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "telemetry_packet_set_specifier")) return false;
+    if (!nextTokenIs(builder_, TELEMETRY)) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeTokens(builder_, 0, TELEMETRY, PACKETS, IDENTIFIER, LEFT_BRACE);
+    result_ = result_ && telemetry_packet_group_member_sequence(builder_, level_ + 1);
+    result_ = result_ && consumeToken(builder_, RIGHT_BRACE);
+    result_ = result_ && telemetry_packet_set_specifier_6(builder_, level_ + 1);
+    exit_section_(builder_, marker_, TELEMETRY_PACKET_SET_SPECIFIER, result_);
+    return result_;
+  }
+
+  // [ OMIT LEFT_BRACE telemetry_channel_identifier_sequence RIGHT_BRACE ]
+  private static boolean telemetry_packet_set_specifier_6(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "telemetry_packet_set_specifier_6")) return false;
+    telemetry_packet_set_specifier_6_0(builder_, level_ + 1);
+    return true;
+  }
+
+  // OMIT LEFT_BRACE telemetry_channel_identifier_sequence RIGHT_BRACE
+  private static boolean telemetry_packet_set_specifier_6_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "telemetry_packet_set_specifier_6_0")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeTokens(builder_, 0, OMIT, LEFT_BRACE);
+    result_ = result_ && telemetry_channel_identifier_sequence(builder_, level_ + 1);
+    result_ = result_ && consumeToken(builder_, RIGHT_BRACE);
+    exit_section_(builder_, marker_, null, result_);
+    return result_;
+  }
+
+  /* ********************************************************** */
+  // PACKET IDENTIFIER [ ID expression ] GROUP expression LEFT_BRACE telemetry_packet_member_sequence RIGHT_BRACE
+  public static boolean telemetry_packet_specifier(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "telemetry_packet_specifier")) return false;
+    if (!nextTokenIs(builder_, PACKET)) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeTokens(builder_, 0, PACKET, IDENTIFIER);
+    result_ = result_ && telemetry_packet_specifier_2(builder_, level_ + 1);
+    result_ = result_ && consumeToken(builder_, GROUP);
+    result_ = result_ && expression(builder_, level_ + 1);
+    result_ = result_ && consumeToken(builder_, LEFT_BRACE);
+    result_ = result_ && telemetry_packet_member_sequence(builder_, level_ + 1);
+    result_ = result_ && consumeToken(builder_, RIGHT_BRACE);
+    exit_section_(builder_, marker_, TELEMETRY_PACKET_SPECIFIER, result_);
+    return result_;
+  }
+
+  // [ ID expression ]
+  private static boolean telemetry_packet_specifier_2(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "telemetry_packet_specifier_2")) return false;
+    telemetry_packet_specifier_2_0(builder_, level_ + 1);
+    return true;
+  }
+
+  // ID expression
+  private static boolean telemetry_packet_specifier_2_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "telemetry_packet_specifier_2_0")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeToken(builder_, ID);
+    result_ = result_ && expression(builder_, level_ + 1);
+    exit_section_(builder_, marker_, null, result_);
+    return result_;
+  }
+
+  /* ********************************************************** */
   // ALWAYS | ON CHANGE
   public static boolean telemetry_update(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "telemetry_update")) return false;
@@ -1818,14 +2827,48 @@ public class FPPParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // component_instance_definition
-  public static boolean topology_member(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "topology_member")) return false;
-    if (!nextTokenIs(builder_, INSTANCE)) return false;
+  // IMPORT qualified_identifier
+  public static boolean topology_import_specifier(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "topology_import_specifier")) return false;
+    if (!nextTokenIs(builder_, IMPORT)) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_);
-    result_ = component_instance_definition(builder_, level_ + 1);
-    exit_section_(builder_, marker_, TOPOLOGY_MEMBER, result_);
+    result_ = consumeToken(builder_, IMPORT);
+    result_ = result_ && qualified_identifier(builder_, level_ + 1);
+    exit_section_(builder_, marker_, TOPOLOGY_IMPORT_SPECIFIER, result_);
+    return result_;
+  }
+
+  /* ********************************************************** */
+  // LOCATE TOPOLOGY qualified_identifier AT STRING_LITERAL
+  public static boolean topology_location_specifier(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "topology_location_specifier")) return false;
+    if (!nextTokenIs(builder_, LOCATE)) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeTokens(builder_, 0, LOCATE, TOPOLOGY);
+    result_ = result_ && qualified_identifier(builder_, level_ + 1);
+    result_ = result_ && consumeTokens(builder_, 0, AT, STRING_LITERAL);
+    exit_section_(builder_, marker_, TOPOLOGY_LOCATION_SPECIFIER, result_);
+    return result_;
+  }
+
+  /* ********************************************************** */
+  // component_instance_specifier
+  //                     | connection_graph_specifier
+  //                     | telemetry_packet_set_specifier
+  //                     | topology_import_specifier
+  //                     | include_specifier
+  public static boolean topology_member(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "topology_member")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_, level_, _NONE_, TOPOLOGY_MEMBER, "<topology member>");
+    result_ = component_instance_specifier(builder_, level_ + 1);
+    if (!result_) result_ = connection_graph_specifier(builder_, level_ + 1);
+    if (!result_) result_ = telemetry_packet_set_specifier(builder_, level_ + 1);
+    if (!result_) result_ = topology_import_specifier(builder_, level_ + 1);
+    if (!result_) result_ = include_specifier(builder_, level_ + 1);
+    exit_section_(builder_, level_, marker_, result_, false, null);
     return result_;
   }
 
@@ -1927,6 +2970,20 @@ public class FPPParser implements PsiParser, LightPsiParser {
     Marker marker_ = enter_section_(builder_, level_, _NONE_, TRANSLATION_UNIT_MEMBER, "<translation unit member>");
     result_ = module_member(builder_, level_ + 1);
     exit_section_(builder_, level_, marker_, result_, false, null);
+    return result_;
+  }
+
+  /* ********************************************************** */
+  // LOCATE TYPE qualified_identifier AT STRING_LITERAL
+  public static boolean type_location_specifier(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "type_location_specifier")) return false;
+    if (!nextTokenIs(builder_, LOCATE)) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeTokens(builder_, 0, LOCATE, TYPE);
+    result_ = result_ && qualified_identifier(builder_, level_ + 1);
+    result_ = result_ && consumeTokens(builder_, 0, AT, STRING_LITERAL);
+    exit_section_(builder_, marker_, TYPE_LOCATION_SPECIFIER, result_);
     return result_;
   }
 

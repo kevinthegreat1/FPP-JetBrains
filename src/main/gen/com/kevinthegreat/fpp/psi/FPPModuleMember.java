@@ -29,6 +29,12 @@ public interface FPPModuleMember extends PsiElement {
   FPPEnumDefinition getEnumDefinition();
 
   @Nullable
+  FPPIncludeSpecifier getIncludeSpecifier();
+
+  @Nullable
+  FPPLocationSpecifier getLocationSpecifier();
+
+  @Nullable
   FPPModuleDefinition getModuleDefinition();
 
   @Nullable

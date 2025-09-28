@@ -11,14 +11,14 @@ import static com.kevinthegreat.fpp.psi.FPPTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.kevinthegreat.fpp.psi.*;
 
-public class FPPPortInterfaceMemberImpl extends ASTWrapperPsiElement implements FPPPortInterfaceMember {
+public class FPPDirectGraphSpecifierImpl extends ASTWrapperPsiElement implements FPPDirectGraphSpecifier {
 
-  public FPPPortInterfaceMemberImpl(@NotNull ASTNode node) {
+  public FPPDirectGraphSpecifierImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull FPPVisitor visitor) {
-    visitor.visitPortInterfaceMember(this);
+    visitor.visitDirectGraphSpecifier(this);
   }
 
   @Override
@@ -28,15 +28,15 @@ public class FPPPortInterfaceMemberImpl extends ASTWrapperPsiElement implements 
   }
 
   @Override
-  @Nullable
-  public FPPInterfaceImportSpecifier getInterfaceImportSpecifier() {
-    return findChildByClass(FPPInterfaceImportSpecifier.class);
+  @NotNull
+  public FPPConnectionSequence getConnectionSequence() {
+    return findNotNullChildByClass(FPPConnectionSequence.class);
   }
 
   @Override
-  @Nullable
-  public FPPPortInstanceSpecifier getPortInstanceSpecifier() {
-    return findChildByClass(FPPPortInstanceSpecifier.class);
+  @NotNull
+  public PsiElement getIdentifier() {
+    return findNotNullChildByType(IDENTIFIER);
   }
 
 }

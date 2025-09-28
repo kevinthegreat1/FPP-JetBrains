@@ -5,12 +5,12 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface FPPPortInterfaceMember extends PsiElement {
+public interface FPPConnectionGraphSpecifier extends PsiElement {
 
   @Nullable
-  FPPInterfaceImportSpecifier getInterfaceImportSpecifier();
+  FPPDirectGraphSpecifier getDirectGraphSpecifier();
 
   @Nullable
-  FPPPortInstanceSpecifier getPortInstanceSpecifier();
+  FPPPatternGraphSpecifier getPatternGraphSpecifier();
 
 }

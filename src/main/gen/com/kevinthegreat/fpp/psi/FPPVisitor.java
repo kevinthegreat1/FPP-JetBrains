@@ -51,7 +51,19 @@ public class FPPVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitComponentInstanceLocationSpecifier(@NotNull FPPComponentInstanceLocationSpecifier o) {
+    visitPsiElement(o);
+  }
+
+  public void visitComponentInstanceSpecifier(@NotNull FPPComponentInstanceSpecifier o) {
+    visitPsiElement(o);
+  }
+
   public void visitComponentKind(@NotNull FPPComponentKind o) {
+    visitPsiElement(o);
+  }
+
+  public void visitComponentLocationSpecifier(@NotNull FPPComponentLocationSpecifier o) {
     visitPsiElement(o);
   }
 
@@ -63,7 +75,31 @@ public class FPPVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitConnection(@NotNull FPPConnection o) {
+    visitPsiElement(o);
+  }
+
+  public void visitConnectionGraphSpecifier(@NotNull FPPConnectionGraphSpecifier o) {
+    visitPsiElement(o);
+  }
+
+  public void visitConnectionSequence(@NotNull FPPConnectionSequence o) {
+    visitPsiElement(o);
+  }
+
   public void visitConstantDefinition(@NotNull FPPConstantDefinition o) {
+    visitPsiElement(o);
+  }
+
+  public void visitConstantLocationSpecifier(@NotNull FPPConstantLocationSpecifier o) {
+    visitPsiElement(o);
+  }
+
+  public void visitContainerSpecifier(@NotNull FPPContainerSpecifier o) {
+    visitPsiElement(o);
+  }
+
+  public void visitDirectGraphSpecifier(@NotNull FPPDirectGraphSpecifier o) {
     visitPsiElement(o);
   }
 
@@ -103,11 +139,31 @@ public class FPPVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitIncludeSpecifier(@NotNull FPPIncludeSpecifier o) {
+    visitPsiElement(o);
+  }
+
   public void visitInitSpecifier(@NotNull FPPInitSpecifier o) {
     visitPsiElement(o);
   }
 
   public void visitInitSpecifierSequence(@NotNull FPPInitSpecifierSequence o) {
+    visitPsiElement(o);
+  }
+
+  public void visitInstanceSequence(@NotNull FPPInstanceSequence o) {
+    visitPsiElement(o);
+  }
+
+  public void visitInterfaceImportSpecifier(@NotNull FPPInterfaceImportSpecifier o) {
+    visitPsiElement(o);
+  }
+
+  public void visitInternalPortSpecifier(@NotNull FPPInternalPortSpecifier o) {
+    visitPsiElement(o);
+  }
+
+  public void visitLocationSpecifier(@NotNull FPPLocationSpecifier o) {
     visitPsiElement(o);
   }
 
@@ -123,11 +179,31 @@ public class FPPVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitNonAnnotatableIncludeSpecifier(@NotNull FPPNonAnnotatableIncludeSpecifier o) {
+    visitPsiElement(o);
+  }
+
   public void visitParamList(@NotNull FPPParamList o) {
     visitPsiElement(o);
   }
 
+  public void visitParameterSpecifier(@NotNull FPPParameterSpecifier o) {
+    visitPsiElement(o);
+  }
+
+  public void visitPatternGraphSpecifier(@NotNull FPPPatternGraphSpecifier o) {
+    visitPsiElement(o);
+  }
+
+  public void visitPatternKind(@NotNull FPPPatternKind o) {
+    visitPsiElement(o);
+  }
+
   public void visitPortDefinition(@NotNull FPPPortDefinition o) {
+    visitPsiElement(o);
+  }
+
+  public void visitPortInstanceIdentifier(@NotNull FPPPortInstanceIdentifier o) {
     visitPsiElement(o);
   }
 
@@ -151,6 +227,14 @@ public class FPPVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitPortLocationSpecifier(@NotNull FPPPortLocationSpecifier o) {
+    visitPsiElement(o);
+  }
+
+  public void visitPortMatchingSpecifier(@NotNull FPPPortMatchingSpecifier o) {
+    visitPsiElement(o);
+  }
+
   public void visitPrimitiveIntegerTypeName(@NotNull FPPPrimitiveIntegerTypeName o) {
     visitPsiElement(o);
   }
@@ -167,11 +251,23 @@ public class FPPVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitRecordSpecifier(@NotNull FPPRecordSpecifier o) {
+    visitPsiElement(o);
+  }
+
   public void visitSpecialPortInputKind(@NotNull FPPSpecialPortInputKind o) {
     visitPsiElement(o);
   }
 
   public void visitSpecialPortKind(@NotNull FPPSpecialPortKind o) {
+    visitPsiElement(o);
+  }
+
+  public void visitStateMachineInstanceSpecifier(@NotNull FPPStateMachineInstanceSpecifier o) {
+    visitPsiElement(o);
+  }
+
+  public void visitStateMachineLocationSpecifier(@NotNull FPPStateMachineLocationSpecifier o) {
     visitPsiElement(o);
   }
 
@@ -191,6 +287,14 @@ public class FPPVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitTelemetryChannelIdentifier(@NotNull FPPTelemetryChannelIdentifier o) {
+    visitPsiElement(o);
+  }
+
+  public void visitTelemetryChannelIdentifierSequence(@NotNull FPPTelemetryChannelIdentifierSequence o) {
+    visitPsiElement(o);
+  }
+
   public void visitTelemetryChannelSpecifier(@NotNull FPPTelemetryChannelSpecifier o) {
     visitPsiElement(o);
   }
@@ -203,11 +307,43 @@ public class FPPVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitTelemetryPacketGroupMember(@NotNull FPPTelemetryPacketGroupMember o) {
+    visitPsiElement(o);
+  }
+
+  public void visitTelemetryPacketGroupMemberSequence(@NotNull FPPTelemetryPacketGroupMemberSequence o) {
+    visitPsiElement(o);
+  }
+
+  public void visitTelemetryPacketMember(@NotNull FPPTelemetryPacketMember o) {
+    visitPsiElement(o);
+  }
+
+  public void visitTelemetryPacketMemberSequence(@NotNull FPPTelemetryPacketMemberSequence o) {
+    visitPsiElement(o);
+  }
+
+  public void visitTelemetryPacketSetSpecifier(@NotNull FPPTelemetryPacketSetSpecifier o) {
+    visitPsiElement(o);
+  }
+
+  public void visitTelemetryPacketSpecifier(@NotNull FPPTelemetryPacketSpecifier o) {
+    visitPsiElement(o);
+  }
+
   public void visitTelemetryUpdate(@NotNull FPPTelemetryUpdate o) {
     visitPsiElement(o);
   }
 
   public void visitTopologyDefinition(@NotNull FPPTopologyDefinition o) {
+    visitPsiElement(o);
+  }
+
+  public void visitTopologyImportSpecifier(@NotNull FPPTopologyImportSpecifier o) {
+    visitPsiElement(o);
+  }
+
+  public void visitTopologyLocationSpecifier(@NotNull FPPTopologyLocationSpecifier o) {
     visitPsiElement(o);
   }
 
@@ -224,6 +360,10 @@ public class FPPVisitor extends PsiElementVisitor {
   }
 
   public void visitTranslationUnitMember(@NotNull FPPTranslationUnitMember o) {
+    visitPsiElement(o);
+  }
+
+  public void visitTypeLocationSpecifier(@NotNull FPPTypeLocationSpecifier o) {
     visitPsiElement(o);
   }
 

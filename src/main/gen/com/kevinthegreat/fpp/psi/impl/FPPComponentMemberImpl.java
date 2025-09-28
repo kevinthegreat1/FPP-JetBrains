@@ -59,6 +59,12 @@ public class FPPComponentMemberImpl extends ASTWrapperPsiElement implements FPPC
 
   @Override
   @Nullable
+  public FPPContainerSpecifier getContainerSpecifier() {
+    return findChildByClass(FPPContainerSpecifier.class);
+  }
+
+  @Override
+  @Nullable
   public FPPEnumDefinition getEnumDefinition() {
     return findChildByClass(FPPEnumDefinition.class);
   }
@@ -71,8 +77,44 @@ public class FPPComponentMemberImpl extends ASTWrapperPsiElement implements FPPC
 
   @Override
   @Nullable
+  public FPPIncludeSpecifier getIncludeSpecifier() {
+    return findChildByClass(FPPIncludeSpecifier.class);
+  }
+
+  @Override
+  @Nullable
+  public FPPInterfaceImportSpecifier getInterfaceImportSpecifier() {
+    return findChildByClass(FPPInterfaceImportSpecifier.class);
+  }
+
+  @Override
+  @Nullable
+  public FPPInternalPortSpecifier getInternalPortSpecifier() {
+    return findChildByClass(FPPInternalPortSpecifier.class);
+  }
+
+  @Override
+  @Nullable
+  public FPPParameterSpecifier getParameterSpecifier() {
+    return findChildByClass(FPPParameterSpecifier.class);
+  }
+
+  @Override
+  @Nullable
   public FPPPortInstanceSpecifier getPortInstanceSpecifier() {
     return findChildByClass(FPPPortInstanceSpecifier.class);
+  }
+
+  @Override
+  @Nullable
+  public FPPRecordSpecifier getRecordSpecifier() {
+    return findChildByClass(FPPRecordSpecifier.class);
+  }
+
+  @Override
+  @Nullable
+  public FPPStateMachineInstanceSpecifier getStateMachineInstanceSpecifier() {
+    return findChildByClass(FPPStateMachineInstanceSpecifier.class);
   }
 
   @Override

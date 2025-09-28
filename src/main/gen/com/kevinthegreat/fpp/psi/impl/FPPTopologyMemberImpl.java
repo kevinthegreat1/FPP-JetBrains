@@ -28,9 +28,33 @@ public class FPPTopologyMemberImpl extends ASTWrapperPsiElement implements FPPTo
   }
 
   @Override
-  @NotNull
-  public FPPComponentInstanceDefinition getComponentInstanceDefinition() {
-    return findNotNullChildByClass(FPPComponentInstanceDefinition.class);
+  @Nullable
+  public FPPComponentInstanceSpecifier getComponentInstanceSpecifier() {
+    return findChildByClass(FPPComponentInstanceSpecifier.class);
+  }
+
+  @Override
+  @Nullable
+  public FPPConnectionGraphSpecifier getConnectionGraphSpecifier() {
+    return findChildByClass(FPPConnectionGraphSpecifier.class);
+  }
+
+  @Override
+  @Nullable
+  public FPPIncludeSpecifier getIncludeSpecifier() {
+    return findChildByClass(FPPIncludeSpecifier.class);
+  }
+
+  @Override
+  @Nullable
+  public FPPTelemetryPacketSetSpecifier getTelemetryPacketSetSpecifier() {
+    return findChildByClass(FPPTelemetryPacketSetSpecifier.class);
+  }
+
+  @Override
+  @Nullable
+  public FPPTopologyImportSpecifier getTopologyImportSpecifier() {
+    return findChildByClass(FPPTopologyImportSpecifier.class);
   }
 
 }

@@ -71,6 +71,18 @@ public class FPPModuleMemberImpl extends ASTWrapperPsiElement implements FPPModu
 
   @Override
   @Nullable
+  public FPPIncludeSpecifier getIncludeSpecifier() {
+    return findChildByClass(FPPIncludeSpecifier.class);
+  }
+
+  @Override
+  @Nullable
+  public FPPLocationSpecifier getLocationSpecifier() {
+    return findChildByClass(FPPLocationSpecifier.class);
+  }
+
+  @Override
+  @Nullable
   public FPPModuleDefinition getModuleDefinition() {
     return findChildByClass(FPPModuleDefinition.class);
   }
