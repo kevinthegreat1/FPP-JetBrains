@@ -166,50 +166,90 @@
 // 14.1. Translation Units
 fpp_file ::= translation_unit
 
+// 5.1. Abstract Type Definitions
+abstract_type_definition ::= TYPE IDENTIFIER
+// 5.2. Alias Type Definitions
+alias_type_definition ::= TYPE IDENTIFIER ASSIGN type_name
+// 5.3. Array Definitions
+array_definition ::= ARRAY IDENTIFIER ASSIGN LEFT_BRACKET expression RIGHT_BRACKET type_name [ DEFAULT expression ] [ FORMAT STRING_LITERAL ]
 // 5.4. Component Definitions
 component_definition ::= component_kind COMPONENT IDENTIFIER LEFT_BRACE component_member_sequence RIGHT_BRACE
 component_kind ::= ACTIVE | PASSIVE | QUEUED
 component_member_sequence ::= (component_member (SEMICOLON | END_OF_LINE)*)*
-component_member ::= command_specifier
-//component_member ::= constant_definition
+component_member ::= constant_definition
 //                  | state_machine_definition
-//                  | struct_definition
-//                  | command_specifier
+                  | struct_definition
+                  | command_specifier
 //                  | container_specifier
 //                  | parameter_specifier
                   | port_instance_specifier
 //                  | record_specifier
 //                  | state_machine_instance_specifier
                   | telemetry_channel_specifier
-//                  | abstract_type_definition
-//                  | alias_type_definition
-//                  | array_definition
-//                  | enum_definition
+                  | abstract_type_definition
+                  | alias_type_definition
+                  | array_definition
+                  | enum_definition
                   | event_specifier
 //                  | include_specifier
 //                  | internal_port_specifier
 //                  | interface_import_specifier
-
+// 5.5. Component Instance Definitions
+component_instance_definition ::= INSTANCE IDENTIFIER COLON qualified_identifier BASE ID expression [ TYPE STRING_LITERAL ] [ AT STRING_LITERAL ] [ QUEUE SIZE expression ] [ STACK SIZE expression ] [ PRIORITY expression ] [ CPU expression ] [ LEFT_BRACE init_specifier_sequence RIGHT_BRACE ]
+init_specifier_sequence ::= (init_specifier (SEMICOLON | END_OF_LINE)*)*
+// 5.6. Constant Definitions
+constant_definition ::= CONSTANT IDENTIFIER ASSIGN expression
+// 5.7. Enum Definitions
+enum_definition ::= ENUM IDENTIFIER [ COLON type_name ] LEFT_BRACE enum_constant_sequence RIGHT_BRACE [ DEFAULT expression ]
+enum_constant_sequence ::= (enum_constant (COMMA | END_OF_LINE)*)*
+// 5.8. Enumerated Constant Definitions
+enum_constant ::= IDENTIFIER [ ASSIGN expression ]
 // 5.9. Module Definitions
 module_definition ::= MODULE IDENTIFIER LEFT_BRACE module_member_sequence RIGHT_BRACE
 module_member_sequence ::= (module_member (SEMICOLON | END_OF_LINE)*)*
 module_member ::= component_definition
-//                 | component_instance_definition
-//                 | constant_definition
+                 | component_instance_definition
+                 | constant_definition
                  | module_definition
                  | port_definition
-//                 | port_interface_definition
+                 | port_interface_definition
 //                 | state_machine_definition
-//                 | struct_definition
-//                 | topology_definition
+                 | struct_definition
+                 | topology_definition
 //                 | location_specifier
-//                 | abstract_type_definition
-//                 | alias_type_definition
-//                 | array_definition
-//                 | enum_definition
+                 | abstract_type_definition
+                 | alias_type_definition
+                 | array_definition
+                 | enum_definition
 //                 | include_specifier
 // 5.10. Port Definitions
 port_definition ::= PORT IDENTIFIER [ LEFT_PAREN param_list RIGHT_PAREN ] [ ARROW type_name ]
+// 5.11. Port Interface Definitions
+port_interface_definition ::= INTERFACE IDENTIFIER LEFT_BRACE port_interface_member_sequence RIGHT_BRACE
+port_interface_member_sequence ::= (port_interface_member (SEMICOLON | END_OF_LINE)*)*
+port_interface_member ::= port_instance_specifier
+//                        | interface_import_specifier
+// 5.12. State Machine Definitions
+//state_machine_definition ::= STATE MACHINE IDENTIFIER [ LEFT_BRACE state_machine_member_sequence RIGHT_BRACE ]
+//state_machine_member_sequence ::= (state_machine_member (SEMICOLON | END_OF_LINE)*)*
+//state_machine_member ::= choice_definition
+//                        | guard_definition
+//                        | initial_transition_specifier
+//                        | signal_definition
+//                        | state_definition
+//                        | action_definition
+// 5.13. Struct Definitions
+struct_definition ::= STRUCT IDENTIFIER LEFT_BRACE struct_type_member_sequence RIGHT_BRACE [ DEFAULT expression ]
+struct_type_member_sequence ::= (struct_type_member (COMMA | END_OF_LINE)*)*
+struct_type_member ::= IDENTIFIER COLON [ LEFT_BRACKET expression RIGHT_BRACKET ] type_name [ FORMAT STRING_LITERAL ]
+// 5.14. Topology Definitions
+topology_definition ::= TOPOLOGY IDENTIFIER LEFT_BRACE topology_member_sequence RIGHT_BRACE
+topology_member_sequence ::= (topology_member (SEMICOLON | END_OF_LINE)*)*
+topology_member ::= component_instance_definition
+//                    | connection_graph_specifier
+//                    | telemetry_packet_set_specifier
+//                    | topology_import_specifier
+//                    | include_specifier
 
 // 7.1. Command Specifiers
 command_specifier ::= command_kind COMMAND IDENTIFIER [ LEFT_PAREN param_list RIGHT_PAREN ] [ OPCODE expression ] [ PRIORITY expression ] [ queue_full_behavior ]
@@ -223,6 +263,8 @@ event_severity ::= ACTIVITY HIGH
             | FATAL
             | WARNING HIGH
             | WARNING LOW
+// 7.7. Init Specifiers
+init_specifier ::= PHASE expression STRING_LITERAL
 // 7.12. Port Instance Specifiers
 port_instance_specifier ::= general_port_kind PORT IDENTIFIER COLON [ LEFT_BRACKET expression RIGHT_BRACKET ] port_instance_type [ PRIORITY expression ] [ queue_full_behavior ]
                             | [ special_port_input_kind ] special_port_kind PORT IDENTIFIER [ PRIORITY expression ] [ queue_full_behavior ]

@@ -29,8 +29,44 @@ public class FPPModuleMemberImpl extends ASTWrapperPsiElement implements FPPModu
 
   @Override
   @Nullable
+  public FPPAbstractTypeDefinition getAbstractTypeDefinition() {
+    return findChildByClass(FPPAbstractTypeDefinition.class);
+  }
+
+  @Override
+  @Nullable
+  public FPPAliasTypeDefinition getAliasTypeDefinition() {
+    return findChildByClass(FPPAliasTypeDefinition.class);
+  }
+
+  @Override
+  @Nullable
+  public FPPArrayDefinition getArrayDefinition() {
+    return findChildByClass(FPPArrayDefinition.class);
+  }
+
+  @Override
+  @Nullable
   public FPPComponentDefinition getComponentDefinition() {
     return findChildByClass(FPPComponentDefinition.class);
+  }
+
+  @Override
+  @Nullable
+  public FPPComponentInstanceDefinition getComponentInstanceDefinition() {
+    return findChildByClass(FPPComponentInstanceDefinition.class);
+  }
+
+  @Override
+  @Nullable
+  public FPPConstantDefinition getConstantDefinition() {
+    return findChildByClass(FPPConstantDefinition.class);
+  }
+
+  @Override
+  @Nullable
+  public FPPEnumDefinition getEnumDefinition() {
+    return findChildByClass(FPPEnumDefinition.class);
   }
 
   @Override
@@ -43,6 +79,24 @@ public class FPPModuleMemberImpl extends ASTWrapperPsiElement implements FPPModu
   @Nullable
   public FPPPortDefinition getPortDefinition() {
     return findChildByClass(FPPPortDefinition.class);
+  }
+
+  @Override
+  @Nullable
+  public FPPPortInterfaceDefinition getPortInterfaceDefinition() {
+    return findChildByClass(FPPPortInterfaceDefinition.class);
+  }
+
+  @Override
+  @Nullable
+  public FPPStructDefinition getStructDefinition() {
+    return findChildByClass(FPPStructDefinition.class);
+  }
+
+  @Override
+  @Nullable
+  public FPPTopologyDefinition getTopologyDefinition() {
+    return findChildByClass(FPPTopologyDefinition.class);
   }
 
 }

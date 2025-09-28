@@ -8,22 +8,32 @@ import com.kevinthegreat.fpp.psi.impl.*;
 
 public interface FPPTypes {
 
+  IElementType ABSTRACT_TYPE_DEFINITION = new FPPElementType("ABSTRACT_TYPE_DEFINITION");
+  IElementType ALIAS_TYPE_DEFINITION = new FPPElementType("ALIAS_TYPE_DEFINITION");
   IElementType ARITHMETIC_EXPRESSION = new FPPElementType("ARITHMETIC_EXPRESSION");
   IElementType ARITHMETIC_EXPRESSION_FACTOR = new FPPElementType("ARITHMETIC_EXPRESSION_FACTOR");
   IElementType ARITHMETIC_EXPRESSION_PRIMARY = new FPPElementType("ARITHMETIC_EXPRESSION_PRIMARY");
   IElementType ARITHMETIC_EXPRESSION_TERM = new FPPElementType("ARITHMETIC_EXPRESSION_TERM");
+  IElementType ARRAY_DEFINITION = new FPPElementType("ARRAY_DEFINITION");
   IElementType COMMAND_KIND = new FPPElementType("COMMAND_KIND");
   IElementType COMMAND_SPECIFIER = new FPPElementType("COMMAND_SPECIFIER");
   IElementType COMPONENT_DEFINITION = new FPPElementType("COMPONENT_DEFINITION");
+  IElementType COMPONENT_INSTANCE_DEFINITION = new FPPElementType("COMPONENT_INSTANCE_DEFINITION");
   IElementType COMPONENT_KIND = new FPPElementType("COMPONENT_KIND");
   IElementType COMPONENT_MEMBER = new FPPElementType("COMPONENT_MEMBER");
   IElementType COMPONENT_MEMBER_SEQUENCE = new FPPElementType("COMPONENT_MEMBER_SEQUENCE");
+  IElementType CONSTANT_DEFINITION = new FPPElementType("CONSTANT_DEFINITION");
+  IElementType ENUM_CONSTANT = new FPPElementType("ENUM_CONSTANT");
+  IElementType ENUM_CONSTANT_SEQUENCE = new FPPElementType("ENUM_CONSTANT_SEQUENCE");
+  IElementType ENUM_DEFINITION = new FPPElementType("ENUM_DEFINITION");
   IElementType EVENT_SEVERITY = new FPPElementType("EVENT_SEVERITY");
   IElementType EVENT_SPECIFIER = new FPPElementType("EVENT_SPECIFIER");
   IElementType EXPRESSION = new FPPElementType("EXPRESSION");
   IElementType FLOATING_POINT_TYPE_NAME = new FPPElementType("FLOATING_POINT_TYPE_NAME");
   IElementType FORMAL_PARAMETER = new FPPElementType("FORMAL_PARAMETER");
   IElementType GENERAL_PORT_KIND = new FPPElementType("GENERAL_PORT_KIND");
+  IElementType INIT_SPECIFIER = new FPPElementType("INIT_SPECIFIER");
+  IElementType INIT_SPECIFIER_SEQUENCE = new FPPElementType("INIT_SPECIFIER_SEQUENCE");
   IElementType MODULE_DEFINITION = new FPPElementType("MODULE_DEFINITION");
   IElementType MODULE_MEMBER = new FPPElementType("MODULE_MEMBER");
   IElementType MODULE_MEMBER_SEQUENCE = new FPPElementType("MODULE_MEMBER_SEQUENCE");
@@ -31,6 +41,9 @@ public interface FPPTypes {
   IElementType PORT_DEFINITION = new FPPElementType("PORT_DEFINITION");
   IElementType PORT_INSTANCE_SPECIFIER = new FPPElementType("PORT_INSTANCE_SPECIFIER");
   IElementType PORT_INSTANCE_TYPE = new FPPElementType("PORT_INSTANCE_TYPE");
+  IElementType PORT_INTERFACE_DEFINITION = new FPPElementType("PORT_INTERFACE_DEFINITION");
+  IElementType PORT_INTERFACE_MEMBER = new FPPElementType("PORT_INTERFACE_MEMBER");
+  IElementType PORT_INTERFACE_MEMBER_SEQUENCE = new FPPElementType("PORT_INTERFACE_MEMBER_SEQUENCE");
   IElementType PRIMITIVE_INTEGER_TYPE_NAME = new FPPElementType("PRIMITIVE_INTEGER_TYPE_NAME");
   IElementType QUALIFIED_IDENTIFIER = new FPPElementType("QUALIFIED_IDENTIFIER");
   IElementType QUALIFIED_IDENTIFIER_TYPE_NAME = new FPPElementType("QUALIFIED_IDENTIFIER_TYPE_NAME");
@@ -38,10 +51,16 @@ public interface FPPTypes {
   IElementType SPECIAL_PORT_INPUT_KIND = new FPPElementType("SPECIAL_PORT_INPUT_KIND");
   IElementType SPECIAL_PORT_KIND = new FPPElementType("SPECIAL_PORT_KIND");
   IElementType STRING_TYPE_NAME = new FPPElementType("STRING_TYPE_NAME");
+  IElementType STRUCT_DEFINITION = new FPPElementType("STRUCT_DEFINITION");
+  IElementType STRUCT_TYPE_MEMBER = new FPPElementType("STRUCT_TYPE_MEMBER");
+  IElementType STRUCT_TYPE_MEMBER_SEQUENCE = new FPPElementType("STRUCT_TYPE_MEMBER_SEQUENCE");
   IElementType TELEMETRY_CHANNEL_SPECIFIER = new FPPElementType("TELEMETRY_CHANNEL_SPECIFIER");
   IElementType TELEMETRY_LIMIT = new FPPElementType("TELEMETRY_LIMIT");
   IElementType TELEMETRY_LIMIT_SEQUENCE = new FPPElementType("TELEMETRY_LIMIT_SEQUENCE");
   IElementType TELEMETRY_UPDATE = new FPPElementType("TELEMETRY_UPDATE");
+  IElementType TOPOLOGY_DEFINITION = new FPPElementType("TOPOLOGY_DEFINITION");
+  IElementType TOPOLOGY_MEMBER = new FPPElementType("TOPOLOGY_MEMBER");
+  IElementType TOPOLOGY_MEMBER_SEQUENCE = new FPPElementType("TOPOLOGY_MEMBER_SEQUENCE");
   IElementType TRANSLATION_UNIT = new FPPElementType("TRANSLATION_UNIT");
   IElementType TRANSLATION_UNIT_MEMBER = new FPPElementType("TRANSLATION_UNIT_MEMBER");
   IElementType TYPE_NAME = new FPPElementType("TYPE_NAME");
@@ -185,7 +204,13 @@ public interface FPPTypes {
   class Factory {
     public static PsiElement createElement(ASTNode node) {
       IElementType type = node.getElementType();
-      if (type == ARITHMETIC_EXPRESSION) {
+      if (type == ABSTRACT_TYPE_DEFINITION) {
+        return new FPPAbstractTypeDefinitionImpl(node);
+      }
+      else if (type == ALIAS_TYPE_DEFINITION) {
+        return new FPPAliasTypeDefinitionImpl(node);
+      }
+      else if (type == ARITHMETIC_EXPRESSION) {
         return new FPPArithmeticExpressionImpl(node);
       }
       else if (type == ARITHMETIC_EXPRESSION_FACTOR) {
@@ -197,6 +222,9 @@ public interface FPPTypes {
       else if (type == ARITHMETIC_EXPRESSION_TERM) {
         return new FPPArithmeticExpressionTermImpl(node);
       }
+      else if (type == ARRAY_DEFINITION) {
+        return new FPPArrayDefinitionImpl(node);
+      }
       else if (type == COMMAND_KIND) {
         return new FPPCommandKindImpl(node);
       }
@@ -206,6 +234,9 @@ public interface FPPTypes {
       else if (type == COMPONENT_DEFINITION) {
         return new FPPComponentDefinitionImpl(node);
       }
+      else if (type == COMPONENT_INSTANCE_DEFINITION) {
+        return new FPPComponentInstanceDefinitionImpl(node);
+      }
       else if (type == COMPONENT_KIND) {
         return new FPPComponentKindImpl(node);
       }
@@ -214,6 +245,18 @@ public interface FPPTypes {
       }
       else if (type == COMPONENT_MEMBER_SEQUENCE) {
         return new FPPComponentMemberSequenceImpl(node);
+      }
+      else if (type == CONSTANT_DEFINITION) {
+        return new FPPConstantDefinitionImpl(node);
+      }
+      else if (type == ENUM_CONSTANT) {
+        return new FPPEnumConstantImpl(node);
+      }
+      else if (type == ENUM_CONSTANT_SEQUENCE) {
+        return new FPPEnumConstantSequenceImpl(node);
+      }
+      else if (type == ENUM_DEFINITION) {
+        return new FPPEnumDefinitionImpl(node);
       }
       else if (type == EVENT_SEVERITY) {
         return new FPPEventSeverityImpl(node);
@@ -232,6 +275,12 @@ public interface FPPTypes {
       }
       else if (type == GENERAL_PORT_KIND) {
         return new FPPGeneralPortKindImpl(node);
+      }
+      else if (type == INIT_SPECIFIER) {
+        return new FPPInitSpecifierImpl(node);
+      }
+      else if (type == INIT_SPECIFIER_SEQUENCE) {
+        return new FPPInitSpecifierSequenceImpl(node);
       }
       else if (type == MODULE_DEFINITION) {
         return new FPPModuleDefinitionImpl(node);
@@ -254,6 +303,15 @@ public interface FPPTypes {
       else if (type == PORT_INSTANCE_TYPE) {
         return new FPPPortInstanceTypeImpl(node);
       }
+      else if (type == PORT_INTERFACE_DEFINITION) {
+        return new FPPPortInterfaceDefinitionImpl(node);
+      }
+      else if (type == PORT_INTERFACE_MEMBER) {
+        return new FPPPortInterfaceMemberImpl(node);
+      }
+      else if (type == PORT_INTERFACE_MEMBER_SEQUENCE) {
+        return new FPPPortInterfaceMemberSequenceImpl(node);
+      }
       else if (type == PRIMITIVE_INTEGER_TYPE_NAME) {
         return new FPPPrimitiveIntegerTypeNameImpl(node);
       }
@@ -275,6 +333,15 @@ public interface FPPTypes {
       else if (type == STRING_TYPE_NAME) {
         return new FPPStringTypeNameImpl(node);
       }
+      else if (type == STRUCT_DEFINITION) {
+        return new FPPStructDefinitionImpl(node);
+      }
+      else if (type == STRUCT_TYPE_MEMBER) {
+        return new FPPStructTypeMemberImpl(node);
+      }
+      else if (type == STRUCT_TYPE_MEMBER_SEQUENCE) {
+        return new FPPStructTypeMemberSequenceImpl(node);
+      }
       else if (type == TELEMETRY_CHANNEL_SPECIFIER) {
         return new FPPTelemetryChannelSpecifierImpl(node);
       }
@@ -286,6 +353,15 @@ public interface FPPTypes {
       }
       else if (type == TELEMETRY_UPDATE) {
         return new FPPTelemetryUpdateImpl(node);
+      }
+      else if (type == TOPOLOGY_DEFINITION) {
+        return new FPPTopologyDefinitionImpl(node);
+      }
+      else if (type == TOPOLOGY_MEMBER) {
+        return new FPPTopologyMemberImpl(node);
+      }
+      else if (type == TOPOLOGY_MEMBER_SEQUENCE) {
+        return new FPPTopologyMemberSequenceImpl(node);
       }
       else if (type == TRANSLATION_UNIT) {
         return new FPPTranslationUnitImpl(node);

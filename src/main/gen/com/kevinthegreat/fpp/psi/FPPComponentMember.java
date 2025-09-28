@@ -8,13 +8,31 @@ import com.intellij.psi.PsiElement;
 public interface FPPComponentMember extends PsiElement {
 
   @Nullable
+  FPPAbstractTypeDefinition getAbstractTypeDefinition();
+
+  @Nullable
+  FPPAliasTypeDefinition getAliasTypeDefinition();
+
+  @Nullable
+  FPPArrayDefinition getArrayDefinition();
+
+  @Nullable
   FPPCommandSpecifier getCommandSpecifier();
+
+  @Nullable
+  FPPConstantDefinition getConstantDefinition();
+
+  @Nullable
+  FPPEnumDefinition getEnumDefinition();
 
   @Nullable
   FPPEventSpecifier getEventSpecifier();
 
   @Nullable
   FPPPortInstanceSpecifier getPortInstanceSpecifier();
+
+  @Nullable
+  FPPStructDefinition getStructDefinition();
 
   @Nullable
   FPPTelemetryChannelSpecifier getTelemetryChannelSpecifier();

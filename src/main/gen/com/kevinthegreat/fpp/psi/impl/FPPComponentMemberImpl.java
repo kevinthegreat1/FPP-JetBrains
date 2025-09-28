@@ -29,8 +29,38 @@ public class FPPComponentMemberImpl extends ASTWrapperPsiElement implements FPPC
 
   @Override
   @Nullable
+  public FPPAbstractTypeDefinition getAbstractTypeDefinition() {
+    return findChildByClass(FPPAbstractTypeDefinition.class);
+  }
+
+  @Override
+  @Nullable
+  public FPPAliasTypeDefinition getAliasTypeDefinition() {
+    return findChildByClass(FPPAliasTypeDefinition.class);
+  }
+
+  @Override
+  @Nullable
+  public FPPArrayDefinition getArrayDefinition() {
+    return findChildByClass(FPPArrayDefinition.class);
+  }
+
+  @Override
+  @Nullable
   public FPPCommandSpecifier getCommandSpecifier() {
     return findChildByClass(FPPCommandSpecifier.class);
+  }
+
+  @Override
+  @Nullable
+  public FPPConstantDefinition getConstantDefinition() {
+    return findChildByClass(FPPConstantDefinition.class);
+  }
+
+  @Override
+  @Nullable
+  public FPPEnumDefinition getEnumDefinition() {
+    return findChildByClass(FPPEnumDefinition.class);
   }
 
   @Override
@@ -43,6 +73,12 @@ public class FPPComponentMemberImpl extends ASTWrapperPsiElement implements FPPC
   @Nullable
   public FPPPortInstanceSpecifier getPortInstanceSpecifier() {
     return findChildByClass(FPPPortInstanceSpecifier.class);
+  }
+
+  @Override
+  @Nullable
+  public FPPStructDefinition getStructDefinition() {
+    return findChildByClass(FPPStructDefinition.class);
   }
 
   @Override

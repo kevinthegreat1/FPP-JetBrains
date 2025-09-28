@@ -8,12 +8,39 @@ import com.intellij.psi.PsiElement;
 public interface FPPModuleMember extends PsiElement {
 
   @Nullable
+  FPPAbstractTypeDefinition getAbstractTypeDefinition();
+
+  @Nullable
+  FPPAliasTypeDefinition getAliasTypeDefinition();
+
+  @Nullable
+  FPPArrayDefinition getArrayDefinition();
+
+  @Nullable
   FPPComponentDefinition getComponentDefinition();
+
+  @Nullable
+  FPPComponentInstanceDefinition getComponentInstanceDefinition();
+
+  @Nullable
+  FPPConstantDefinition getConstantDefinition();
+
+  @Nullable
+  FPPEnumDefinition getEnumDefinition();
 
   @Nullable
   FPPModuleDefinition getModuleDefinition();
 
   @Nullable
   FPPPortDefinition getPortDefinition();
+
+  @Nullable
+  FPPPortInterfaceDefinition getPortInterfaceDefinition();
+
+  @Nullable
+  FPPStructDefinition getStructDefinition();
+
+  @Nullable
+  FPPTopologyDefinition getTopologyDefinition();
 
 }

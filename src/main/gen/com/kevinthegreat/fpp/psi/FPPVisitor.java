@@ -7,6 +7,14 @@ import com.intellij.psi.PsiElement;
 
 public class FPPVisitor extends PsiElementVisitor {
 
+  public void visitAbstractTypeDefinition(@NotNull FPPAbstractTypeDefinition o) {
+    visitPsiElement(o);
+  }
+
+  public void visitAliasTypeDefinition(@NotNull FPPAliasTypeDefinition o) {
+    visitPsiElement(o);
+  }
+
   public void visitArithmeticExpression(@NotNull FPPArithmeticExpression o) {
     visitPsiElement(o);
   }
@@ -23,6 +31,10 @@ public class FPPVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitArrayDefinition(@NotNull FPPArrayDefinition o) {
+    visitPsiElement(o);
+  }
+
   public void visitCommandKind(@NotNull FPPCommandKind o) {
     visitPsiElement(o);
   }
@@ -35,6 +47,10 @@ public class FPPVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitComponentInstanceDefinition(@NotNull FPPComponentInstanceDefinition o) {
+    visitPsiElement(o);
+  }
+
   public void visitComponentKind(@NotNull FPPComponentKind o) {
     visitPsiElement(o);
   }
@@ -44,6 +60,22 @@ public class FPPVisitor extends PsiElementVisitor {
   }
 
   public void visitComponentMemberSequence(@NotNull FPPComponentMemberSequence o) {
+    visitPsiElement(o);
+  }
+
+  public void visitConstantDefinition(@NotNull FPPConstantDefinition o) {
+    visitPsiElement(o);
+  }
+
+  public void visitEnumConstant(@NotNull FPPEnumConstant o) {
+    visitPsiElement(o);
+  }
+
+  public void visitEnumConstantSequence(@NotNull FPPEnumConstantSequence o) {
+    visitPsiElement(o);
+  }
+
+  public void visitEnumDefinition(@NotNull FPPEnumDefinition o) {
     visitPsiElement(o);
   }
 
@@ -68,6 +100,14 @@ public class FPPVisitor extends PsiElementVisitor {
   }
 
   public void visitGeneralPortKind(@NotNull FPPGeneralPortKind o) {
+    visitPsiElement(o);
+  }
+
+  public void visitInitSpecifier(@NotNull FPPInitSpecifier o) {
+    visitPsiElement(o);
+  }
+
+  public void visitInitSpecifierSequence(@NotNull FPPInitSpecifierSequence o) {
     visitPsiElement(o);
   }
 
@@ -99,6 +139,18 @@ public class FPPVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitPortInterfaceDefinition(@NotNull FPPPortInterfaceDefinition o) {
+    visitPsiElement(o);
+  }
+
+  public void visitPortInterfaceMember(@NotNull FPPPortInterfaceMember o) {
+    visitPsiElement(o);
+  }
+
+  public void visitPortInterfaceMemberSequence(@NotNull FPPPortInterfaceMemberSequence o) {
+    visitPsiElement(o);
+  }
+
   public void visitPrimitiveIntegerTypeName(@NotNull FPPPrimitiveIntegerTypeName o) {
     visitPsiElement(o);
   }
@@ -127,6 +179,18 @@ public class FPPVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitStructDefinition(@NotNull FPPStructDefinition o) {
+    visitPsiElement(o);
+  }
+
+  public void visitStructTypeMember(@NotNull FPPStructTypeMember o) {
+    visitPsiElement(o);
+  }
+
+  public void visitStructTypeMemberSequence(@NotNull FPPStructTypeMemberSequence o) {
+    visitPsiElement(o);
+  }
+
   public void visitTelemetryChannelSpecifier(@NotNull FPPTelemetryChannelSpecifier o) {
     visitPsiElement(o);
   }
@@ -140,6 +204,18 @@ public class FPPVisitor extends PsiElementVisitor {
   }
 
   public void visitTelemetryUpdate(@NotNull FPPTelemetryUpdate o) {
+    visitPsiElement(o);
+  }
+
+  public void visitTopologyDefinition(@NotNull FPPTopologyDefinition o) {
+    visitPsiElement(o);
+  }
+
+  public void visitTopologyMember(@NotNull FPPTopologyMember o) {
+    visitPsiElement(o);
+  }
+
+  public void visitTopologyMemberSequence(@NotNull FPPTopologyMemberSequence o) {
     visitPsiElement(o);
   }
 
