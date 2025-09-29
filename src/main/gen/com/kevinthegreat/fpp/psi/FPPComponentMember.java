@@ -47,7 +47,13 @@ public interface FPPComponentMember extends PsiElement {
   FPPPortInstanceSpecifier getPortInstanceSpecifier();
 
   @Nullable
+  FPPPortMatchingSpecifier getPortMatchingSpecifier();
+
+  @Nullable
   FPPRecordSpecifier getRecordSpecifier();
+
+  @Nullable
+  FPPStateMachineDefinition getStateMachineDefinition();
 
   @Nullable
   FPPStateMachineInstanceSpecifier getStateMachineInstanceSpecifier();

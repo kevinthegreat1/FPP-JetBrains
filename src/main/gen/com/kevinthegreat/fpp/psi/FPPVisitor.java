@@ -11,6 +11,14 @@ public class FPPVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitActionDefinition(@NotNull FPPActionDefinition o) {
+    visitPsiElement(o);
+  }
+
+  public void visitActionSequence(@NotNull FPPActionSequence o) {
+    visitPsiElement(o);
+  }
+
   public void visitAliasTypeDefinition(@NotNull FPPAliasTypeDefinition o) {
     visitPsiElement(o);
   }
@@ -32,6 +40,10 @@ public class FPPVisitor extends PsiElementVisitor {
   }
 
   public void visitArrayDefinition(@NotNull FPPArrayDefinition o) {
+    visitPsiElement(o);
+  }
+
+  public void visitChoiceDefinition(@NotNull FPPChoiceDefinition o) {
     visitPsiElement(o);
   }
 
@@ -103,6 +115,10 @@ public class FPPVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitDoExpression(@NotNull FPPDoExpression o) {
+    visitPsiElement(o);
+  }
+
   public void visitEnumConstant(@NotNull FPPEnumConstant o) {
     visitPsiElement(o);
   }
@@ -139,6 +155,10 @@ public class FPPVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitGuardDefinition(@NotNull FPPGuardDefinition o) {
+    visitPsiElement(o);
+  }
+
   public void visitIncludeSpecifier(@NotNull FPPIncludeSpecifier o) {
     visitPsiElement(o);
   }
@@ -148,6 +168,10 @@ public class FPPVisitor extends PsiElementVisitor {
   }
 
   public void visitInitSpecifierSequence(@NotNull FPPInitSpecifierSequence o) {
+    visitPsiElement(o);
+  }
+
+  public void visitInitialTransitionSpecifier(@NotNull FPPInitialTransitionSpecifier o) {
     visitPsiElement(o);
   }
 
@@ -255,6 +279,10 @@ public class FPPVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitSignalDefinition(@NotNull FPPSignalDefinition o) {
+    visitPsiElement(o);
+  }
+
   public void visitSpecialPortInputKind(@NotNull FPPSpecialPortInputKind o) {
     visitPsiElement(o);
   }
@@ -263,11 +291,47 @@ public class FPPVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitStateDefinition(@NotNull FPPStateDefinition o) {
+    visitPsiElement(o);
+  }
+
+  public void visitStateDefinitionMember(@NotNull FPPStateDefinitionMember o) {
+    visitPsiElement(o);
+  }
+
+  public void visitStateDefinitionMemberSequence(@NotNull FPPStateDefinitionMemberSequence o) {
+    visitPsiElement(o);
+  }
+
+  public void visitStateEntrySpecifier(@NotNull FPPStateEntrySpecifier o) {
+    visitPsiElement(o);
+  }
+
+  public void visitStateExitSpecifier(@NotNull FPPStateExitSpecifier o) {
+    visitPsiElement(o);
+  }
+
+  public void visitStateMachineDefinition(@NotNull FPPStateMachineDefinition o) {
+    visitPsiElement(o);
+  }
+
   public void visitStateMachineInstanceSpecifier(@NotNull FPPStateMachineInstanceSpecifier o) {
     visitPsiElement(o);
   }
 
   public void visitStateMachineLocationSpecifier(@NotNull FPPStateMachineLocationSpecifier o) {
+    visitPsiElement(o);
+  }
+
+  public void visitStateMachineMember(@NotNull FPPStateMachineMember o) {
+    visitPsiElement(o);
+  }
+
+  public void visitStateMachineMemberSequence(@NotNull FPPStateMachineMemberSequence o) {
+    visitPsiElement(o);
+  }
+
+  public void visitStateTransitionSpecifier(@NotNull FPPStateTransitionSpecifier o) {
     visitPsiElement(o);
   }
 
@@ -352,6 +416,14 @@ public class FPPVisitor extends PsiElementVisitor {
   }
 
   public void visitTopologyMemberSequence(@NotNull FPPTopologyMemberSequence o) {
+    visitPsiElement(o);
+  }
+
+  public void visitTransitionExpression(@NotNull FPPTransitionExpression o) {
+    visitPsiElement(o);
+  }
+
+  public void visitTransitionOrDo(@NotNull FPPTransitionOrDo o) {
     visitPsiElement(o);
   }
 

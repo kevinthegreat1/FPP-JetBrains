@@ -107,8 +107,20 @@ public class FPPComponentMemberImpl extends ASTWrapperPsiElement implements FPPC
 
   @Override
   @Nullable
+  public FPPPortMatchingSpecifier getPortMatchingSpecifier() {
+    return findChildByClass(FPPPortMatchingSpecifier.class);
+  }
+
+  @Override
+  @Nullable
   public FPPRecordSpecifier getRecordSpecifier() {
     return findChildByClass(FPPRecordSpecifier.class);
+  }
+
+  @Override
+  @Nullable
+  public FPPStateMachineDefinition getStateMachineDefinition() {
+    return findChildByClass(FPPStateMachineDefinition.class);
   }
 
   @Override

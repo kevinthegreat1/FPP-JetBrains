@@ -101,6 +101,12 @@ public class FPPModuleMemberImpl extends ASTWrapperPsiElement implements FPPModu
 
   @Override
   @Nullable
+  public FPPStateMachineDefinition getStateMachineDefinition() {
+    return findChildByClass(FPPStateMachineDefinition.class);
+  }
+
+  @Override
+  @Nullable
   public FPPStructDefinition getStructDefinition() {
     return findChildByClass(FPPStructDefinition.class);
   }

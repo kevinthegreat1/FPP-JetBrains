@@ -166,6 +166,7 @@
 // 14.1. Translation Units
 fpp_file ::= translation_unit
 
+// 5. Definitions
 // 5.1. Abstract Type Definitions
 abstract_type_definition ::= TYPE IDENTIFIER
 // 5.2. Alias Type Definitions
@@ -177,12 +178,13 @@ component_definition ::= component_kind COMPONENT IDENTIFIER LEFT_BRACE componen
 component_kind ::= ACTIVE | PASSIVE | QUEUED
 component_member_sequence ::= (component_member (SEMICOLON | END_OF_LINE)*)*
 component_member ::= constant_definition
-//                  | state_machine_definition
+                  | state_machine_definition
                   | struct_definition
                   | command_specifier
                   | container_specifier
                   | parameter_specifier
                   | port_instance_specifier
+                  | port_matching_specifier
                   | record_specifier
                   | state_machine_instance_specifier
                   | telemetry_channel_specifier
@@ -213,7 +215,7 @@ module_member ::= component_definition
                  | module_definition
                  | port_definition
                  | port_interface_definition
-//                 | state_machine_definition
+                 | state_machine_definition
                  | struct_definition
                  | topology_definition
                  | location_specifier
@@ -230,14 +232,14 @@ port_interface_member_sequence ::= (port_interface_member (SEMICOLON | END_OF_LI
 port_interface_member ::= port_instance_specifier
                         | interface_import_specifier
 // 5.12. State Machine Definitions
-//state_machine_definition ::= STATE MACHINE IDENTIFIER [ LEFT_BRACE state_machine_member_sequence RIGHT_BRACE ]
-//state_machine_member_sequence ::= (state_machine_member (SEMICOLON | END_OF_LINE)*)*
-//state_machine_member ::= choice_definition
-//                        | guard_definition
-//                        | initial_transition_specifier
-//                        | signal_definition
-//                        | state_definition
-//                        | action_definition
+state_machine_definition ::= STATE MACHINE IDENTIFIER [ LEFT_BRACE state_machine_member_sequence RIGHT_BRACE ]
+state_machine_member_sequence ::= (state_machine_member (SEMICOLON | END_OF_LINE)*)*
+state_machine_member ::= choice_definition
+                        | guard_definition
+                        | initial_transition_specifier
+                        | signal_definition
+                        | state_definition
+                        | action_definition
 // 5.13. Struct Definitions
 struct_definition ::= STRUCT IDENTIFIER LEFT_BRACE struct_type_member_sequence RIGHT_BRACE [ DEFAULT expression ]
 struct_type_member_sequence ::= (struct_type_member (COMMA | END_OF_LINE)*)*
@@ -251,6 +253,41 @@ topology_member ::= component_instance_specifier
                     | topology_import_specifier
                     | include_specifier
 
+// 6. State Machine Behavior Elements
+// 6.1. Action Definitions
+action_definition ::= ACTION IDENTIFIER [ COLON type_name ]
+// 6.2. Choice Definitions
+choice_definition ::= CHOICE IDENTIFIER LEFT_BRACE IF IDENTIFIER transition_expression ELSE transition_expression RIGHT_BRACE
+// 6.3. Do Expressions
+do_expression ::= DO LEFT_BRACE action_sequence RIGHT_BRACE
+action_sequence ::= (IDENTIFIER (COMMA | END_OF_LINE)*)*
+// 6.4. Guard Definitions
+guard_definition ::= GUARD IDENTIFIER [ COLON type_name ]
+// 6.5. Initial Transition Specifiers
+initial_transition_specifier ::= INITIAL transition_expression
+// 6.6. Signal Definitions
+signal_definition ::= SIGNAL IDENTIFIER [ COLON type_name ]
+// 6.7. State Definitions
+state_definition ::= STATE IDENTIFIER [ LEFT_BRACE state_definition_member_sequence RIGHT_BRACE ]
+state_definition_member_sequence ::= (state_definition_member (SEMICOLON | END_OF_LINE)*)*
+state_definition_member ::= initial_transition_specifier
+                        | choice_definition
+                        | state_definition
+                        | state_transition_specifier
+                        | state_entry_specifier
+                        | state_exit_specifier
+// 6.8. State Entry Specifiers
+state_entry_specifier ::= ENTRY do_expression
+// 6.9. State Exit Specifiers
+state_exit_specifier ::= EXIT do_expression
+// 6.10. State Transition Specifiers
+state_transition_specifier ::= ON IDENTIFIER [ IF IDENTIFIER ] transition_or_do
+transition_or_do ::= transition_expression
+                    | do_expression
+// 6.11. Transition Expressions
+transition_expression ::= [ do_expression ] ENTER qualified_identifier
+
+// 7. Specifiers
 // 7.1. Command Specifiers
 command_specifier ::= command_kind COMMAND IDENTIFIER [ LEFT_PAREN param_list RIGHT_PAREN ] [ OPCODE expression ] [ PRIORITY expression ] [ queue_full_behavior ]
 command_kind ::= ASYNC | GUARDED | SYNC

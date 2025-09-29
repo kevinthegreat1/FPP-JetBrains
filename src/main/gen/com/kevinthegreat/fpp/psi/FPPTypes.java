@@ -9,12 +9,15 @@ import com.kevinthegreat.fpp.psi.impl.*;
 public interface FPPTypes {
 
   IElementType ABSTRACT_TYPE_DEFINITION = new FPPElementType("ABSTRACT_TYPE_DEFINITION");
+  IElementType ACTION_DEFINITION = new FPPElementType("ACTION_DEFINITION");
+  IElementType ACTION_SEQUENCE = new FPPElementType("ACTION_SEQUENCE");
   IElementType ALIAS_TYPE_DEFINITION = new FPPElementType("ALIAS_TYPE_DEFINITION");
   IElementType ARITHMETIC_EXPRESSION = new FPPElementType("ARITHMETIC_EXPRESSION");
   IElementType ARITHMETIC_EXPRESSION_FACTOR = new FPPElementType("ARITHMETIC_EXPRESSION_FACTOR");
   IElementType ARITHMETIC_EXPRESSION_PRIMARY = new FPPElementType("ARITHMETIC_EXPRESSION_PRIMARY");
   IElementType ARITHMETIC_EXPRESSION_TERM = new FPPElementType("ARITHMETIC_EXPRESSION_TERM");
   IElementType ARRAY_DEFINITION = new FPPElementType("ARRAY_DEFINITION");
+  IElementType CHOICE_DEFINITION = new FPPElementType("CHOICE_DEFINITION");
   IElementType COMMAND_KIND = new FPPElementType("COMMAND_KIND");
   IElementType COMMAND_SPECIFIER = new FPPElementType("COMMAND_SPECIFIER");
   IElementType COMPONENT_DEFINITION = new FPPElementType("COMPONENT_DEFINITION");
@@ -32,6 +35,7 @@ public interface FPPTypes {
   IElementType CONSTANT_LOCATION_SPECIFIER = new FPPElementType("CONSTANT_LOCATION_SPECIFIER");
   IElementType CONTAINER_SPECIFIER = new FPPElementType("CONTAINER_SPECIFIER");
   IElementType DIRECT_GRAPH_SPECIFIER = new FPPElementType("DIRECT_GRAPH_SPECIFIER");
+  IElementType DO_EXPRESSION = new FPPElementType("DO_EXPRESSION");
   IElementType ENUM_CONSTANT = new FPPElementType("ENUM_CONSTANT");
   IElementType ENUM_CONSTANT_SEQUENCE = new FPPElementType("ENUM_CONSTANT_SEQUENCE");
   IElementType ENUM_DEFINITION = new FPPElementType("ENUM_DEFINITION");
@@ -41,7 +45,9 @@ public interface FPPTypes {
   IElementType FLOATING_POINT_TYPE_NAME = new FPPElementType("FLOATING_POINT_TYPE_NAME");
   IElementType FORMAL_PARAMETER = new FPPElementType("FORMAL_PARAMETER");
   IElementType GENERAL_PORT_KIND = new FPPElementType("GENERAL_PORT_KIND");
+  IElementType GUARD_DEFINITION = new FPPElementType("GUARD_DEFINITION");
   IElementType INCLUDE_SPECIFIER = new FPPElementType("INCLUDE_SPECIFIER");
+  IElementType INITIAL_TRANSITION_SPECIFIER = new FPPElementType("INITIAL_TRANSITION_SPECIFIER");
   IElementType INIT_SPECIFIER = new FPPElementType("INIT_SPECIFIER");
   IElementType INIT_SPECIFIER_SEQUENCE = new FPPElementType("INIT_SPECIFIER_SEQUENCE");
   IElementType INSTANCE_SEQUENCE = new FPPElementType("INSTANCE_SEQUENCE");
@@ -70,10 +76,20 @@ public interface FPPTypes {
   IElementType QUALIFIED_IDENTIFIER_TYPE_NAME = new FPPElementType("QUALIFIED_IDENTIFIER_TYPE_NAME");
   IElementType QUEUE_FULL_BEHAVIOR = new FPPElementType("QUEUE_FULL_BEHAVIOR");
   IElementType RECORD_SPECIFIER = new FPPElementType("RECORD_SPECIFIER");
+  IElementType SIGNAL_DEFINITION = new FPPElementType("SIGNAL_DEFINITION");
   IElementType SPECIAL_PORT_INPUT_KIND = new FPPElementType("SPECIAL_PORT_INPUT_KIND");
   IElementType SPECIAL_PORT_KIND = new FPPElementType("SPECIAL_PORT_KIND");
+  IElementType STATE_DEFINITION = new FPPElementType("STATE_DEFINITION");
+  IElementType STATE_DEFINITION_MEMBER = new FPPElementType("STATE_DEFINITION_MEMBER");
+  IElementType STATE_DEFINITION_MEMBER_SEQUENCE = new FPPElementType("STATE_DEFINITION_MEMBER_SEQUENCE");
+  IElementType STATE_ENTRY_SPECIFIER = new FPPElementType("STATE_ENTRY_SPECIFIER");
+  IElementType STATE_EXIT_SPECIFIER = new FPPElementType("STATE_EXIT_SPECIFIER");
+  IElementType STATE_MACHINE_DEFINITION = new FPPElementType("STATE_MACHINE_DEFINITION");
   IElementType STATE_MACHINE_INSTANCE_SPECIFIER = new FPPElementType("STATE_MACHINE_INSTANCE_SPECIFIER");
   IElementType STATE_MACHINE_LOCATION_SPECIFIER = new FPPElementType("STATE_MACHINE_LOCATION_SPECIFIER");
+  IElementType STATE_MACHINE_MEMBER = new FPPElementType("STATE_MACHINE_MEMBER");
+  IElementType STATE_MACHINE_MEMBER_SEQUENCE = new FPPElementType("STATE_MACHINE_MEMBER_SEQUENCE");
+  IElementType STATE_TRANSITION_SPECIFIER = new FPPElementType("STATE_TRANSITION_SPECIFIER");
   IElementType STRING_TYPE_NAME = new FPPElementType("STRING_TYPE_NAME");
   IElementType STRUCT_DEFINITION = new FPPElementType("STRUCT_DEFINITION");
   IElementType STRUCT_TYPE_MEMBER = new FPPElementType("STRUCT_TYPE_MEMBER");
@@ -95,6 +111,8 @@ public interface FPPTypes {
   IElementType TOPOLOGY_LOCATION_SPECIFIER = new FPPElementType("TOPOLOGY_LOCATION_SPECIFIER");
   IElementType TOPOLOGY_MEMBER = new FPPElementType("TOPOLOGY_MEMBER");
   IElementType TOPOLOGY_MEMBER_SEQUENCE = new FPPElementType("TOPOLOGY_MEMBER_SEQUENCE");
+  IElementType TRANSITION_EXPRESSION = new FPPElementType("TRANSITION_EXPRESSION");
+  IElementType TRANSITION_OR_DO = new FPPElementType("TRANSITION_OR_DO");
   IElementType TRANSLATION_UNIT = new FPPElementType("TRANSLATION_UNIT");
   IElementType TRANSLATION_UNIT_MEMBER = new FPPElementType("TRANSLATION_UNIT_MEMBER");
   IElementType TYPE_LOCATION_SPECIFIER = new FPPElementType("TYPE_LOCATION_SPECIFIER");
@@ -242,6 +260,12 @@ public interface FPPTypes {
       if (type == ABSTRACT_TYPE_DEFINITION) {
         return new FPPAbstractTypeDefinitionImpl(node);
       }
+      else if (type == ACTION_DEFINITION) {
+        return new FPPActionDefinitionImpl(node);
+      }
+      else if (type == ACTION_SEQUENCE) {
+        return new FPPActionSequenceImpl(node);
+      }
       else if (type == ALIAS_TYPE_DEFINITION) {
         return new FPPAliasTypeDefinitionImpl(node);
       }
@@ -259,6 +283,9 @@ public interface FPPTypes {
       }
       else if (type == ARRAY_DEFINITION) {
         return new FPPArrayDefinitionImpl(node);
+      }
+      else if (type == CHOICE_DEFINITION) {
+        return new FPPChoiceDefinitionImpl(node);
       }
       else if (type == COMMAND_KIND) {
         return new FPPCommandKindImpl(node);
@@ -311,6 +338,9 @@ public interface FPPTypes {
       else if (type == DIRECT_GRAPH_SPECIFIER) {
         return new FPPDirectGraphSpecifierImpl(node);
       }
+      else if (type == DO_EXPRESSION) {
+        return new FPPDoExpressionImpl(node);
+      }
       else if (type == ENUM_CONSTANT) {
         return new FPPEnumConstantImpl(node);
       }
@@ -338,8 +368,14 @@ public interface FPPTypes {
       else if (type == GENERAL_PORT_KIND) {
         return new FPPGeneralPortKindImpl(node);
       }
+      else if (type == GUARD_DEFINITION) {
+        return new FPPGuardDefinitionImpl(node);
+      }
       else if (type == INCLUDE_SPECIFIER) {
         return new FPPIncludeSpecifierImpl(node);
+      }
+      else if (type == INITIAL_TRANSITION_SPECIFIER) {
+        return new FPPInitialTransitionSpecifierImpl(node);
       }
       else if (type == INIT_SPECIFIER) {
         return new FPPInitSpecifierImpl(node);
@@ -425,17 +461,47 @@ public interface FPPTypes {
       else if (type == RECORD_SPECIFIER) {
         return new FPPRecordSpecifierImpl(node);
       }
+      else if (type == SIGNAL_DEFINITION) {
+        return new FPPSignalDefinitionImpl(node);
+      }
       else if (type == SPECIAL_PORT_INPUT_KIND) {
         return new FPPSpecialPortInputKindImpl(node);
       }
       else if (type == SPECIAL_PORT_KIND) {
         return new FPPSpecialPortKindImpl(node);
       }
+      else if (type == STATE_DEFINITION) {
+        return new FPPStateDefinitionImpl(node);
+      }
+      else if (type == STATE_DEFINITION_MEMBER) {
+        return new FPPStateDefinitionMemberImpl(node);
+      }
+      else if (type == STATE_DEFINITION_MEMBER_SEQUENCE) {
+        return new FPPStateDefinitionMemberSequenceImpl(node);
+      }
+      else if (type == STATE_ENTRY_SPECIFIER) {
+        return new FPPStateEntrySpecifierImpl(node);
+      }
+      else if (type == STATE_EXIT_SPECIFIER) {
+        return new FPPStateExitSpecifierImpl(node);
+      }
+      else if (type == STATE_MACHINE_DEFINITION) {
+        return new FPPStateMachineDefinitionImpl(node);
+      }
       else if (type == STATE_MACHINE_INSTANCE_SPECIFIER) {
         return new FPPStateMachineInstanceSpecifierImpl(node);
       }
       else if (type == STATE_MACHINE_LOCATION_SPECIFIER) {
         return new FPPStateMachineLocationSpecifierImpl(node);
+      }
+      else if (type == STATE_MACHINE_MEMBER) {
+        return new FPPStateMachineMemberImpl(node);
+      }
+      else if (type == STATE_MACHINE_MEMBER_SEQUENCE) {
+        return new FPPStateMachineMemberSequenceImpl(node);
+      }
+      else if (type == STATE_TRANSITION_SPECIFIER) {
+        return new FPPStateTransitionSpecifierImpl(node);
       }
       else if (type == STRING_TYPE_NAME) {
         return new FPPStringTypeNameImpl(node);
@@ -499,6 +565,12 @@ public interface FPPTypes {
       }
       else if (type == TOPOLOGY_MEMBER_SEQUENCE) {
         return new FPPTopologyMemberSequenceImpl(node);
+      }
+      else if (type == TRANSITION_EXPRESSION) {
+        return new FPPTransitionExpressionImpl(node);
+      }
+      else if (type == TRANSITION_OR_DO) {
+        return new FPPTransitionOrDoImpl(node);
       }
       else if (type == TRANSLATION_UNIT) {
         return new FPPTranslationUnitImpl(node);

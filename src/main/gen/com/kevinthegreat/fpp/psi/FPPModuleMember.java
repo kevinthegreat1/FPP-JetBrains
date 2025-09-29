@@ -44,6 +44,9 @@ public interface FPPModuleMember extends PsiElement {
   FPPPortInterfaceDefinition getPortInterfaceDefinition();
 
   @Nullable
+  FPPStateMachineDefinition getStateMachineDefinition();
+
+  @Nullable
   FPPStructDefinition getStructDefinition();
 
   @Nullable
