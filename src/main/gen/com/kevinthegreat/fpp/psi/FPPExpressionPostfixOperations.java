@@ -5,9 +5,12 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface FPPArithmeticExpression extends PsiElement {
+public interface FPPExpressionPostfixOperations extends PsiElement {
 
   @NotNull
-  List<FPPArithmeticExpressionMultiplicative> getArithmeticExpressionMultiplicativeList();
+  List<FPPExpression> getExpressionList();
+
+  @Nullable
+  PsiElement getIdentifier();
 
 }

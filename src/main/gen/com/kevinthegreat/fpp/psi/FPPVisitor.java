@@ -27,19 +27,23 @@ public class FPPVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitArithmeticExpressionFactor(@NotNull FPPArithmeticExpressionFactor o) {
+  public void visitArithmeticExpressionMultiplicative(@NotNull FPPArithmeticExpressionMultiplicative o) {
     visitPsiElement(o);
   }
 
-  public void visitArithmeticExpressionPrimary(@NotNull FPPArithmeticExpressionPrimary o) {
-    visitPsiElement(o);
-  }
-
-  public void visitArithmeticExpressionTerm(@NotNull FPPArithmeticExpressionTerm o) {
+  public void visitArithmeticExpressionUnary(@NotNull FPPArithmeticExpressionUnary o) {
     visitPsiElement(o);
   }
 
   public void visitArrayDefinition(@NotNull FPPArrayDefinition o) {
+    visitPsiElement(o);
+  }
+
+  public void visitArrayElementSequence(@NotNull FPPArrayElementSequence o) {
+    visitPsiElement(o);
+  }
+
+  public void visitArrayExpression(@NotNull FPPArrayExpression o) {
     visitPsiElement(o);
   }
 
@@ -140,6 +144,18 @@ public class FPPVisitor extends PsiElementVisitor {
   }
 
   public void visitExpression(@NotNull FPPExpression o) {
+    visitPsiElement(o);
+  }
+
+  public void visitExpressionPostfix(@NotNull FPPExpressionPostfix o) {
+    visitPsiElement(o);
+  }
+
+  public void visitExpressionPostfixOperations(@NotNull FPPExpressionPostfixOperations o) {
+    visitPsiElement(o);
+  }
+
+  public void visitExpressionPrimary(@NotNull FPPExpressionPrimary o) {
     visitPsiElement(o);
   }
 
@@ -340,6 +356,18 @@ public class FPPVisitor extends PsiElementVisitor {
   }
 
   public void visitStructDefinition(@NotNull FPPStructDefinition o) {
+    visitPsiElement(o);
+  }
+
+  public void visitStructElement(@NotNull FPPStructElement o) {
+    visitPsiElement(o);
+  }
+
+  public void visitStructElementSequence(@NotNull FPPStructElementSequence o) {
+    visitPsiElement(o);
+  }
+
+  public void visitStructExpression(@NotNull FPPStructExpression o) {
     visitPsiElement(o);
   }
 

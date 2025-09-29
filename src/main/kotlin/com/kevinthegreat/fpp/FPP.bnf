@@ -415,14 +415,29 @@ qualified_identifier_type_name ::= qualified_identifier
 // 10. Expressions
 expression ::= arithmetic_expression
 // 10.1. Arithmetic Expressions
-arithmetic_expression ::= arithmetic_expression_term ( ( ADD | SUB ) arithmetic_expression_term )*
-arithmetic_expression_term ::= arithmetic_expression_factor ( ( MUL | DIV ) arithmetic_expression_factor )*
-arithmetic_expression_factor ::= SUB arithmetic_expression_factor
-                                | arithmetic_expression_primary
-arithmetic_expression_primary ::= INTEGER_LITERAL
-                                | FLOATING_POINT_LITERAL
-                                | qualified_identifier
-                                | LEFT_PAREN expression RIGHT_PAREN
+arithmetic_expression ::= arithmetic_expression_multiplicative ( ( ADD | SUB ) arithmetic_expression_multiplicative )*
+arithmetic_expression_multiplicative ::= arithmetic_expression_unary ( ( MUL | DIV ) arithmetic_expression_unary )*
+arithmetic_expression_unary ::= SUB arithmetic_expression_unary
+                                | expression_postfix
+// 10. Expressions
+expression_postfix ::= expression_primary expression_postfix_operations*
+expression_postfix_operations ::= expression LEFT_BRACKET expression RIGHT_BRACKET // 10.3. Array Subscript Expressions
+                                | expression DOT IDENTIFIER // 10.5. Dot Expressions
+expression_primary ::= array_expression
+                    | BOOLEAN_LITERAL // 10.4. Boolean Literals
+                    | FLOATING_POINT_LITERAL // 10.6. Floating-Point Literals
+                    | qualified_identifier // 10.7. Identifier Expressions
+                    | INTEGER_LITERAL // 10.8. Integer Literals
+                    | LEFT_PAREN expression RIGHT_PAREN // 10.9. Parenthesis Expressions
+                    | STRING_LITERAL // 10.10. String Literals
+                    | struct_expression
+// 10.2. Array Expressions
+array_expression ::= LEFT_BRACKET array_element_sequence RIGHT_BRACKET
+array_element_sequence ::= (expression (COMMA | END_OF_LINE)*)*
+// 10.11. Struct Expressions
+struct_expression ::= LEFT_BRACE struct_element_sequence RIGHT_BRACE
+struct_element_sequence ::= (struct_element (COMMA | END_OF_LINE)*)*
+struct_element ::= IDENTIFIER ASSIGN expression
 
 // 11. Formal Parameter Lists
 param_list ::= (formal_parameter (COMMA | END_OF_LINE)*)*

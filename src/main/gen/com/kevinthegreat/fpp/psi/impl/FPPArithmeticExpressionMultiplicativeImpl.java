@@ -11,14 +11,14 @@ import static com.kevinthegreat.fpp.psi.FPPTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.kevinthegreat.fpp.psi.*;
 
-public class FPPArithmeticExpressionImpl extends ASTWrapperPsiElement implements FPPArithmeticExpression {
+public class FPPArithmeticExpressionMultiplicativeImpl extends ASTWrapperPsiElement implements FPPArithmeticExpressionMultiplicative {
 
-  public FPPArithmeticExpressionImpl(@NotNull ASTNode node) {
+  public FPPArithmeticExpressionMultiplicativeImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull FPPVisitor visitor) {
-    visitor.visitArithmeticExpression(this);
+    visitor.visitArithmeticExpressionMultiplicative(this);
   }
 
   @Override
@@ -29,8 +29,8 @@ public class FPPArithmeticExpressionImpl extends ASTWrapperPsiElement implements
 
   @Override
   @NotNull
-  public List<FPPArithmeticExpressionMultiplicative> getArithmeticExpressionMultiplicativeList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, FPPArithmeticExpressionMultiplicative.class);
+  public List<FPPArithmeticExpressionUnary> getArithmeticExpressionUnaryList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, FPPArithmeticExpressionUnary.class);
   }
 
 }

@@ -5,9 +5,9 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface FPPArithmeticExpressionTerm extends PsiElement {
+public interface FPPArrayExpression extends PsiElement {
 
   @NotNull
-  List<FPPArithmeticExpressionFactor> getArithmeticExpressionFactorList();
+  FPPArrayElementSequence getArrayElementSequence();
 
 }

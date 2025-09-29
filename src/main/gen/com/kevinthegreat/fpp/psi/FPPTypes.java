@@ -13,10 +13,11 @@ public interface FPPTypes {
   IElementType ACTION_SEQUENCE = new FPPElementType("ACTION_SEQUENCE");
   IElementType ALIAS_TYPE_DEFINITION = new FPPElementType("ALIAS_TYPE_DEFINITION");
   IElementType ARITHMETIC_EXPRESSION = new FPPElementType("ARITHMETIC_EXPRESSION");
-  IElementType ARITHMETIC_EXPRESSION_FACTOR = new FPPElementType("ARITHMETIC_EXPRESSION_FACTOR");
-  IElementType ARITHMETIC_EXPRESSION_PRIMARY = new FPPElementType("ARITHMETIC_EXPRESSION_PRIMARY");
-  IElementType ARITHMETIC_EXPRESSION_TERM = new FPPElementType("ARITHMETIC_EXPRESSION_TERM");
+  IElementType ARITHMETIC_EXPRESSION_MULTIPLICATIVE = new FPPElementType("ARITHMETIC_EXPRESSION_MULTIPLICATIVE");
+  IElementType ARITHMETIC_EXPRESSION_UNARY = new FPPElementType("ARITHMETIC_EXPRESSION_UNARY");
   IElementType ARRAY_DEFINITION = new FPPElementType("ARRAY_DEFINITION");
+  IElementType ARRAY_ELEMENT_SEQUENCE = new FPPElementType("ARRAY_ELEMENT_SEQUENCE");
+  IElementType ARRAY_EXPRESSION = new FPPElementType("ARRAY_EXPRESSION");
   IElementType CHOICE_DEFINITION = new FPPElementType("CHOICE_DEFINITION");
   IElementType COMMAND_KIND = new FPPElementType("COMMAND_KIND");
   IElementType COMMAND_SPECIFIER = new FPPElementType("COMMAND_SPECIFIER");
@@ -42,6 +43,9 @@ public interface FPPTypes {
   IElementType EVENT_SEVERITY = new FPPElementType("EVENT_SEVERITY");
   IElementType EVENT_SPECIFIER = new FPPElementType("EVENT_SPECIFIER");
   IElementType EXPRESSION = new FPPElementType("EXPRESSION");
+  IElementType EXPRESSION_POSTFIX = new FPPElementType("EXPRESSION_POSTFIX");
+  IElementType EXPRESSION_POSTFIX_OPERATIONS = new FPPElementType("EXPRESSION_POSTFIX_OPERATIONS");
+  IElementType EXPRESSION_PRIMARY = new FPPElementType("EXPRESSION_PRIMARY");
   IElementType FLOATING_POINT_TYPE_NAME = new FPPElementType("FLOATING_POINT_TYPE_NAME");
   IElementType FORMAL_PARAMETER = new FPPElementType("FORMAL_PARAMETER");
   IElementType GENERAL_PORT_KIND = new FPPElementType("GENERAL_PORT_KIND");
@@ -92,6 +96,9 @@ public interface FPPTypes {
   IElementType STATE_TRANSITION_SPECIFIER = new FPPElementType("STATE_TRANSITION_SPECIFIER");
   IElementType STRING_TYPE_NAME = new FPPElementType("STRING_TYPE_NAME");
   IElementType STRUCT_DEFINITION = new FPPElementType("STRUCT_DEFINITION");
+  IElementType STRUCT_ELEMENT = new FPPElementType("STRUCT_ELEMENT");
+  IElementType STRUCT_ELEMENT_SEQUENCE = new FPPElementType("STRUCT_ELEMENT_SEQUENCE");
+  IElementType STRUCT_EXPRESSION = new FPPElementType("STRUCT_EXPRESSION");
   IElementType STRUCT_TYPE_MEMBER = new FPPElementType("STRUCT_TYPE_MEMBER");
   IElementType STRUCT_TYPE_MEMBER_SEQUENCE = new FPPElementType("STRUCT_TYPE_MEMBER_SEQUENCE");
   IElementType TELEMETRY_CHANNEL_IDENTIFIER = new FPPElementType("TELEMETRY_CHANNEL_IDENTIFIER");
@@ -132,6 +139,7 @@ public interface FPPTypes {
   IElementType BASE = new FPPTokenType("base");
   IElementType BLOCK = new FPPTokenType("block");
   IElementType BOOL = new FPPTokenType("bool");
+  IElementType BOOLEAN_LITERAL = new FPPTokenType("BOOLEAN_LITERAL");
   IElementType CHANGE = new FPPTokenType("change");
   IElementType CHOICE = new FPPTokenType("choice");
   IElementType COLON = new FPPTokenType(":");
@@ -272,17 +280,20 @@ public interface FPPTypes {
       else if (type == ARITHMETIC_EXPRESSION) {
         return new FPPArithmeticExpressionImpl(node);
       }
-      else if (type == ARITHMETIC_EXPRESSION_FACTOR) {
-        return new FPPArithmeticExpressionFactorImpl(node);
+      else if (type == ARITHMETIC_EXPRESSION_MULTIPLICATIVE) {
+        return new FPPArithmeticExpressionMultiplicativeImpl(node);
       }
-      else if (type == ARITHMETIC_EXPRESSION_PRIMARY) {
-        return new FPPArithmeticExpressionPrimaryImpl(node);
-      }
-      else if (type == ARITHMETIC_EXPRESSION_TERM) {
-        return new FPPArithmeticExpressionTermImpl(node);
+      else if (type == ARITHMETIC_EXPRESSION_UNARY) {
+        return new FPPArithmeticExpressionUnaryImpl(node);
       }
       else if (type == ARRAY_DEFINITION) {
         return new FPPArrayDefinitionImpl(node);
+      }
+      else if (type == ARRAY_ELEMENT_SEQUENCE) {
+        return new FPPArrayElementSequenceImpl(node);
+      }
+      else if (type == ARRAY_EXPRESSION) {
+        return new FPPArrayExpressionImpl(node);
       }
       else if (type == CHOICE_DEFINITION) {
         return new FPPChoiceDefinitionImpl(node);
@@ -358,6 +369,15 @@ public interface FPPTypes {
       }
       else if (type == EXPRESSION) {
         return new FPPExpressionImpl(node);
+      }
+      else if (type == EXPRESSION_POSTFIX) {
+        return new FPPExpressionPostfixImpl(node);
+      }
+      else if (type == EXPRESSION_POSTFIX_OPERATIONS) {
+        return new FPPExpressionPostfixOperationsImpl(node);
+      }
+      else if (type == EXPRESSION_PRIMARY) {
+        return new FPPExpressionPrimaryImpl(node);
       }
       else if (type == FLOATING_POINT_TYPE_NAME) {
         return new FPPFloatingPointTypeNameImpl(node);
@@ -508,6 +528,15 @@ public interface FPPTypes {
       }
       else if (type == STRUCT_DEFINITION) {
         return new FPPStructDefinitionImpl(node);
+      }
+      else if (type == STRUCT_ELEMENT) {
+        return new FPPStructElementImpl(node);
+      }
+      else if (type == STRUCT_ELEMENT_SEQUENCE) {
+        return new FPPStructElementSequenceImpl(node);
+      }
+      else if (type == STRUCT_EXPRESSION) {
+        return new FPPStructExpressionImpl(node);
       }
       else if (type == STRUCT_TYPE_MEMBER) {
         return new FPPStructTypeMemberImpl(node);

@@ -11,14 +11,14 @@ import static com.kevinthegreat.fpp.psi.FPPTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.kevinthegreat.fpp.psi.*;
 
-public class FPPArithmeticExpressionPrimaryImpl extends ASTWrapperPsiElement implements FPPArithmeticExpressionPrimary {
+public class FPPStructElementImpl extends ASTWrapperPsiElement implements FPPStructElement {
 
-  public FPPArithmeticExpressionPrimaryImpl(@NotNull ASTNode node) {
+  public FPPStructElementImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull FPPVisitor visitor) {
-    visitor.visitArithmeticExpressionPrimary(this);
+    visitor.visitStructElement(this);
   }
 
   @Override
@@ -28,27 +28,15 @@ public class FPPArithmeticExpressionPrimaryImpl extends ASTWrapperPsiElement imp
   }
 
   @Override
-  @Nullable
+  @NotNull
   public FPPExpression getExpression() {
-    return findChildByClass(FPPExpression.class);
+    return findNotNullChildByClass(FPPExpression.class);
   }
 
   @Override
-  @Nullable
-  public FPPQualifiedIdentifier getQualifiedIdentifier() {
-    return findChildByClass(FPPQualifiedIdentifier.class);
-  }
-
-  @Override
-  @Nullable
-  public PsiElement getFloatingPointLiteral() {
-    return findChildByType(FLOATING_POINT_LITERAL);
-  }
-
-  @Override
-  @Nullable
-  public PsiElement getIntegerLiteral() {
-    return findChildByType(INTEGER_LITERAL);
+  @NotNull
+  public PsiElement getIdentifier() {
+    return findNotNullChildByType(IDENTIFIER);
   }
 
 }

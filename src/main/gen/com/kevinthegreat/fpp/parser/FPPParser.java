@@ -137,18 +137,18 @@ public class FPPParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // arithmetic_expression_term ( ( ADD | SUB ) arithmetic_expression_term )*
+  // arithmetic_expression_multiplicative ( ( ADD | SUB ) arithmetic_expression_multiplicative )*
   public static boolean arithmetic_expression(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "arithmetic_expression")) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_, level_, _NONE_, ARITHMETIC_EXPRESSION, "<arithmetic expression>");
-    result_ = arithmetic_expression_term(builder_, level_ + 1);
+    result_ = arithmetic_expression_multiplicative(builder_, level_ + 1);
     result_ = result_ && arithmetic_expression_1(builder_, level_ + 1);
     exit_section_(builder_, level_, marker_, result_, false, null);
     return result_;
   }
 
-  // ( ( ADD | SUB ) arithmetic_expression_term )*
+  // ( ( ADD | SUB ) arithmetic_expression_multiplicative )*
   private static boolean arithmetic_expression_1(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "arithmetic_expression_1")) return false;
     while (true) {
@@ -159,13 +159,13 @@ public class FPPParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // ( ADD | SUB ) arithmetic_expression_term
+  // ( ADD | SUB ) arithmetic_expression_multiplicative
   private static boolean arithmetic_expression_1_0(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "arithmetic_expression_1_0")) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_);
     result_ = arithmetic_expression_1_0_0(builder_, level_ + 1);
-    result_ = result_ && arithmetic_expression_term(builder_, level_ + 1);
+    result_ = result_ && arithmetic_expression_multiplicative(builder_, level_ + 1);
     exit_section_(builder_, marker_, null, result_);
     return result_;
   }
@@ -180,98 +180,69 @@ public class FPPParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // SUB arithmetic_expression_factor
-  //                                 | arithmetic_expression_primary
-  public static boolean arithmetic_expression_factor(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "arithmetic_expression_factor")) return false;
+  // arithmetic_expression_unary ( ( MUL | DIV ) arithmetic_expression_unary )*
+  public static boolean arithmetic_expression_multiplicative(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "arithmetic_expression_multiplicative")) return false;
     boolean result_;
-    Marker marker_ = enter_section_(builder_, level_, _NONE_, ARITHMETIC_EXPRESSION_FACTOR, "<arithmetic expression factor>");
-    result_ = arithmetic_expression_factor_0(builder_, level_ + 1);
-    if (!result_) result_ = arithmetic_expression_primary(builder_, level_ + 1);
+    Marker marker_ = enter_section_(builder_, level_, _NONE_, ARITHMETIC_EXPRESSION_MULTIPLICATIVE, "<arithmetic expression multiplicative>");
+    result_ = arithmetic_expression_unary(builder_, level_ + 1);
+    result_ = result_ && arithmetic_expression_multiplicative_1(builder_, level_ + 1);
     exit_section_(builder_, level_, marker_, result_, false, null);
     return result_;
   }
 
-  // SUB arithmetic_expression_factor
-  private static boolean arithmetic_expression_factor_0(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "arithmetic_expression_factor_0")) return false;
-    boolean result_;
-    Marker marker_ = enter_section_(builder_);
-    result_ = consumeToken(builder_, SUB);
-    result_ = result_ && arithmetic_expression_factor(builder_, level_ + 1);
-    exit_section_(builder_, marker_, null, result_);
-    return result_;
-  }
-
-  /* ********************************************************** */
-  // INTEGER_LITERAL
-  //                                 | FLOATING_POINT_LITERAL
-  //                                 | qualified_identifier
-  //                                 | LEFT_PAREN expression RIGHT_PAREN
-  public static boolean arithmetic_expression_primary(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "arithmetic_expression_primary")) return false;
-    boolean result_;
-    Marker marker_ = enter_section_(builder_, level_, _NONE_, ARITHMETIC_EXPRESSION_PRIMARY, "<arithmetic expression primary>");
-    result_ = consumeToken(builder_, INTEGER_LITERAL);
-    if (!result_) result_ = consumeToken(builder_, FLOATING_POINT_LITERAL);
-    if (!result_) result_ = qualified_identifier(builder_, level_ + 1);
-    if (!result_) result_ = arithmetic_expression_primary_3(builder_, level_ + 1);
-    exit_section_(builder_, level_, marker_, result_, false, null);
-    return result_;
-  }
-
-  // LEFT_PAREN expression RIGHT_PAREN
-  private static boolean arithmetic_expression_primary_3(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "arithmetic_expression_primary_3")) return false;
-    boolean result_;
-    Marker marker_ = enter_section_(builder_);
-    result_ = consumeToken(builder_, LEFT_PAREN);
-    result_ = result_ && expression(builder_, level_ + 1);
-    result_ = result_ && consumeToken(builder_, RIGHT_PAREN);
-    exit_section_(builder_, marker_, null, result_);
-    return result_;
-  }
-
-  /* ********************************************************** */
-  // arithmetic_expression_factor ( ( MUL | DIV ) arithmetic_expression_factor )*
-  public static boolean arithmetic_expression_term(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "arithmetic_expression_term")) return false;
-    boolean result_;
-    Marker marker_ = enter_section_(builder_, level_, _NONE_, ARITHMETIC_EXPRESSION_TERM, "<arithmetic expression term>");
-    result_ = arithmetic_expression_factor(builder_, level_ + 1);
-    result_ = result_ && arithmetic_expression_term_1(builder_, level_ + 1);
-    exit_section_(builder_, level_, marker_, result_, false, null);
-    return result_;
-  }
-
-  // ( ( MUL | DIV ) arithmetic_expression_factor )*
-  private static boolean arithmetic_expression_term_1(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "arithmetic_expression_term_1")) return false;
+  // ( ( MUL | DIV ) arithmetic_expression_unary )*
+  private static boolean arithmetic_expression_multiplicative_1(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "arithmetic_expression_multiplicative_1")) return false;
     while (true) {
       int pos_ = current_position_(builder_);
-      if (!arithmetic_expression_term_1_0(builder_, level_ + 1)) break;
-      if (!empty_element_parsed_guard_(builder_, "arithmetic_expression_term_1", pos_)) break;
+      if (!arithmetic_expression_multiplicative_1_0(builder_, level_ + 1)) break;
+      if (!empty_element_parsed_guard_(builder_, "arithmetic_expression_multiplicative_1", pos_)) break;
     }
     return true;
   }
 
-  // ( MUL | DIV ) arithmetic_expression_factor
-  private static boolean arithmetic_expression_term_1_0(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "arithmetic_expression_term_1_0")) return false;
+  // ( MUL | DIV ) arithmetic_expression_unary
+  private static boolean arithmetic_expression_multiplicative_1_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "arithmetic_expression_multiplicative_1_0")) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_);
-    result_ = arithmetic_expression_term_1_0_0(builder_, level_ + 1);
-    result_ = result_ && arithmetic_expression_factor(builder_, level_ + 1);
+    result_ = arithmetic_expression_multiplicative_1_0_0(builder_, level_ + 1);
+    result_ = result_ && arithmetic_expression_unary(builder_, level_ + 1);
     exit_section_(builder_, marker_, null, result_);
     return result_;
   }
 
   // MUL | DIV
-  private static boolean arithmetic_expression_term_1_0_0(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "arithmetic_expression_term_1_0_0")) return false;
+  private static boolean arithmetic_expression_multiplicative_1_0_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "arithmetic_expression_multiplicative_1_0_0")) return false;
     boolean result_;
     result_ = consumeToken(builder_, MUL);
     if (!result_) result_ = consumeToken(builder_, DIV);
+    return result_;
+  }
+
+  /* ********************************************************** */
+  // SUB arithmetic_expression_unary
+  //                                 | expression_postfix
+  public static boolean arithmetic_expression_unary(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "arithmetic_expression_unary")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_, level_, _NONE_, ARITHMETIC_EXPRESSION_UNARY, "<arithmetic expression unary>");
+    result_ = arithmetic_expression_unary_0(builder_, level_ + 1);
+    if (!result_) result_ = expression_postfix(builder_, level_ + 1);
+    exit_section_(builder_, level_, marker_, result_, false, null);
+    return result_;
+  }
+
+  // SUB arithmetic_expression_unary
+  private static boolean arithmetic_expression_unary_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "arithmetic_expression_unary_0")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeToken(builder_, SUB);
+    result_ = result_ && arithmetic_expression_unary(builder_, level_ + 1);
+    exit_section_(builder_, marker_, null, result_);
     return result_;
   }
 
@@ -315,6 +286,65 @@ public class FPPParser implements PsiParser, LightPsiParser {
     if (!recursion_guard_(builder_, level_, "array_definition_8")) return false;
     parseTokens(builder_, 0, FORMAT, STRING_LITERAL);
     return true;
+  }
+
+  /* ********************************************************** */
+  // (expression (COMMA | END_OF_LINE)*)*
+  public static boolean array_element_sequence(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "array_element_sequence")) return false;
+    Marker marker_ = enter_section_(builder_, level_, _NONE_, ARRAY_ELEMENT_SEQUENCE, "<array element sequence>");
+    while (true) {
+      int pos_ = current_position_(builder_);
+      if (!array_element_sequence_0(builder_, level_ + 1)) break;
+      if (!empty_element_parsed_guard_(builder_, "array_element_sequence", pos_)) break;
+    }
+    exit_section_(builder_, level_, marker_, true, false, null);
+    return true;
+  }
+
+  // expression (COMMA | END_OF_LINE)*
+  private static boolean array_element_sequence_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "array_element_sequence_0")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = expression(builder_, level_ + 1);
+    result_ = result_ && array_element_sequence_0_1(builder_, level_ + 1);
+    exit_section_(builder_, marker_, null, result_);
+    return result_;
+  }
+
+  // (COMMA | END_OF_LINE)*
+  private static boolean array_element_sequence_0_1(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "array_element_sequence_0_1")) return false;
+    while (true) {
+      int pos_ = current_position_(builder_);
+      if (!array_element_sequence_0_1_0(builder_, level_ + 1)) break;
+      if (!empty_element_parsed_guard_(builder_, "array_element_sequence_0_1", pos_)) break;
+    }
+    return true;
+  }
+
+  // COMMA | END_OF_LINE
+  private static boolean array_element_sequence_0_1_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "array_element_sequence_0_1_0")) return false;
+    boolean result_;
+    result_ = consumeToken(builder_, COMMA);
+    if (!result_) result_ = consumeToken(builder_, END_OF_LINE);
+    return result_;
+  }
+
+  /* ********************************************************** */
+  // LEFT_BRACKET array_element_sequence RIGHT_BRACKET
+  public static boolean array_expression(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "array_expression")) return false;
+    if (!nextTokenIs(builder_, LEFT_BRACKET)) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeToken(builder_, LEFT_BRACKET);
+    result_ = result_ && array_element_sequence(builder_, level_ + 1);
+    result_ = result_ && consumeToken(builder_, RIGHT_BRACKET);
+    exit_section_(builder_, marker_, ARRAY_EXPRESSION, result_);
+    return result_;
   }
 
   /* ********************************************************** */
@@ -1177,6 +1207,103 @@ public class FPPParser implements PsiParser, LightPsiParser {
     Marker marker_ = enter_section_(builder_, level_, _NONE_, EXPRESSION, "<expression>");
     result_ = arithmetic_expression(builder_, level_ + 1);
     exit_section_(builder_, level_, marker_, result_, false, null);
+    return result_;
+  }
+
+  /* ********************************************************** */
+  // expression_primary expression_postfix_operations*
+  public static boolean expression_postfix(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "expression_postfix")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_, level_, _NONE_, EXPRESSION_POSTFIX, "<expression postfix>");
+    result_ = expression_primary(builder_, level_ + 1);
+    result_ = result_ && expression_postfix_1(builder_, level_ + 1);
+    exit_section_(builder_, level_, marker_, result_, false, null);
+    return result_;
+  }
+
+  // expression_postfix_operations*
+  private static boolean expression_postfix_1(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "expression_postfix_1")) return false;
+    while (true) {
+      int pos_ = current_position_(builder_);
+      if (!expression_postfix_operations(builder_, level_ + 1)) break;
+      if (!empty_element_parsed_guard_(builder_, "expression_postfix_1", pos_)) break;
+    }
+    return true;
+  }
+
+  /* ********************************************************** */
+  // expression LEFT_BRACKET expression RIGHT_BRACKET // 10.3. Array Subscript Expressions
+  //                                 | expression DOT IDENTIFIER
+  public static boolean expression_postfix_operations(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "expression_postfix_operations")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_, level_, _NONE_, EXPRESSION_POSTFIX_OPERATIONS, "<expression postfix operations>");
+    result_ = expression_postfix_operations_0(builder_, level_ + 1);
+    if (!result_) result_ = expression_postfix_operations_1(builder_, level_ + 1);
+    exit_section_(builder_, level_, marker_, result_, false, null);
+    return result_;
+  }
+
+  // expression LEFT_BRACKET expression RIGHT_BRACKET
+  private static boolean expression_postfix_operations_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "expression_postfix_operations_0")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = expression(builder_, level_ + 1);
+    result_ = result_ && consumeToken(builder_, LEFT_BRACKET);
+    result_ = result_ && expression(builder_, level_ + 1);
+    result_ = result_ && consumeToken(builder_, RIGHT_BRACKET);
+    exit_section_(builder_, marker_, null, result_);
+    return result_;
+  }
+
+  // expression DOT IDENTIFIER
+  private static boolean expression_postfix_operations_1(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "expression_postfix_operations_1")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = expression(builder_, level_ + 1);
+    result_ = result_ && consumeTokens(builder_, 0, DOT, IDENTIFIER);
+    exit_section_(builder_, marker_, null, result_);
+    return result_;
+  }
+
+  /* ********************************************************** */
+  // array_expression
+  //                     | BOOLEAN_LITERAL // 10.4. Boolean Literals
+  //                     | FLOATING_POINT_LITERAL // 10.6. Floating-Point Literals
+  //                     | qualified_identifier // 10.7. Identifier Expressions
+  //                     | INTEGER_LITERAL // 10.8. Integer Literals
+  //                     | LEFT_PAREN expression RIGHT_PAREN // 10.9. Parenthesis Expressions
+  //                     | STRING_LITERAL // 10.10. String Literals
+  //                     | struct_expression
+  public static boolean expression_primary(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "expression_primary")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_, level_, _NONE_, EXPRESSION_PRIMARY, "<expression primary>");
+    result_ = array_expression(builder_, level_ + 1);
+    if (!result_) result_ = consumeToken(builder_, BOOLEAN_LITERAL);
+    if (!result_) result_ = consumeToken(builder_, FLOATING_POINT_LITERAL);
+    if (!result_) result_ = qualified_identifier(builder_, level_ + 1);
+    if (!result_) result_ = consumeToken(builder_, INTEGER_LITERAL);
+    if (!result_) result_ = expression_primary_5(builder_, level_ + 1);
+    if (!result_) result_ = consumeToken(builder_, STRING_LITERAL);
+    if (!result_) result_ = struct_expression(builder_, level_ + 1);
+    exit_section_(builder_, level_, marker_, result_, false, null);
+    return result_;
+  }
+
+  // LEFT_PAREN expression RIGHT_PAREN
+  private static boolean expression_primary_5(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "expression_primary_5")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeToken(builder_, LEFT_PAREN);
+    result_ = result_ && expression(builder_, level_ + 1);
+    result_ = result_ && consumeToken(builder_, RIGHT_PAREN);
+    exit_section_(builder_, marker_, null, result_);
     return result_;
   }
 
@@ -2675,6 +2802,78 @@ public class FPPParser implements PsiParser, LightPsiParser {
     result_ = consumeToken(builder_, DEFAULT);
     result_ = result_ && expression(builder_, level_ + 1);
     exit_section_(builder_, marker_, null, result_);
+    return result_;
+  }
+
+  /* ********************************************************** */
+  // IDENTIFIER ASSIGN expression
+  public static boolean struct_element(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "struct_element")) return false;
+    if (!nextTokenIs(builder_, IDENTIFIER)) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeTokens(builder_, 0, IDENTIFIER, ASSIGN);
+    result_ = result_ && expression(builder_, level_ + 1);
+    exit_section_(builder_, marker_, STRUCT_ELEMENT, result_);
+    return result_;
+  }
+
+  /* ********************************************************** */
+  // (struct_element (COMMA | END_OF_LINE)*)*
+  public static boolean struct_element_sequence(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "struct_element_sequence")) return false;
+    Marker marker_ = enter_section_(builder_, level_, _NONE_, STRUCT_ELEMENT_SEQUENCE, "<struct element sequence>");
+    while (true) {
+      int pos_ = current_position_(builder_);
+      if (!struct_element_sequence_0(builder_, level_ + 1)) break;
+      if (!empty_element_parsed_guard_(builder_, "struct_element_sequence", pos_)) break;
+    }
+    exit_section_(builder_, level_, marker_, true, false, null);
+    return true;
+  }
+
+  // struct_element (COMMA | END_OF_LINE)*
+  private static boolean struct_element_sequence_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "struct_element_sequence_0")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = struct_element(builder_, level_ + 1);
+    result_ = result_ && struct_element_sequence_0_1(builder_, level_ + 1);
+    exit_section_(builder_, marker_, null, result_);
+    return result_;
+  }
+
+  // (COMMA | END_OF_LINE)*
+  private static boolean struct_element_sequence_0_1(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "struct_element_sequence_0_1")) return false;
+    while (true) {
+      int pos_ = current_position_(builder_);
+      if (!struct_element_sequence_0_1_0(builder_, level_ + 1)) break;
+      if (!empty_element_parsed_guard_(builder_, "struct_element_sequence_0_1", pos_)) break;
+    }
+    return true;
+  }
+
+  // COMMA | END_OF_LINE
+  private static boolean struct_element_sequence_0_1_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "struct_element_sequence_0_1_0")) return false;
+    boolean result_;
+    result_ = consumeToken(builder_, COMMA);
+    if (!result_) result_ = consumeToken(builder_, END_OF_LINE);
+    return result_;
+  }
+
+  /* ********************************************************** */
+  // LEFT_BRACE struct_element_sequence RIGHT_BRACE
+  public static boolean struct_expression(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "struct_expression")) return false;
+    if (!nextTokenIs(builder_, LEFT_BRACE)) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeToken(builder_, LEFT_BRACE);
+    result_ = result_ && struct_element_sequence(builder_, level_ + 1);
+    result_ = result_ && consumeToken(builder_, RIGHT_BRACE);
+    exit_section_(builder_, marker_, STRUCT_EXPRESSION, result_);
     return result_;
   }
 
