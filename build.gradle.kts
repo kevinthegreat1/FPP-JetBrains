@@ -1,12 +1,12 @@
 plugins {
     id("java")
     id("org.jetbrains.kotlin.jvm") version "2.2.20"
-    id("org.jetbrains.intellij.platform") version "2.3.0"
+    id("org.jetbrains.intellij.platform") version "2.9.0"
     id("org.jetbrains.grammarkit") version "2022.3.2.2"
 }
 
 group = "com.kevinthegreat"
-version = "1.0-SNAPSHOT"
+version = "0.1.0"
 
 repositories {
     mavenCentral()
@@ -44,6 +44,18 @@ intellijPlatform {
         changeNotes = """
       Initial version
     """.trimIndent()
+    }
+
+    buildSearchableOptions = false
+
+    signing {
+        privateKey = System.getenv("INTELLIJ_SIGNING_PRIVATE_KEY")
+        password = System.getenv("INTELLIJ_SIGNING_PASSWORD")
+        certificateChain = System.getenv("INTELLIJ_SIGNING_CERTIFICATE_CHAIN")
+    }
+
+    publishing {
+        token = System.getenv("INTELLIJ_PUBLISHING_TOKEN")
     }
 }
 
