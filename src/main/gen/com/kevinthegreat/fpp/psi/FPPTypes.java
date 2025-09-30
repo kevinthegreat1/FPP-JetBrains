@@ -18,6 +18,7 @@ public interface FPPTypes {
   IElementType ARRAY_DEFINITION = new FPPElementType("ARRAY_DEFINITION");
   IElementType ARRAY_ELEMENT_SEQUENCE = new FPPElementType("ARRAY_ELEMENT_SEQUENCE");
   IElementType ARRAY_EXPRESSION = new FPPElementType("ARRAY_EXPRESSION");
+  IElementType BOOLEAN_LITERAL = new FPPElementType("BOOLEAN_LITERAL");
   IElementType CHOICE_DEFINITION = new FPPElementType("CHOICE_DEFINITION");
   IElementType COMMAND_KIND = new FPPElementType("COMMAND_KIND");
   IElementType COMMAND_SPECIFIER = new FPPElementType("COMMAND_SPECIFIER");
@@ -139,7 +140,6 @@ public interface FPPTypes {
   IElementType BASE = new FPPTokenType("base");
   IElementType BLOCK = new FPPTokenType("block");
   IElementType BOOL = new FPPTokenType("bool");
-  IElementType BOOLEAN_LITERAL = new FPPTokenType("BOOLEAN_LITERAL");
   IElementType CHANGE = new FPPTokenType("change");
   IElementType CHOICE = new FPPTokenType("choice");
   IElementType COLON = new FPPTokenType(":");
@@ -294,6 +294,9 @@ public interface FPPTypes {
       }
       else if (type == ARRAY_EXPRESSION) {
         return new FPPArrayExpressionImpl(node);
+      }
+      else if (type == BOOLEAN_LITERAL) {
+        return new FPPBooleanLiteralImpl(node);
       }
       else if (type == CHOICE_DEFINITION) {
         return new FPPChoiceDefinitionImpl(node);

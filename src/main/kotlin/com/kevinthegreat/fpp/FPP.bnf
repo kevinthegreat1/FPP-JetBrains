@@ -152,8 +152,6 @@
     POST_ANNOTATION="regexp:@<[^\r\n]*"
     WHITESPACE="regexp: +"
 
-    // 10.4. Boolean Literals
-    BOOLEAN_LITERAL
     // 10.6. Floating-Point Literals
     FLOATING_POINT_LITERAL
     // 10.8. Integer Literals
@@ -424,7 +422,7 @@ expression_postfix ::= expression_primary expression_postfix_operations*
 expression_postfix_operations ::= expression LEFT_BRACKET expression RIGHT_BRACKET // 10.3. Array Subscript Expressions
                                 | expression DOT IDENTIFIER // 10.5. Dot Expressions
 expression_primary ::= array_expression
-                    | BOOLEAN_LITERAL // 10.4. Boolean Literals
+                    | boolean_literal // 10.4. Boolean Literals
                     | FLOATING_POINT_LITERAL // 10.6. Floating-Point Literals
                     | qualified_identifier // 10.7. Identifier Expressions
                     | INTEGER_LITERAL // 10.8. Integer Literals
@@ -434,6 +432,8 @@ expression_primary ::= array_expression
 // 10.2. Array Expressions
 array_expression ::= LEFT_BRACKET array_element_sequence RIGHT_BRACKET
 array_element_sequence ::= (expression (COMMA | END_OF_LINE)*)*
+// 10.4. Boolean Literals
+boolean_literal ::= TRUE | FALSE
 // 10.11. Struct Expressions
 struct_expression ::= LEFT_BRACE struct_element_sequence RIGHT_BRACE
 struct_element_sequence ::= (struct_element (COMMA | END_OF_LINE)*)*

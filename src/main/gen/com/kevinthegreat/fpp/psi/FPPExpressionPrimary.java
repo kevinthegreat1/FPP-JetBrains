@@ -11,6 +11,9 @@ public interface FPPExpressionPrimary extends PsiElement {
   FPPArrayExpression getArrayExpression();
 
   @Nullable
+  FPPBooleanLiteral getBooleanLiteral();
+
+  @Nullable
   FPPExpression getExpression();
 
   @Nullable
@@ -18,9 +21,6 @@ public interface FPPExpressionPrimary extends PsiElement {
 
   @Nullable
   FPPStructExpression getStructExpression();
-
-  @Nullable
-  PsiElement getBooleanLiteral();
 
   @Nullable
   PsiElement getFloatingPointLiteral();

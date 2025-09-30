@@ -47,6 +47,10 @@ public class FPPVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitBooleanLiteral(@NotNull FPPBooleanLiteral o) {
+    visitPsiElement(o);
+  }
+
   public void visitChoiceDefinition(@NotNull FPPChoiceDefinition o) {
     visitPsiElement(o);
   }

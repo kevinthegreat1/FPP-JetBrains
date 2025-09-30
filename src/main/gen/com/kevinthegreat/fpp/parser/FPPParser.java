@@ -348,6 +348,19 @@ public class FPPParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // TRUE | FALSE
+  public static boolean boolean_literal(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "boolean_literal")) return false;
+    if (!nextTokenIs(builder_, "<boolean literal>", FALSE, TRUE)) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_, level_, _NONE_, BOOLEAN_LITERAL, "<boolean literal>");
+    result_ = consumeToken(builder_, TRUE);
+    if (!result_) result_ = consumeToken(builder_, FALSE);
+    exit_section_(builder_, level_, marker_, result_, false, null);
+    return result_;
+  }
+
+  /* ********************************************************** */
   // CHOICE IDENTIFIER LEFT_BRACE IF IDENTIFIER transition_expression ELSE transition_expression RIGHT_BRACE
   public static boolean choice_definition(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "choice_definition")) return false;
@@ -1272,7 +1285,7 @@ public class FPPParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // array_expression
-  //                     | BOOLEAN_LITERAL // 10.4. Boolean Literals
+  //                     | boolean_literal // 10.4. Boolean Literals
   //                     | FLOATING_POINT_LITERAL // 10.6. Floating-Point Literals
   //                     | qualified_identifier // 10.7. Identifier Expressions
   //                     | INTEGER_LITERAL // 10.8. Integer Literals
@@ -1284,7 +1297,7 @@ public class FPPParser implements PsiParser, LightPsiParser {
     boolean result_;
     Marker marker_ = enter_section_(builder_, level_, _NONE_, EXPRESSION_PRIMARY, "<expression primary>");
     result_ = array_expression(builder_, level_ + 1);
-    if (!result_) result_ = consumeToken(builder_, BOOLEAN_LITERAL);
+    if (!result_) result_ = boolean_literal(builder_, level_ + 1);
     if (!result_) result_ = consumeToken(builder_, FLOATING_POINT_LITERAL);
     if (!result_) result_ = qualified_identifier(builder_, level_ + 1);
     if (!result_) result_ = consumeToken(builder_, INTEGER_LITERAL);

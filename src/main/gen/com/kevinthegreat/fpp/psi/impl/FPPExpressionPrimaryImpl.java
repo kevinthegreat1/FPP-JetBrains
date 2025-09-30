@@ -35,6 +35,12 @@ public class FPPExpressionPrimaryImpl extends ASTWrapperPsiElement implements FP
 
   @Override
   @Nullable
+  public FPPBooleanLiteral getBooleanLiteral() {
+    return findChildByClass(FPPBooleanLiteral.class);
+  }
+
+  @Override
+  @Nullable
   public FPPExpression getExpression() {
     return findChildByClass(FPPExpression.class);
   }
@@ -49,12 +55,6 @@ public class FPPExpressionPrimaryImpl extends ASTWrapperPsiElement implements FP
   @Nullable
   public FPPStructExpression getStructExpression() {
     return findChildByClass(FPPStructExpression.class);
-  }
-
-  @Override
-  @Nullable
-  public PsiElement getBooleanLiteral() {
-    return findChildByType(BOOLEAN_LITERAL);
   }
 
   @Override
