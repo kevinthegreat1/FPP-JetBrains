@@ -38,4 +38,9 @@
                 language="FPP"
                 implementationClass="com.kevinthegreat.fpp.highlighter.FPPSyntaxHighlighterFactory"/>
     </extensions>
+    <extensions defaultExtensionNs="com.intellij">
+        <lang.commenter
+                language="FPP"
+                implementationClass="com.kevinthegreat.fpp.FPPCommenter"/>
+    </extensions>
 </idea-plugin>

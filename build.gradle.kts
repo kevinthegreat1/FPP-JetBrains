@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "com.kevinthegreat"
-version = "0.1.1"
+version = "0.1.2"
 
 repositories {
     mavenCentral()
@@ -42,6 +42,7 @@ intellijPlatform {
         }
 
         changeNotes = """
+            Add commenter
             Add support for fppi files
         """.trimIndent()
     }
