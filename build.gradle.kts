@@ -42,8 +42,8 @@ intellijPlatform {
         }
 
         changeNotes = """
-      Initial version
-    """.trimIndent()
+            Add support for fppi files
+        """.trimIndent()
     }
 
     buildSearchableOptions = false
