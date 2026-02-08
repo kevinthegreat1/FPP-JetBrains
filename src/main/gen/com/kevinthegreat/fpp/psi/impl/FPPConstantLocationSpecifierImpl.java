@@ -29,8 +29,8 @@ public class FPPConstantLocationSpecifierImpl extends ASTWrapperPsiElement imple
 
   @Override
   @NotNull
-  public FPPQualifiedIdentifier getQualifiedIdentifier() {
-    return findNotNullChildByClass(FPPQualifiedIdentifier.class);
+  public FPPQualifiedIdentifierConstantDefinition getQualifiedIdentifierConstantDefinition() {
+    return findNotNullChildByClass(FPPQualifiedIdentifierConstantDefinition.class);
   }
 
   @Override

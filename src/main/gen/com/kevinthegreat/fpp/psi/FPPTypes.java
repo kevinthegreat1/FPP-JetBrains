@@ -72,6 +72,7 @@ public interface FPPTypes {
   IElementType PORT_INSTANCE_SPECIFIER = new FPPElementType("PORT_INSTANCE_SPECIFIER");
   IElementType PORT_INSTANCE_TYPE = new FPPElementType("PORT_INSTANCE_TYPE");
   IElementType PORT_INTERFACE_DEFINITION = new FPPElementType("PORT_INTERFACE_DEFINITION");
+  IElementType PORT_INTERFACE_LOCATION_SPECIFIER = new FPPElementType("PORT_INTERFACE_LOCATION_SPECIFIER");
   IElementType PORT_INTERFACE_MEMBER = new FPPElementType("PORT_INTERFACE_MEMBER");
   IElementType PORT_INTERFACE_MEMBER_SEQUENCE = new FPPElementType("PORT_INTERFACE_MEMBER_SEQUENCE");
   IElementType PORT_LOCATION_SPECIFIER = new FPPElementType("PORT_LOCATION_SPECIFIER");
@@ -79,6 +80,14 @@ public interface FPPTypes {
   IElementType PRIMITIVE_INTEGER_TYPE_NAME = new FPPElementType("PRIMITIVE_INTEGER_TYPE_NAME");
   IElementType QUALIFIED_IDENTIFIER = new FPPElementType("QUALIFIED_IDENTIFIER");
   IElementType QUALIFIED_IDENTIFIER_COMPONENT_DEFINITION = new FPPElementType("QUALIFIED_IDENTIFIER_COMPONENT_DEFINITION");
+  IElementType QUALIFIED_IDENTIFIER_COMPONENT_INSTANCE_DEFINITION = new FPPElementType("QUALIFIED_IDENTIFIER_COMPONENT_INSTANCE_DEFINITION");
+  IElementType QUALIFIED_IDENTIFIER_CONSTANT_DEFINITION = new FPPElementType("QUALIFIED_IDENTIFIER_CONSTANT_DEFINITION");
+  IElementType QUALIFIED_IDENTIFIER_PORT_DEFINITION = new FPPElementType("QUALIFIED_IDENTIFIER_PORT_DEFINITION");
+  IElementType QUALIFIED_IDENTIFIER_PORT_INTERFACE_DEFINITION = new FPPElementType("QUALIFIED_IDENTIFIER_PORT_INTERFACE_DEFINITION");
+  IElementType QUALIFIED_IDENTIFIER_STATE_MACHINE_DEFINITION = new FPPElementType("QUALIFIED_IDENTIFIER_STATE_MACHINE_DEFINITION");
+  IElementType QUALIFIED_IDENTIFIER_STATE_OR_CHOICE_DEFINITION = new FPPElementType("QUALIFIED_IDENTIFIER_STATE_OR_CHOICE_DEFINITION");
+  IElementType QUALIFIED_IDENTIFIER_TOPOLOGY_DEFINITION = new FPPElementType("QUALIFIED_IDENTIFIER_TOPOLOGY_DEFINITION");
+  IElementType QUALIFIED_IDENTIFIER_TYPE_LOCATION_SPECIFIER = new FPPElementType("QUALIFIED_IDENTIFIER_TYPE_LOCATION_SPECIFIER");
   IElementType QUALIFIED_IDENTIFIER_TYPE_NAME = new FPPElementType("QUALIFIED_IDENTIFIER_TYPE_NAME");
   IElementType QUEUE_FULL_BEHAVIOR = new FPPElementType("QUEUE_FULL_BEHAVIOR");
   IElementType RECORD_SPECIFIER = new FPPElementType("RECORD_SPECIFIER");
@@ -459,6 +468,9 @@ public interface FPPTypes {
       else if (type == PORT_INTERFACE_DEFINITION) {
         return new FPPPortInterfaceDefinitionImpl(node);
       }
+      else if (type == PORT_INTERFACE_LOCATION_SPECIFIER) {
+        return new FPPPortInterfaceLocationSpecifierImpl(node);
+      }
       else if (type == PORT_INTERFACE_MEMBER) {
         return new FPPPortInterfaceMemberImpl(node);
       }
@@ -479,6 +491,30 @@ public interface FPPTypes {
       }
       else if (type == QUALIFIED_IDENTIFIER_COMPONENT_DEFINITION) {
         return new FPPQualifiedIdentifierComponentDefinitionImpl(node);
+      }
+      else if (type == QUALIFIED_IDENTIFIER_COMPONENT_INSTANCE_DEFINITION) {
+        return new FPPQualifiedIdentifierComponentInstanceDefinitionImpl(node);
+      }
+      else if (type == QUALIFIED_IDENTIFIER_CONSTANT_DEFINITION) {
+        return new FPPQualifiedIdentifierConstantDefinitionImpl(node);
+      }
+      else if (type == QUALIFIED_IDENTIFIER_PORT_DEFINITION) {
+        return new FPPQualifiedIdentifierPortDefinitionImpl(node);
+      }
+      else if (type == QUALIFIED_IDENTIFIER_PORT_INTERFACE_DEFINITION) {
+        return new FPPQualifiedIdentifierPortInterfaceDefinitionImpl(node);
+      }
+      else if (type == QUALIFIED_IDENTIFIER_STATE_MACHINE_DEFINITION) {
+        return new FPPQualifiedIdentifierStateMachineDefinitionImpl(node);
+      }
+      else if (type == QUALIFIED_IDENTIFIER_STATE_OR_CHOICE_DEFINITION) {
+        return new FPPQualifiedIdentifierStateOrChoiceDefinitionImpl(node);
+      }
+      else if (type == QUALIFIED_IDENTIFIER_TOPOLOGY_DEFINITION) {
+        return new FPPQualifiedIdentifierTopologyDefinitionImpl(node);
+      }
+      else if (type == QUALIFIED_IDENTIFIER_TYPE_LOCATION_SPECIFIER) {
+        return new FPPQualifiedIdentifierTypeLocationSpecifierImpl(node);
       }
       else if (type == QUALIFIED_IDENTIFIER_TYPE_NAME) {
         return new FPPQualifiedIdentifierTypeNameImpl(node);

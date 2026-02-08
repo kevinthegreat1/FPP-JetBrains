@@ -41,8 +41,8 @@ public class FPPPatternGraphSpecifierImpl extends ASTWrapperPsiElement implement
 
   @Override
   @NotNull
-  public FPPQualifiedIdentifier getQualifiedIdentifier() {
-    return findNotNullChildByClass(FPPQualifiedIdentifier.class);
+  public FPPQualifiedIdentifierComponentInstanceDefinition getQualifiedIdentifierComponentInstanceDefinition() {
+    return findNotNullChildByClass(FPPQualifiedIdentifierComponentInstanceDefinition.class);
   }
 
 }

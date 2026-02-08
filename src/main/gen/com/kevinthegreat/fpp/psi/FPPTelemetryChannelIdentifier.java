@@ -7,4 +7,10 @@ import com.intellij.psi.PsiElement;
 
 public interface FPPTelemetryChannelIdentifier extends PsiElement {
 
+  @NotNull
+  FPPQualifiedIdentifierComponentInstanceDefinition getQualifiedIdentifierComponentInstanceDefinition();
+
+  @NotNull
+  PsiElement getIdentifier();
+
 }

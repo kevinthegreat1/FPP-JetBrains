@@ -17,6 +17,9 @@ public interface FPPLocationSpecifier extends PsiElement {
   FPPConstantLocationSpecifier getConstantLocationSpecifier();
 
   @Nullable
+  FPPPortInterfaceLocationSpecifier getPortInterfaceLocationSpecifier();
+
+  @Nullable
   FPPPortLocationSpecifier getPortLocationSpecifier();
 
   @Nullable

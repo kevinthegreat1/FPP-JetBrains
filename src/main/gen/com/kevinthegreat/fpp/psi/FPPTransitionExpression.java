@@ -11,6 +11,6 @@ public interface FPPTransitionExpression extends PsiElement {
   FPPDoExpression getDoExpression();
 
   @NotNull
-  FPPQualifiedIdentifier getQualifiedIdentifier();
+  FPPQualifiedIdentifierStateOrChoiceDefinition getQualifiedIdentifierStateOrChoiceDefinition();
 
 }

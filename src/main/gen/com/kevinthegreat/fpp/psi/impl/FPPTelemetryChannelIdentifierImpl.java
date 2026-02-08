@@ -27,4 +27,16 @@ public class FPPTelemetryChannelIdentifierImpl extends ASTWrapperPsiElement impl
     else super.accept(visitor);
   }
 
+  @Override
+  @NotNull
+  public FPPQualifiedIdentifierComponentInstanceDefinition getQualifiedIdentifierComponentInstanceDefinition() {
+    return findNotNullChildByClass(FPPQualifiedIdentifierComponentInstanceDefinition.class);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getIdentifier() {
+    return findNotNullChildByType(IDENTIFIER);
+  }
+
 }

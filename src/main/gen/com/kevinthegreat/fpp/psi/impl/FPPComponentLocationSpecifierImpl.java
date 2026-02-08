@@ -29,8 +29,8 @@ public class FPPComponentLocationSpecifierImpl extends ASTWrapperPsiElement impl
 
   @Override
   @NotNull
-  public FPPQualifiedIdentifier getQualifiedIdentifier() {
-    return findNotNullChildByClass(FPPQualifiedIdentifier.class);
+  public FPPQualifiedIdentifierComponentDefinition getQualifiedIdentifierComponentDefinition() {
+    return findNotNullChildByClass(FPPQualifiedIdentifierComponentDefinition.class);
   }
 
   @Override

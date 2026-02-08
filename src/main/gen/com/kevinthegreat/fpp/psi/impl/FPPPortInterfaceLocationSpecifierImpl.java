@@ -11,14 +11,14 @@ import static com.kevinthegreat.fpp.psi.FPPTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.kevinthegreat.fpp.psi.*;
 
-public class FPPTypeLocationSpecifierImpl extends ASTWrapperPsiElement implements FPPTypeLocationSpecifier {
+public class FPPPortInterfaceLocationSpecifierImpl extends ASTWrapperPsiElement implements FPPPortInterfaceLocationSpecifier {
 
-  public FPPTypeLocationSpecifierImpl(@NotNull ASTNode node) {
+  public FPPPortInterfaceLocationSpecifierImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull FPPVisitor visitor) {
-    visitor.visitTypeLocationSpecifier(this);
+    visitor.visitPortInterfaceLocationSpecifier(this);
   }
 
   @Override
@@ -29,8 +29,8 @@ public class FPPTypeLocationSpecifierImpl extends ASTWrapperPsiElement implement
 
   @Override
   @NotNull
-  public FPPQualifiedIdentifierTypeLocationSpecifier getQualifiedIdentifierTypeLocationSpecifier() {
-    return findNotNullChildByClass(FPPQualifiedIdentifierTypeLocationSpecifier.class);
+  public FPPQualifiedIdentifierPortInterfaceDefinition getQualifiedIdentifierPortInterfaceDefinition() {
+    return findNotNullChildByClass(FPPQualifiedIdentifierPortInterfaceDefinition.class);
   }
 
   @Override

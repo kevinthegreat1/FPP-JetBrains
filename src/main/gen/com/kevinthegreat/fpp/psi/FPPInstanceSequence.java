@@ -8,6 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface FPPInstanceSequence extends PsiElement {
 
   @NotNull
-  List<FPPQualifiedIdentifier> getQualifiedIdentifierList();
+  List<FPPQualifiedIdentifierComponentInstanceDefinition> getQualifiedIdentifierComponentInstanceDefinitionList();
 
 }

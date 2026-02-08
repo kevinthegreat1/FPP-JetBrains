@@ -11,7 +11,7 @@ public interface FPPStateMachineInstanceSpecifier extends PsiElement {
   FPPExpression getExpression();
 
   @NotNull
-  FPPQualifiedIdentifier getQualifiedIdentifier();
+  FPPQualifiedIdentifierStateMachineDefinition getQualifiedIdentifierStateMachineDefinition();
 
   @Nullable
   FPPQueueFullBehavior getQueueFullBehavior();

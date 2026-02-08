@@ -8,7 +8,7 @@ import com.intellij.psi.PsiElement;
 public interface FPPTopologyLocationSpecifier extends PsiElement {
 
   @NotNull
-  FPPQualifiedIdentifier getQualifiedIdentifier();
+  FPPQualifiedIdentifierTopologyDefinition getQualifiedIdentifierTopologyDefinition();
 
   @NotNull
   PsiElement getStringLiteral();

@@ -29,8 +29,8 @@ public class FPPPortInstanceTypeImpl extends ASTWrapperPsiElement implements FPP
 
   @Override
   @Nullable
-  public FPPQualifiedIdentifier getQualifiedIdentifier() {
-    return findChildByClass(FPPQualifiedIdentifier.class);
+  public FPPQualifiedIdentifierPortDefinition getQualifiedIdentifierPortDefinition() {
+    return findChildByClass(FPPQualifiedIdentifierPortDefinition.class);
   }
 
 }

@@ -14,6 +14,6 @@ public interface FPPPatternGraphSpecifier extends PsiElement {
   FPPPatternKind getPatternKind();
 
   @NotNull
-  FPPQualifiedIdentifier getQualifiedIdentifier();
+  FPPQualifiedIdentifierComponentInstanceDefinition getQualifiedIdentifierComponentInstanceDefinition();
 
 }

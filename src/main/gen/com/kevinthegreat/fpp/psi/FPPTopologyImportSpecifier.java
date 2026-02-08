@@ -8,6 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface FPPTopologyImportSpecifier extends PsiElement {
 
   @NotNull
-  FPPQualifiedIdentifier getQualifiedIdentifier();
+  FPPQualifiedIdentifierTopologyDefinition getQualifiedIdentifierTopologyDefinition();
 
 }

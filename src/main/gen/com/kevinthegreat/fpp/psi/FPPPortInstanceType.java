@@ -8,6 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface FPPPortInstanceType extends PsiElement {
 
   @Nullable
-  FPPQualifiedIdentifier getQualifiedIdentifier();
+  FPPQualifiedIdentifierPortDefinition getQualifiedIdentifierPortDefinition();
 
 }

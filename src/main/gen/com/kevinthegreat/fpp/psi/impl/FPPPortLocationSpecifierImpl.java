@@ -29,8 +29,8 @@ public class FPPPortLocationSpecifierImpl extends ASTWrapperPsiElement implement
 
   @Override
   @NotNull
-  public FPPQualifiedIdentifier getQualifiedIdentifier() {
-    return findNotNullChildByClass(FPPQualifiedIdentifier.class);
+  public FPPQualifiedIdentifierPortDefinition getQualifiedIdentifierPortDefinition() {
+    return findNotNullChildByClass(FPPQualifiedIdentifierPortDefinition.class);
   }
 
   @Override

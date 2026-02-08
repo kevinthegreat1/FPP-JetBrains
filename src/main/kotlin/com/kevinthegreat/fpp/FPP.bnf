@@ -199,7 +199,6 @@ component_member ::= constant_definition
 // 5.5. Component Instance Definitions
 component_instance_definition ::= INSTANCE IDENTIFIER COLON qualified_identifier_component_definition BASE ID expression [ TYPE STRING_LITERAL ] [ AT STRING_LITERAL ] [ QUEUE SIZE expression ] [ STACK SIZE expression ] [ PRIORITY expression ] [ CPU expression ] [ LEFT_BRACE init_specifier_sequence RIGHT_BRACE ]
 init_specifier_sequence ::= (init_specifier (SEMICOLON | END_OF_LINE)*)*
-qualified_identifier_component_definition ::= qualified_identifier
 // 5.6. Constant Definitions
 constant_definition ::= [ DICTIONARY ] CONSTANT IDENTIFIER ASSIGN expression
 // 5.7. Enum Definitions
@@ -286,21 +285,21 @@ state_transition_specifier ::= ON IDENTIFIER [ IF IDENTIFIER ] transition_or_do
 transition_or_do ::= transition_expression
                     | do_expression
 // 6.11. Transition Expressions
-transition_expression ::= [ do_expression ] ENTER qualified_identifier
+transition_expression ::= [ do_expression ] ENTER qualified_identifier_state_or_choice_definition
 
 // 7. Specifiers
 // 7.1. Command Specifiers
 command_specifier ::= command_kind COMMAND IDENTIFIER [ LEFT_PAREN param_list RIGHT_PAREN ] [ OPCODE expression ] [ PRIORITY expression ] [ queue_full_behavior ]
 command_kind ::= ASYNC | GUARDED | SYNC
 // 7.2. Component Instance Specifiers
-component_instance_specifier ::= [ PRIVATE ] INSTANCE qualified_identifier
+component_instance_specifier ::= [ PRIVATE ] INSTANCE qualified_identifier_component_instance_definition
 // 7.3. Connection Graph Specifiers
 connection_graph_specifier ::= direct_graph_specifier
                                 | pattern_graph_specifier
 direct_graph_specifier ::= CONNECTIONS IDENTIFIER LEFT_BRACE connection_sequence RIGHT_BRACE
 connection_sequence ::= (connection (COMMA | END_OF_LINE)*)*
 connection ::= [ UNMATCHED ] port_instance_identifier [ LEFT_BRACKET expression RIGHT_BRACKET ] ARROW port_instance_identifier [ LEFT_BRACKET expression RIGHT_BRACKET ]
-pattern_graph_specifier ::= pattern_kind CONNECTIONS INSTANCE qualified_identifier [ LEFT_BRACE instance_sequence RIGHT_BRACE ]
+pattern_graph_specifier ::= pattern_kind CONNECTIONS INSTANCE qualified_identifier_component_instance_definition [ LEFT_BRACE instance_sequence RIGHT_BRACE ]
 pattern_kind ::= COMMAND
                 | EVENT
                 | HEALTH
@@ -308,7 +307,7 @@ pattern_kind ::= COMMAND
                 | TELEMETRY
                 | TEXT EVENT
                 | TIME
-instance_sequence ::= (qualified_identifier (COMMA | END_OF_LINE)*)*
+instance_sequence ::= (qualified_identifier_component_instance_definition (COMMA | END_OF_LINE)*)*
 // 7.4. Container Specifiers
 container_specifier ::= PRODUCT IDENTIFIER [ ID expression ] [ DEFAULT PRIORITY expression ]
 // 7.5. Event Specifiers
@@ -325,24 +324,26 @@ include_specifier ::= INCLUDE STRING_LITERAL
 // 7.7. Init Specifiers
 init_specifier ::= PHASE expression STRING_LITERAL
 // 7.8. Interface Import Specifiers
-interface_import_specifier ::= IMPORT qualified_identifier
+interface_import_specifier ::= IMPORT qualified_identifier_port_interface_definition
 // 7.9. Internal Port Specifiers
 internal_port_specifier ::= INTERNAL PORT IDENTIFIER [ LEFT_PAREN param_list RIGHT_PAREN ] [ PRIORITY expression ] [ queue_full_behavior ]
 // 7.10. Location Specifiers
 location_specifier ::= component_instance_location_specifier
                         | component_location_specifier
                         | constant_location_specifier
+                        | port_interface_location_specifier
                         | port_location_specifier
                         | state_machine_location_specifier
                         | topology_location_specifier
                         | type_location_specifier
-component_instance_location_specifier ::= LOCATE INSTANCE qualified_identifier AT STRING_LITERAL
-component_location_specifier ::= LOCATE COMPONENT qualified_identifier AT STRING_LITERAL
-constant_location_specifier ::= LOCATE [ DICTIONARY ] CONSTANT qualified_identifier AT STRING_LITERAL
-port_location_specifier ::= LOCATE PORT qualified_identifier AT STRING_LITERAL
-state_machine_location_specifier ::= LOCATE STATE MACHINE qualified_identifier AT STRING_LITERAL
-topology_location_specifier ::= LOCATE TOPOLOGY qualified_identifier AT STRING_LITERAL
-type_location_specifier ::= LOCATE [ DICTIONARY ] TYPE qualified_identifier AT STRING_LITERAL
+component_instance_location_specifier ::= LOCATE INSTANCE qualified_identifier_component_instance_definition AT STRING_LITERAL
+component_location_specifier ::= LOCATE COMPONENT qualified_identifier_component_definition AT STRING_LITERAL
+constant_location_specifier ::= LOCATE [ DICTIONARY ] CONSTANT qualified_identifier_constant_definition AT STRING_LITERAL
+port_interface_location_specifier ::= LOCATE INTERFACE qualified_identifier_port_interface_definition AT STRING_LITERAL
+port_location_specifier ::= LOCATE PORT qualified_identifier_port_definition AT STRING_LITERAL
+state_machine_location_specifier ::= LOCATE STATE MACHINE qualified_identifier_state_machine_definition AT STRING_LITERAL
+topology_location_specifier ::= LOCATE TOPOLOGY qualified_identifier_topology_definition AT STRING_LITERAL
+type_location_specifier ::= LOCATE [ DICTIONARY ] TYPE qualified_identifier_type_location_specifier AT STRING_LITERAL
 // 7.11. Parameter Specifiers
 parameter_specifier ::= [ EXTERNAL ] PARAM IDENTIFIER COLON type_name [ DEFAULT expression ] [ ID expression ] [ SET OPCODE expression ] [ SAVE OPCODE expression ]
 // 7.12. Port Instance Specifiers
@@ -352,7 +353,7 @@ general_port_kind ::= ASYNC INPUT
                         | GUARDED INPUT
                         | OUTPUT
                         | SYNC INPUT
-port_instance_type ::= qualified_identifier
+port_instance_type ::= qualified_identifier_port_definition
                         | SERIAL
 queue_full_behavior ::= ASSERT | BLOCK | DROP | HOOK
 special_port_input_kind ::= ASYNC | GUARDED | SYNC
@@ -374,7 +375,7 @@ port_matching_specifier ::= MATCH IDENTIFIER WITH IDENTIFIER
 // 7.14. Record Specifiers
 record_specifier ::= PRODUCT RECORD IDENTIFIER COLON type_name [ ARRAY ] [ ID expression ]
 // 7.15. State Machine Instance Specifiers
-state_machine_instance_specifier ::= STATE MACHINE INSTANCE IDENTIFIER COLON qualified_identifier [ PRIORITY expression ] [ queue_full_behavior ]
+state_machine_instance_specifier ::= STATE MACHINE INSTANCE IDENTIFIER COLON qualified_identifier_state_machine_definition [ PRIORITY expression ] [ queue_full_behavior ]
 // 7.16. Telemetry Channel Specifiers
 telemetry_channel_specifier ::= TELEMETRY IDENTIFIER COLON type_name [ ID expression ] [ UPDATE telemetry_update ] [ FORMAT STRING_LITERAL ] [ LOW LEFT_BRACE telemetry_limit_sequence RIGHT_BRACE ] [ HIGH LEFT_BRACE telemetry_limit_sequence RIGHT_BRACE ]
 telemetry_update ::= ALWAYS | ON CHANGE
@@ -395,12 +396,12 @@ telemetry_packet_member ::= non_annotatable_include_specifier
                             | telemetry_channel_identifier
 non_annotatable_include_specifier ::= include_specifier
 // 7.19. Topology Import Specifiers
-topology_import_specifier ::= IMPORT qualified_identifier
+topology_import_specifier ::= IMPORT qualified_identifier_topology_definition
 
 // 8.1. Port Instance Identifiers
-port_instance_identifier ::= IDENTIFIER (DOT IDENTIFIER)+
+port_instance_identifier ::= qualified_identifier_component_instance_definition DOT IDENTIFIER
 // 8.2. Telemetry Channel Identifiers
-telemetry_channel_identifier ::= IDENTIFIER (DOT IDENTIFIER)+
+telemetry_channel_identifier ::= qualified_identifier_component_instance_definition DOT IDENTIFIER
 
 // 9. Type Names
 type_name ::= primitive_integer_type_name
@@ -411,7 +412,6 @@ type_name ::= primitive_integer_type_name
 primitive_integer_type_name ::= U8 | U16 | U32 | U64 | I8 | I16 | I32 | I64
 floating_point_type_name ::= F32 | F64
 string_type_name ::= STRING [ SIZE expression ]
-qualified_identifier_type_name ::= qualified_identifier
 
 // 10. Expressions
 expression ::= arithmetic_expression
@@ -452,3 +452,13 @@ translation_unit_member ::= module_member
 
 // 15.1. Qualified Identifiers
 qualified_identifier ::= IDENTIFIER (DOT IDENTIFIER)*
+qualified_identifier_type_name ::= qualified_identifier
+qualified_identifier_component_definition ::= qualified_identifier
+qualified_identifier_state_or_choice_definition ::= qualified_identifier
+qualified_identifier_component_instance_definition ::= qualified_identifier
+qualified_identifier_port_interface_definition ::= qualified_identifier
+qualified_identifier_constant_definition ::= qualified_identifier
+qualified_identifier_port_definition ::= qualified_identifier
+qualified_identifier_state_machine_definition ::= qualified_identifier
+qualified_identifier_topology_definition ::= qualified_identifier
+qualified_identifier_type_location_specifier ::= qualified_identifier

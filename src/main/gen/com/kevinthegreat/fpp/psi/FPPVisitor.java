@@ -263,6 +263,10 @@ public class FPPVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitPortInterfaceLocationSpecifier(@NotNull FPPPortInterfaceLocationSpecifier o) {
+    visitPsiElement(o);
+  }
+
   public void visitPortInterfaceMember(@NotNull FPPPortInterfaceMember o) {
     visitPsiElement(o);
   }
@@ -288,6 +292,38 @@ public class FPPVisitor extends PsiElementVisitor {
   }
 
   public void visitQualifiedIdentifierComponentDefinition(@NotNull FPPQualifiedIdentifierComponentDefinition o) {
+    visitPsiElement(o);
+  }
+
+  public void visitQualifiedIdentifierComponentInstanceDefinition(@NotNull FPPQualifiedIdentifierComponentInstanceDefinition o) {
+    visitPsiElement(o);
+  }
+
+  public void visitQualifiedIdentifierConstantDefinition(@NotNull FPPQualifiedIdentifierConstantDefinition o) {
+    visitPsiElement(o);
+  }
+
+  public void visitQualifiedIdentifierPortDefinition(@NotNull FPPQualifiedIdentifierPortDefinition o) {
+    visitPsiElement(o);
+  }
+
+  public void visitQualifiedIdentifierPortInterfaceDefinition(@NotNull FPPQualifiedIdentifierPortInterfaceDefinition o) {
+    visitPsiElement(o);
+  }
+
+  public void visitQualifiedIdentifierStateMachineDefinition(@NotNull FPPQualifiedIdentifierStateMachineDefinition o) {
+    visitPsiElement(o);
+  }
+
+  public void visitQualifiedIdentifierStateOrChoiceDefinition(@NotNull FPPQualifiedIdentifierStateOrChoiceDefinition o) {
+    visitPsiElement(o);
+  }
+
+  public void visitQualifiedIdentifierTopologyDefinition(@NotNull FPPQualifiedIdentifierTopologyDefinition o) {
+    visitPsiElement(o);
+  }
+
+  public void visitQualifiedIdentifierTypeLocationSpecifier(@NotNull FPPQualifiedIdentifierTypeLocationSpecifier o) {
     visitPsiElement(o);
   }
 

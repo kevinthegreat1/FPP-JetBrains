@@ -29,8 +29,8 @@ public class FPPTopologyLocationSpecifierImpl extends ASTWrapperPsiElement imple
 
   @Override
   @NotNull
-  public FPPQualifiedIdentifier getQualifiedIdentifier() {
-    return findNotNullChildByClass(FPPQualifiedIdentifier.class);
+  public FPPQualifiedIdentifierTopologyDefinition getQualifiedIdentifierTopologyDefinition() {
+    return findNotNullChildByClass(FPPQualifiedIdentifierTopologyDefinition.class);
   }
 
   @Override

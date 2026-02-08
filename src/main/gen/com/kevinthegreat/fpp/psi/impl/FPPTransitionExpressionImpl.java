@@ -35,8 +35,8 @@ public class FPPTransitionExpressionImpl extends ASTWrapperPsiElement implements
 
   @Override
   @NotNull
-  public FPPQualifiedIdentifier getQualifiedIdentifier() {
-    return findNotNullChildByClass(FPPQualifiedIdentifier.class);
+  public FPPQualifiedIdentifierStateOrChoiceDefinition getQualifiedIdentifierStateOrChoiceDefinition() {
+    return findNotNullChildByClass(FPPQualifiedIdentifierStateOrChoiceDefinition.class);
   }
 
 }

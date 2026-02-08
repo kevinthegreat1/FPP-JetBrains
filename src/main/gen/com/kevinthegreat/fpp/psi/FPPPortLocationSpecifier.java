@@ -8,7 +8,7 @@ import com.intellij.psi.PsiElement;
 public interface FPPPortLocationSpecifier extends PsiElement {
 
   @NotNull
-  FPPQualifiedIdentifier getQualifiedIdentifier();
+  FPPQualifiedIdentifierPortDefinition getQualifiedIdentifierPortDefinition();
 
   @NotNull
   PsiElement getStringLiteral();

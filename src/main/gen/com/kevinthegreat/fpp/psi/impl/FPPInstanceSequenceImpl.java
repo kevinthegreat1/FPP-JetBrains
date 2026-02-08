@@ -29,8 +29,8 @@ public class FPPInstanceSequenceImpl extends ASTWrapperPsiElement implements FPP
 
   @Override
   @NotNull
-  public List<FPPQualifiedIdentifier> getQualifiedIdentifierList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, FPPQualifiedIdentifier.class);
+  public List<FPPQualifiedIdentifierComponentInstanceDefinition> getQualifiedIdentifierComponentInstanceDefinitionList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, FPPQualifiedIdentifierComponentInstanceDefinition.class);
   }
 
 }

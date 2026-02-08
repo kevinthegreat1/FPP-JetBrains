@@ -29,8 +29,8 @@ public class FPPStateMachineLocationSpecifierImpl extends ASTWrapperPsiElement i
 
   @Override
   @NotNull
-  public FPPQualifiedIdentifier getQualifiedIdentifier() {
-    return findNotNullChildByClass(FPPQualifiedIdentifier.class);
+  public FPPQualifiedIdentifierStateMachineDefinition getQualifiedIdentifierStateMachineDefinition() {
+    return findNotNullChildByClass(FPPQualifiedIdentifierStateMachineDefinition.class);
   }
 
   @Override

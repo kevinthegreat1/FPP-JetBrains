@@ -29,8 +29,8 @@ public class FPPInterfaceImportSpecifierImpl extends ASTWrapperPsiElement implem
 
   @Override
   @NotNull
-  public FPPQualifiedIdentifier getQualifiedIdentifier() {
-    return findNotNullChildByClass(FPPQualifiedIdentifier.class);
+  public FPPQualifiedIdentifierPortInterfaceDefinition getQualifiedIdentifierPortInterfaceDefinition() {
+    return findNotNullChildByClass(FPPQualifiedIdentifierPortInterfaceDefinition.class);
   }
 
 }

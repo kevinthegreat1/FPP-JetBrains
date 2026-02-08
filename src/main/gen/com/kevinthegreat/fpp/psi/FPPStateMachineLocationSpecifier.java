@@ -8,7 +8,7 @@ import com.intellij.psi.PsiElement;
 public interface FPPStateMachineLocationSpecifier extends PsiElement {
 
   @NotNull
-  FPPQualifiedIdentifier getQualifiedIdentifier();
+  FPPQualifiedIdentifierStateMachineDefinition getQualifiedIdentifierStateMachineDefinition();
 
   @NotNull
   PsiElement getStringLiteral();

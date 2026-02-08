@@ -47,6 +47,12 @@ public class FPPLocationSpecifierImpl extends ASTWrapperPsiElement implements FP
 
   @Override
   @Nullable
+  public FPPPortInterfaceLocationSpecifier getPortInterfaceLocationSpecifier() {
+    return findChildByClass(FPPPortInterfaceLocationSpecifier.class);
+  }
+
+  @Override
+  @Nullable
   public FPPPortLocationSpecifier getPortLocationSpecifier() {
     return findChildByClass(FPPPortLocationSpecifier.class);
   }

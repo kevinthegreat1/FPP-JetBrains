@@ -8,7 +8,7 @@ import com.intellij.psi.PsiElement;
 public interface FPPTypeLocationSpecifier extends PsiElement {
 
   @NotNull
-  FPPQualifiedIdentifier getQualifiedIdentifier();
+  FPPQualifiedIdentifierTypeLocationSpecifier getQualifiedIdentifierTypeLocationSpecifier();
 
   @NotNull
   PsiElement getStringLiteral();

@@ -11,14 +11,14 @@ import static com.kevinthegreat.fpp.psi.FPPTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.kevinthegreat.fpp.psi.*;
 
-public class FPPTypeLocationSpecifierImpl extends ASTWrapperPsiElement implements FPPTypeLocationSpecifier {
+public class FPPQualifiedIdentifierTypeLocationSpecifierImpl extends ASTWrapperPsiElement implements FPPQualifiedIdentifierTypeLocationSpecifier {
 
-  public FPPTypeLocationSpecifierImpl(@NotNull ASTNode node) {
+  public FPPQualifiedIdentifierTypeLocationSpecifierImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull FPPVisitor visitor) {
-    visitor.visitTypeLocationSpecifier(this);
+    visitor.visitQualifiedIdentifierTypeLocationSpecifier(this);
   }
 
   @Override
@@ -29,14 +29,8 @@ public class FPPTypeLocationSpecifierImpl extends ASTWrapperPsiElement implement
 
   @Override
   @NotNull
-  public FPPQualifiedIdentifierTypeLocationSpecifier getQualifiedIdentifierTypeLocationSpecifier() {
-    return findNotNullChildByClass(FPPQualifiedIdentifierTypeLocationSpecifier.class);
-  }
-
-  @Override
-  @NotNull
-  public PsiElement getStringLiteral() {
-    return findNotNullChildByType(STRING_LITERAL);
+  public FPPQualifiedIdentifier getQualifiedIdentifier() {
+    return findNotNullChildByClass(FPPQualifiedIdentifier.class);
   }
 
 }
