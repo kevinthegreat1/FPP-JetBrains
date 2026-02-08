@@ -1355,9 +1355,26 @@ public class FPPParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // translation_unit
+  // END_OF_LINE* translation_unit
   static boolean fpp_file(PsiBuilder builder_, int level_) {
-    return translation_unit(builder_, level_ + 1);
+    if (!recursion_guard_(builder_, level_, "fpp_file")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = fpp_file_0(builder_, level_ + 1);
+    result_ = result_ && translation_unit(builder_, level_ + 1);
+    exit_section_(builder_, marker_, null, result_);
+    return result_;
+  }
+
+  // END_OF_LINE*
+  private static boolean fpp_file_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "fpp_file_0")) return false;
+    while (true) {
+      int pos_ = current_position_(builder_);
+      if (!consumeToken(builder_, END_OF_LINE)) break;
+      if (!empty_element_parsed_guard_(builder_, "fpp_file_0", pos_)) break;
+    }
+    return true;
   }
 
   /* ********************************************************** */

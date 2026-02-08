@@ -186,9 +186,12 @@ STRING_LITERAL = {SINGLE_LINE_STRING_LITERAL} | {MULTILINE_STRING_LITERAL}
     {POST_ANNOTATION}   { yybegin(COMMENT_STATE); return POST_ANNOTATION; }
     {PRE_ANNOTATION}    { yybegin(COMMENT_STATE); return PRE_ANNOTATION; }
     // 3.6. Whitespace and Non-Printable Characters
-    {WHITESPACE}+       {}
+    // Return a whitespace token or else other the next token will begin with these whitespace characters.
+    // The whitespace tokens will be ignored as defined in the parser definition.
+    // This is the same reason for explicit line continuations and automatic suppression of newlines.
+    {WHITESPACE}+       { return TokenType.WHITE_SPACE; }
     // 3.7. Explicit Line Continuations
-    "\\" {END_OF_LINE}  {}
+    "\\" {END_OF_LINE}  { return TokenType.WHITE_SPACE; }
 
     // 10.6. Floating-Point Literals
     {FLOATING_POINT_LITERAL}    { return FLOATING_POINT_LITERAL; }
@@ -208,7 +211,7 @@ STRING_LITERAL = {SINGLE_LINE_STRING_LITERAL} | {MULTILINE_STRING_LITERAL}
 
 // 3.8. Automatic Suppression of Newlines
 <AFTER_EOL_SUPPRESSOR> {
-    ({WHITESPACE}|{END_OF_LINE})+   {}
+    ({WHITESPACE}|{END_OF_LINE})+   { return TokenType.WHITE_SPACE; }
     // 3.5. Comments
     {COMMENT}                       { return COMMENT; }
     // 13.2. Annotations

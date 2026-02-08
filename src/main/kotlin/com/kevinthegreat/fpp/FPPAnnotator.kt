@@ -12,7 +12,7 @@ class FPPAnnotator : Annotator {
         if (element !is FPPQualifiedIdentifierTypeName) return
 
         val resolvedIdentifiers =
-            FPPUtil.getParentDefinition(element)?.let { FPPUtil.resolveIdentifier(it, FPPNameGroup.TYPE, element.text) }
+            FPPUtil.getParentDefinition(element)?.let { FPPUtil.resolveQualifiedIdentifier(it, FPPNameGroup.TYPE, element.text) }
                 ?: emptyList()
 
         if (resolvedIdentifiers.isEmpty()) {

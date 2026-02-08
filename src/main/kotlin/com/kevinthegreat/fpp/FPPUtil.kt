@@ -40,7 +40,7 @@ object FPPUtil {
     }
 
     // 15.5. Resolution of Identifiers
-    fun resolveIdentifier(definition: PsiElement, nameGroup: FPPNameGroup, identifier: String): List<PsiElement> {
+    fun resolveIdentifier(definition: PsiElement, nameGroup: FPPNameGroup?, identifier: String): List<PsiElement> {
         if (isTopLevel(definition)) {
             return findIdentifier(definition.project, nameGroup, identifier)
         }
@@ -55,7 +55,22 @@ object FPPUtil {
                 resolveIdentifier(parent, nameGroup, identifier)
     }
 
-    private fun findIdentifier(project: Project, nameGroup: FPPNameGroup, qualifiedIdentifier: String): List<PsiElement> {
+    // 15.6. Resolution of Qualified Identifiers
+    fun resolveQualifiedIdentifier(definition: PsiElement, nameGroup: FPPNameGroup?, identifier: String): List<PsiElement> {
+        val identifierSplit = identifier.split(".")
+        if (identifierSplit.size == 1) {
+            return resolveIdentifier(definition, nameGroup, identifier)
+        }
+
+        val parentIdentifier = identifierSplit.dropLast(1).joinToString(".")
+        val parentResolutions = resolveQualifiedIdentifier(definition, null, parentIdentifier)
+
+        // Find identifier starting from parents' children because we are looking for the identifier inside the parents
+        return parentResolutions.filter { isDefinition(it) }
+            .flatMap { it.children.flatMap { findIdentifier(it, nameGroup, identifierSplit.last()) } }
+    }
+
+    private fun findIdentifier(project: Project, nameGroup: FPPNameGroup?, qualifiedIdentifier: String): List<PsiElement> {
         val result = ArrayList<PsiElement>()
         val virtualFiles = FileTypeIndex.getFiles(FPPFileType, GlobalSearchScope.allScope(project))
 
@@ -67,14 +82,14 @@ object FPPUtil {
         return result
     }
 
-    private fun findIdentifier(element: PsiElement, nameGroup: FPPNameGroup, qualifiedIdentifier: String): List<PsiElement> =
+    private fun findIdentifier(element: PsiElement, nameGroup: FPPNameGroup?, qualifiedIdentifier: String): List<PsiElement> =
         findIdentifier(element, nameGroup, qualifiedIdentifier.split("."))
 
-    private fun findIdentifier(element: PsiElement, nameGroup: FPPNameGroup, identifierSplit: List<String>): List<PsiElement> {
+    private fun findIdentifier(element: PsiElement, nameGroup: FPPNameGroup?, identifierSplit: List<String>): List<PsiElement> {
         if (identifierSplit.isEmpty()) return emptyList()
 
         val isDefinition = isDefinition(element)
-        val isCorrectNameGroup = isDefinition && element.elementType in nameGroup.types
+        val isCorrectNameGroup = isDefinition && (nameGroup == null || element.elementType in nameGroup.types)
         val currentTarget = identifierSplit.first()
         val remainingTarget = identifierSplit.drop(1)
 

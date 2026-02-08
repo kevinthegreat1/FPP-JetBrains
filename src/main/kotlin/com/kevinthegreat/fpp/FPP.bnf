@@ -162,7 +162,8 @@
 }
 
 // 14.1. Translation Units
-fpp_file ::= translation_unit
+// Absorb leading eol tokens to fix comments at the beginning of files.
+fpp_file ::= END_OF_LINE* translation_unit
 
 // 5. Definitions
 // 5.1. Abstract Type Definitions
