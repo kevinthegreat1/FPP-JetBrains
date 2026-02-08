@@ -153,6 +153,7 @@ public interface FPPTypes {
   IElementType CPU = new FPPTokenType("cpu");
   IElementType DEFAULT = new FPPTokenType("default");
   IElementType DIAGNOSTIC = new FPPTokenType("diagnostic");
+  IElementType DICTIONARY = new FPPTokenType("dictionary");
   IElementType DIV = new FPPTokenType("/");
   IElementType DO = new FPPTokenType("do");
   IElementType DOT = new FPPTokenType(".");

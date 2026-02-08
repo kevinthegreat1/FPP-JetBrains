@@ -124,16 +124,24 @@ public class FPPParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // TYPE IDENTIFIER ASSIGN type_name
+  // [ DICTIONARY ] TYPE IDENTIFIER ASSIGN type_name
   public static boolean alias_type_definition(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "alias_type_definition")) return false;
-    if (!nextTokenIs(builder_, TYPE)) return false;
+    if (!nextTokenIs(builder_, "<alias type definition>", DICTIONARY, TYPE)) return false;
     boolean result_;
-    Marker marker_ = enter_section_(builder_);
-    result_ = consumeTokens(builder_, 0, TYPE, IDENTIFIER, ASSIGN);
+    Marker marker_ = enter_section_(builder_, level_, _NONE_, ALIAS_TYPE_DEFINITION, "<alias type definition>");
+    result_ = alias_type_definition_0(builder_, level_ + 1);
+    result_ = result_ && consumeTokens(builder_, 0, TYPE, IDENTIFIER, ASSIGN);
     result_ = result_ && type_name(builder_, level_ + 1);
-    exit_section_(builder_, marker_, ALIAS_TYPE_DEFINITION, result_);
+    exit_section_(builder_, level_, marker_, result_, false, null);
     return result_;
+  }
+
+  // [ DICTIONARY ]
+  private static boolean alias_type_definition_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "alias_type_definition_0")) return false;
+    consumeToken(builder_, DICTIONARY);
+    return true;
   }
 
   /* ********************************************************** */
@@ -247,32 +255,40 @@ public class FPPParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ARRAY IDENTIFIER ASSIGN LEFT_BRACKET expression RIGHT_BRACKET type_name [ DEFAULT expression ] [ FORMAT STRING_LITERAL ]
+  // [ DICTIONARY ] ARRAY IDENTIFIER ASSIGN LEFT_BRACKET expression RIGHT_BRACKET type_name [ DEFAULT expression ] [ FORMAT STRING_LITERAL ]
   public static boolean array_definition(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "array_definition")) return false;
-    if (!nextTokenIs(builder_, ARRAY)) return false;
+    if (!nextTokenIs(builder_, "<array definition>", ARRAY, DICTIONARY)) return false;
     boolean result_;
-    Marker marker_ = enter_section_(builder_);
-    result_ = consumeTokens(builder_, 0, ARRAY, IDENTIFIER, ASSIGN, LEFT_BRACKET);
+    Marker marker_ = enter_section_(builder_, level_, _NONE_, ARRAY_DEFINITION, "<array definition>");
+    result_ = array_definition_0(builder_, level_ + 1);
+    result_ = result_ && consumeTokens(builder_, 0, ARRAY, IDENTIFIER, ASSIGN, LEFT_BRACKET);
     result_ = result_ && expression(builder_, level_ + 1);
     result_ = result_ && consumeToken(builder_, RIGHT_BRACKET);
     result_ = result_ && type_name(builder_, level_ + 1);
-    result_ = result_ && array_definition_7(builder_, level_ + 1);
     result_ = result_ && array_definition_8(builder_, level_ + 1);
-    exit_section_(builder_, marker_, ARRAY_DEFINITION, result_);
+    result_ = result_ && array_definition_9(builder_, level_ + 1);
+    exit_section_(builder_, level_, marker_, result_, false, null);
     return result_;
   }
 
+  // [ DICTIONARY ]
+  private static boolean array_definition_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "array_definition_0")) return false;
+    consumeToken(builder_, DICTIONARY);
+    return true;
+  }
+
   // [ DEFAULT expression ]
-  private static boolean array_definition_7(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "array_definition_7")) return false;
-    array_definition_7_0(builder_, level_ + 1);
+  private static boolean array_definition_8(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "array_definition_8")) return false;
+    array_definition_8_0(builder_, level_ + 1);
     return true;
   }
 
   // DEFAULT expression
-  private static boolean array_definition_7_0(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "array_definition_7_0")) return false;
+  private static boolean array_definition_8_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "array_definition_8_0")) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_);
     result_ = consumeToken(builder_, DEFAULT);
@@ -282,8 +298,8 @@ public class FPPParser implements PsiParser, LightPsiParser {
   }
 
   // [ FORMAT STRING_LITERAL ]
-  private static boolean array_definition_8(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "array_definition_8")) return false;
+  private static boolean array_definition_9(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "array_definition_9")) return false;
     parseTokens(builder_, 0, FORMAT, STRING_LITERAL);
     return true;
   }
@@ -883,30 +899,47 @@ public class FPPParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // CONSTANT IDENTIFIER ASSIGN expression
+  // [ DICTIONARY ] CONSTANT IDENTIFIER ASSIGN expression
   public static boolean constant_definition(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "constant_definition")) return false;
-    if (!nextTokenIs(builder_, CONSTANT)) return false;
+    if (!nextTokenIs(builder_, "<constant definition>", CONSTANT, DICTIONARY)) return false;
     boolean result_;
-    Marker marker_ = enter_section_(builder_);
-    result_ = consumeTokens(builder_, 0, CONSTANT, IDENTIFIER, ASSIGN);
+    Marker marker_ = enter_section_(builder_, level_, _NONE_, CONSTANT_DEFINITION, "<constant definition>");
+    result_ = constant_definition_0(builder_, level_ + 1);
+    result_ = result_ && consumeTokens(builder_, 0, CONSTANT, IDENTIFIER, ASSIGN);
     result_ = result_ && expression(builder_, level_ + 1);
-    exit_section_(builder_, marker_, CONSTANT_DEFINITION, result_);
+    exit_section_(builder_, level_, marker_, result_, false, null);
     return result_;
   }
 
+  // [ DICTIONARY ]
+  private static boolean constant_definition_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "constant_definition_0")) return false;
+    consumeToken(builder_, DICTIONARY);
+    return true;
+  }
+
   /* ********************************************************** */
-  // LOCATE CONSTANT qualified_identifier AT STRING_LITERAL
+  // LOCATE [ DICTIONARY ] CONSTANT qualified_identifier AT STRING_LITERAL
   public static boolean constant_location_specifier(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "constant_location_specifier")) return false;
     if (!nextTokenIs(builder_, LOCATE)) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_);
-    result_ = consumeTokens(builder_, 0, LOCATE, CONSTANT);
+    result_ = consumeToken(builder_, LOCATE);
+    result_ = result_ && constant_location_specifier_1(builder_, level_ + 1);
+    result_ = result_ && consumeToken(builder_, CONSTANT);
     result_ = result_ && qualified_identifier(builder_, level_ + 1);
     result_ = result_ && consumeTokens(builder_, 0, AT, STRING_LITERAL);
     exit_section_(builder_, marker_, CONSTANT_LOCATION_SPECIFIER, result_);
     return result_;
+  }
+
+  // [ DICTIONARY ]
+  private static boolean constant_location_specifier_1(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "constant_location_specifier_1")) return false;
+    consumeToken(builder_, DICTIONARY);
+    return true;
   }
 
   /* ********************************************************** */
@@ -1064,32 +1097,40 @@ public class FPPParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ENUM IDENTIFIER [ COLON type_name ] LEFT_BRACE enum_constant_sequence RIGHT_BRACE [ DEFAULT expression ]
+  // [ DICTIONARY ] ENUM IDENTIFIER [ COLON type_name ] LEFT_BRACE enum_constant_sequence RIGHT_BRACE [ DEFAULT expression ]
   public static boolean enum_definition(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "enum_definition")) return false;
-    if (!nextTokenIs(builder_, ENUM)) return false;
+    if (!nextTokenIs(builder_, "<enum definition>", DICTIONARY, ENUM)) return false;
     boolean result_;
-    Marker marker_ = enter_section_(builder_);
-    result_ = consumeTokens(builder_, 0, ENUM, IDENTIFIER);
-    result_ = result_ && enum_definition_2(builder_, level_ + 1);
+    Marker marker_ = enter_section_(builder_, level_, _NONE_, ENUM_DEFINITION, "<enum definition>");
+    result_ = enum_definition_0(builder_, level_ + 1);
+    result_ = result_ && consumeTokens(builder_, 0, ENUM, IDENTIFIER);
+    result_ = result_ && enum_definition_3(builder_, level_ + 1);
     result_ = result_ && consumeToken(builder_, LEFT_BRACE);
     result_ = result_ && enum_constant_sequence(builder_, level_ + 1);
     result_ = result_ && consumeToken(builder_, RIGHT_BRACE);
-    result_ = result_ && enum_definition_6(builder_, level_ + 1);
-    exit_section_(builder_, marker_, ENUM_DEFINITION, result_);
+    result_ = result_ && enum_definition_7(builder_, level_ + 1);
+    exit_section_(builder_, level_, marker_, result_, false, null);
     return result_;
   }
 
+  // [ DICTIONARY ]
+  private static boolean enum_definition_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "enum_definition_0")) return false;
+    consumeToken(builder_, DICTIONARY);
+    return true;
+  }
+
   // [ COLON type_name ]
-  private static boolean enum_definition_2(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "enum_definition_2")) return false;
-    enum_definition_2_0(builder_, level_ + 1);
+  private static boolean enum_definition_3(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "enum_definition_3")) return false;
+    enum_definition_3_0(builder_, level_ + 1);
     return true;
   }
 
   // COLON type_name
-  private static boolean enum_definition_2_0(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "enum_definition_2_0")) return false;
+  private static boolean enum_definition_3_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "enum_definition_3_0")) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_);
     result_ = consumeToken(builder_, COLON);
@@ -1099,15 +1140,15 @@ public class FPPParser implements PsiParser, LightPsiParser {
   }
 
   // [ DEFAULT expression ]
-  private static boolean enum_definition_6(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "enum_definition_6")) return false;
-    enum_definition_6_0(builder_, level_ + 1);
+  private static boolean enum_definition_7(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "enum_definition_7")) return false;
+    enum_definition_7_0(builder_, level_ + 1);
     return true;
   }
 
   // DEFAULT expression
-  private static boolean enum_definition_6_0(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "enum_definition_6_0")) return false;
+  private static boolean enum_definition_7_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "enum_definition_7_0")) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_);
     result_ = consumeToken(builder_, DEFAULT);
@@ -2803,30 +2844,38 @@ public class FPPParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // STRUCT IDENTIFIER LEFT_BRACE struct_type_member_sequence RIGHT_BRACE [ DEFAULT expression ]
+  // [ DICTIONARY ] STRUCT IDENTIFIER LEFT_BRACE struct_type_member_sequence RIGHT_BRACE [ DEFAULT expression ]
   public static boolean struct_definition(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "struct_definition")) return false;
-    if (!nextTokenIs(builder_, STRUCT)) return false;
+    if (!nextTokenIs(builder_, "<struct definition>", DICTIONARY, STRUCT)) return false;
     boolean result_;
-    Marker marker_ = enter_section_(builder_);
-    result_ = consumeTokens(builder_, 0, STRUCT, IDENTIFIER, LEFT_BRACE);
+    Marker marker_ = enter_section_(builder_, level_, _NONE_, STRUCT_DEFINITION, "<struct definition>");
+    result_ = struct_definition_0(builder_, level_ + 1);
+    result_ = result_ && consumeTokens(builder_, 0, STRUCT, IDENTIFIER, LEFT_BRACE);
     result_ = result_ && struct_type_member_sequence(builder_, level_ + 1);
     result_ = result_ && consumeToken(builder_, RIGHT_BRACE);
-    result_ = result_ && struct_definition_5(builder_, level_ + 1);
-    exit_section_(builder_, marker_, STRUCT_DEFINITION, result_);
+    result_ = result_ && struct_definition_6(builder_, level_ + 1);
+    exit_section_(builder_, level_, marker_, result_, false, null);
     return result_;
   }
 
+  // [ DICTIONARY ]
+  private static boolean struct_definition_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "struct_definition_0")) return false;
+    consumeToken(builder_, DICTIONARY);
+    return true;
+  }
+
   // [ DEFAULT expression ]
-  private static boolean struct_definition_5(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "struct_definition_5")) return false;
-    struct_definition_5_0(builder_, level_ + 1);
+  private static boolean struct_definition_6(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "struct_definition_6")) return false;
+    struct_definition_6_0(builder_, level_ + 1);
     return true;
   }
 
   // DEFAULT expression
-  private static boolean struct_definition_5_0(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "struct_definition_5_0")) return false;
+  private static boolean struct_definition_6_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "struct_definition_6_0")) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_);
     result_ = consumeToken(builder_, DEFAULT);
@@ -3666,17 +3715,26 @@ public class FPPParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // LOCATE TYPE qualified_identifier AT STRING_LITERAL
+  // LOCATE [ DICTIONARY ] TYPE qualified_identifier AT STRING_LITERAL
   public static boolean type_location_specifier(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "type_location_specifier")) return false;
     if (!nextTokenIs(builder_, LOCATE)) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_);
-    result_ = consumeTokens(builder_, 0, LOCATE, TYPE);
+    result_ = consumeToken(builder_, LOCATE);
+    result_ = result_ && type_location_specifier_1(builder_, level_ + 1);
+    result_ = result_ && consumeToken(builder_, TYPE);
     result_ = result_ && qualified_identifier(builder_, level_ + 1);
     result_ = result_ && consumeTokens(builder_, 0, AT, STRING_LITERAL);
     exit_section_(builder_, marker_, TYPE_LOCATION_SPECIFIER, result_);
     return result_;
+  }
+
+  // [ DICTIONARY ]
+  private static boolean type_location_specifier_1(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "type_location_specifier_1")) return false;
+    consumeToken(builder_, DICTIONARY);
+    return true;
   }
 
   /* ********************************************************** */

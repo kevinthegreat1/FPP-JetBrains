@@ -43,6 +43,7 @@
     CPU="cpu"
     DEFAULT="default"
     DIAGNOSTIC="diagnostic"
+    DICTIONARY="dictionary"
     DO="do"
     DROP="drop"
     ELSE="else"
@@ -169,9 +170,9 @@ fpp_file ::= END_OF_LINE* translation_unit
 // 5.1. Abstract Type Definitions
 abstract_type_definition ::= TYPE IDENTIFIER
 // 5.2. Alias Type Definitions
-alias_type_definition ::= TYPE IDENTIFIER ASSIGN type_name
+alias_type_definition ::= [ DICTIONARY ] TYPE IDENTIFIER ASSIGN type_name
 // 5.3. Array Definitions
-array_definition ::= ARRAY IDENTIFIER ASSIGN LEFT_BRACKET expression RIGHT_BRACKET type_name [ DEFAULT expression ] [ FORMAT STRING_LITERAL ]
+array_definition ::= [ DICTIONARY ] ARRAY IDENTIFIER ASSIGN LEFT_BRACKET expression RIGHT_BRACKET type_name [ DEFAULT expression ] [ FORMAT STRING_LITERAL ]
 // 5.4. Component Definitions
 component_definition ::= component_kind COMPONENT IDENTIFIER LEFT_BRACE component_member_sequence RIGHT_BRACE
 component_kind ::= ACTIVE | PASSIVE | QUEUED
@@ -199,9 +200,9 @@ component_member ::= constant_definition
 component_instance_definition ::= INSTANCE IDENTIFIER COLON qualified_identifier BASE ID expression [ TYPE STRING_LITERAL ] [ AT STRING_LITERAL ] [ QUEUE SIZE expression ] [ STACK SIZE expression ] [ PRIORITY expression ] [ CPU expression ] [ LEFT_BRACE init_specifier_sequence RIGHT_BRACE ]
 init_specifier_sequence ::= (init_specifier (SEMICOLON | END_OF_LINE)*)*
 // 5.6. Constant Definitions
-constant_definition ::= CONSTANT IDENTIFIER ASSIGN expression
+constant_definition ::= [ DICTIONARY ] CONSTANT IDENTIFIER ASSIGN expression
 // 5.7. Enum Definitions
-enum_definition ::= ENUM IDENTIFIER [ COLON type_name ] LEFT_BRACE enum_constant_sequence RIGHT_BRACE [ DEFAULT expression ]
+enum_definition ::= [ DICTIONARY ] ENUM IDENTIFIER [ COLON type_name ] LEFT_BRACE enum_constant_sequence RIGHT_BRACE [ DEFAULT expression ]
 enum_constant_sequence ::= (enum_constant (COMMA | END_OF_LINE)*)*
 // 5.8. Enumerated Constant Definitions
 enum_constant ::= IDENTIFIER [ ASSIGN expression ]
@@ -240,7 +241,7 @@ state_machine_member ::= choice_definition
                         | state_definition
                         | action_definition
 // 5.13. Struct Definitions
-struct_definition ::= STRUCT IDENTIFIER LEFT_BRACE struct_type_member_sequence RIGHT_BRACE [ DEFAULT expression ]
+struct_definition ::= [ DICTIONARY ] STRUCT IDENTIFIER LEFT_BRACE struct_type_member_sequence RIGHT_BRACE [ DEFAULT expression ]
 struct_type_member_sequence ::= (struct_type_member (COMMA | END_OF_LINE)*)*
 struct_type_member ::= IDENTIFIER COLON [ LEFT_BRACKET expression RIGHT_BRACKET ] type_name [ FORMAT STRING_LITERAL ]
 // 5.14. Topology Definitions
@@ -336,11 +337,11 @@ location_specifier ::= component_instance_location_specifier
                         | type_location_specifier
 component_instance_location_specifier ::= LOCATE INSTANCE qualified_identifier AT STRING_LITERAL
 component_location_specifier ::= LOCATE COMPONENT qualified_identifier AT STRING_LITERAL
-constant_location_specifier ::= LOCATE CONSTANT qualified_identifier AT STRING_LITERAL
+constant_location_specifier ::= LOCATE [ DICTIONARY ] CONSTANT qualified_identifier AT STRING_LITERAL
 port_location_specifier ::= LOCATE PORT qualified_identifier AT STRING_LITERAL
 state_machine_location_specifier ::= LOCATE STATE MACHINE qualified_identifier AT STRING_LITERAL
 topology_location_specifier ::= LOCATE TOPOLOGY qualified_identifier AT STRING_LITERAL
-type_location_specifier ::= LOCATE TYPE qualified_identifier AT STRING_LITERAL
+type_location_specifier ::= LOCATE [ DICTIONARY ] TYPE qualified_identifier AT STRING_LITERAL
 // 7.11. Parameter Specifiers
 parameter_specifier ::= [ EXTERNAL ] PARAM IDENTIFIER COLON type_name [ DEFAULT expression ] [ ID expression ] [ SET OPCODE expression ] [ SAVE OPCODE expression ]
 // 7.12. Port Instance Specifiers

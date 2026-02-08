@@ -74,6 +74,7 @@ STRING_LITERAL = {SINGLE_LINE_STRING_LITERAL} | {MULTILINE_STRING_LITERAL}
     "cpu"         { return CPU; }
     "default"     { return DEFAULT; }
     "diagnostic"  { return DIAGNOSTIC; }
+    "dictionary"  { return DICTIONARY; }
     "do"          { return DO; }
     "drop"        { return DROP; }
     "else"        { return ELSE; }
