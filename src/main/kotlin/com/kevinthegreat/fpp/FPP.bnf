@@ -197,8 +197,9 @@ component_member ::= constant_definition
                   | internal_port_specifier
                   | interface_import_specifier
 // 5.5. Component Instance Definitions
-component_instance_definition ::= INSTANCE IDENTIFIER COLON qualified_identifier BASE ID expression [ TYPE STRING_LITERAL ] [ AT STRING_LITERAL ] [ QUEUE SIZE expression ] [ STACK SIZE expression ] [ PRIORITY expression ] [ CPU expression ] [ LEFT_BRACE init_specifier_sequence RIGHT_BRACE ]
+component_instance_definition ::= INSTANCE IDENTIFIER COLON qualified_identifier_component_definition BASE ID expression [ TYPE STRING_LITERAL ] [ AT STRING_LITERAL ] [ QUEUE SIZE expression ] [ STACK SIZE expression ] [ PRIORITY expression ] [ CPU expression ] [ LEFT_BRACE init_specifier_sequence RIGHT_BRACE ]
 init_specifier_sequence ::= (init_specifier (SEMICOLON | END_OF_LINE)*)*
+qualified_identifier_component_definition ::= qualified_identifier
 // 5.6. Constant Definitions
 constant_definition ::= [ DICTIONARY ] CONSTANT IDENTIFIER ASSIGN expression
 // 5.7. Enum Definitions

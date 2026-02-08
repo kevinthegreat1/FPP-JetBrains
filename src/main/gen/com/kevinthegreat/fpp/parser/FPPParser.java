@@ -498,14 +498,14 @@ public class FPPParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // INSTANCE IDENTIFIER COLON qualified_identifier BASE ID expression [ TYPE STRING_LITERAL ] [ AT STRING_LITERAL ] [ QUEUE SIZE expression ] [ STACK SIZE expression ] [ PRIORITY expression ] [ CPU expression ] [ LEFT_BRACE init_specifier_sequence RIGHT_BRACE ]
+  // INSTANCE IDENTIFIER COLON qualified_identifier_component_definition BASE ID expression [ TYPE STRING_LITERAL ] [ AT STRING_LITERAL ] [ QUEUE SIZE expression ] [ STACK SIZE expression ] [ PRIORITY expression ] [ CPU expression ] [ LEFT_BRACE init_specifier_sequence RIGHT_BRACE ]
   public static boolean component_instance_definition(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "component_instance_definition")) return false;
     if (!nextTokenIs(builder_, INSTANCE)) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_);
     result_ = consumeTokens(builder_, 0, INSTANCE, IDENTIFIER, COLON);
-    result_ = result_ && qualified_identifier(builder_, level_ + 1);
+    result_ = result_ && qualified_identifier_component_definition(builder_, level_ + 1);
     result_ = result_ && consumeTokens(builder_, 0, BASE, ID);
     result_ = result_ && expression(builder_, level_ + 1);
     result_ = result_ && component_instance_definition_7(builder_, level_ + 1);
@@ -2367,6 +2367,18 @@ public class FPPParser implements PsiParser, LightPsiParser {
     Marker marker_ = enter_section_(builder_);
     result_ = consumeTokens(builder_, 0, DOT, IDENTIFIER);
     exit_section_(builder_, marker_, null, result_);
+    return result_;
+  }
+
+  /* ********************************************************** */
+  // qualified_identifier
+  public static boolean qualified_identifier_component_definition(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "qualified_identifier_component_definition")) return false;
+    if (!nextTokenIs(builder_, IDENTIFIER)) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = qualified_identifier(builder_, level_ + 1);
+    exit_section_(builder_, marker_, QUALIFIED_IDENTIFIER_COMPONENT_DEFINITION, result_);
     return result_;
   }
 

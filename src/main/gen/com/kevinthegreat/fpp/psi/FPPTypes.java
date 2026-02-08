@@ -78,6 +78,7 @@ public interface FPPTypes {
   IElementType PORT_MATCHING_SPECIFIER = new FPPElementType("PORT_MATCHING_SPECIFIER");
   IElementType PRIMITIVE_INTEGER_TYPE_NAME = new FPPElementType("PRIMITIVE_INTEGER_TYPE_NAME");
   IElementType QUALIFIED_IDENTIFIER = new FPPElementType("QUALIFIED_IDENTIFIER");
+  IElementType QUALIFIED_IDENTIFIER_COMPONENT_DEFINITION = new FPPElementType("QUALIFIED_IDENTIFIER_COMPONENT_DEFINITION");
   IElementType QUALIFIED_IDENTIFIER_TYPE_NAME = new FPPElementType("QUALIFIED_IDENTIFIER_TYPE_NAME");
   IElementType QUEUE_FULL_BEHAVIOR = new FPPElementType("QUEUE_FULL_BEHAVIOR");
   IElementType RECORD_SPECIFIER = new FPPElementType("RECORD_SPECIFIER");
@@ -475,6 +476,9 @@ public interface FPPTypes {
       }
       else if (type == QUALIFIED_IDENTIFIER) {
         return new FPPQualifiedIdentifierImpl(node);
+      }
+      else if (type == QUALIFIED_IDENTIFIER_COMPONENT_DEFINITION) {
+        return new FPPQualifiedIdentifierComponentDefinitionImpl(node);
       }
       else if (type == QUALIFIED_IDENTIFIER_TYPE_NAME) {
         return new FPPQualifiedIdentifierTypeNameImpl(node);

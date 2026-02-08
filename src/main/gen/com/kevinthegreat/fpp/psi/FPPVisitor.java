@@ -287,6 +287,10 @@ public class FPPVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitQualifiedIdentifierComponentDefinition(@NotNull FPPQualifiedIdentifierComponentDefinition o) {
+    visitPsiElement(o);
+  }
+
   public void visitQualifiedIdentifierTypeName(@NotNull FPPQualifiedIdentifierTypeName o) {
     visitPsiElement(o);
   }

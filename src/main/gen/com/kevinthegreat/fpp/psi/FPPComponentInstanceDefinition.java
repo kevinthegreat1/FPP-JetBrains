@@ -14,7 +14,7 @@ public interface FPPComponentInstanceDefinition extends PsiElement {
   FPPInitSpecifierSequence getInitSpecifierSequence();
 
   @NotNull
-  FPPQualifiedIdentifier getQualifiedIdentifier();
+  FPPQualifiedIdentifierComponentDefinition getQualifiedIdentifierComponentDefinition();
 
   @NotNull
   PsiElement getIdentifier();
