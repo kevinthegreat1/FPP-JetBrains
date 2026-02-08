@@ -39,6 +39,11 @@
                 implementationClass="com.kevinthegreat.fpp.highlighter.FPPSyntaxHighlighterFactory"/>
     </extensions>
     <extensions defaultExtensionNs="com.intellij">
+        <annotator
+                language="FPP"
+                implementationClass="com.kevinthegreat.fpp.FPPAnnotator"/>
+    </extensions>
+    <extensions defaultExtensionNs="com.intellij">
         <lang.commenter
                 language="FPP"
                 implementationClass="com.kevinthegreat.fpp.FPPCommenter"/>
