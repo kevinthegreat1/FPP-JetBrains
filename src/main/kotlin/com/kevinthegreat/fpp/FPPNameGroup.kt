@@ -30,8 +30,8 @@ enum class FPPNameGroup(vararg val types: IElementType) {
     companion object {
         val DEF_TYPES = entries.flatMap { it.types.asList() }.toSet()
 
-        fun getDefTypes(qualifiedIdentifier: PsiElement): List<IElementType>? {
-            return when (qualifiedIdentifier) {
+        fun getDefTypes(qualId: PsiElement): List<IElementType>? {
+            return when (qualId) {
                 is FPPQualifiedIdentifierTypeName -> listOf(
                     FPPTypes.ABSTRACT_TYPE_DEFINITION,
                     FPPTypes.ALIAS_TYPE_DEFINITION,

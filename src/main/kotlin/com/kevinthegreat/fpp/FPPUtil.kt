@@ -10,7 +10,6 @@ import com.intellij.psi.util.PsiTreeUtil
 import com.intellij.psi.util.elementType
 import com.intellij.psi.util.parents
 import com.intellij.psi.util.siblings
-import com.kevinthegreat.fpp.psi.FPPFile
 import com.kevinthegreat.fpp.psi.FPPModuleDefinition
 import com.kevinthegreat.fpp.psi.FPPTypes
 
@@ -77,15 +76,9 @@ object FPPUtil {
     }
 
     private fun findDefinitions(qualId: String, project: Project, defTypes: List<IElementType>): List<PsiElement> {
-        val result = ArrayList<PsiElement>()
-        val virtualFiles = FileTypeIndex.getFiles(FPPFileType, GlobalSearchScope.allScope(project))
-
-        for (virtualFile in virtualFiles) {
-            val fppFile = PsiManager.getInstance(project).findFile(virtualFile) as FPPFile? ?: continue
-            result.addAll(findDefinitions(qualId, fppFile, defTypes))
-        }
-
-        return result
+        return FileTypeIndex.getFiles(FPPFileType, GlobalSearchScope.allScope(project))
+            .mapNotNull(PsiManager.getInstance(project)::findFile)
+            .flatMap { findDefinitions(qualId, it, defTypes) }
     }
 
     private fun findDefinitions(qualId: String, location: PsiElement, defTypes: List<IElementType>): List<PsiElement> =

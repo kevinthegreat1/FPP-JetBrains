@@ -7,9 +7,10 @@ import com.intellij.psi.PsiPolyVariantReferenceBase
 import com.intellij.psi.ResolveResult
 import com.intellij.psi.tree.IElementType
 
-class FPPReference(element: PsiElement, val types: List<IElementType>) : PsiPolyVariantReferenceBase<PsiElement>(element, TextRange(0, element.textLength)) {
+class FPPReference(element: PsiElement, val qualId: String, range: TextRange, val types: List<IElementType>) :
+    PsiPolyVariantReferenceBase<PsiElement>(element, range) {
     override fun multiResolve(incompleteCode: Boolean): Array<out ResolveResult?> =
-        FPPUtil.resolveQualifiedIdentifier(element.text, element, types)
+        FPPUtil.resolveQualifiedIdentifier(qualId, element, types)
             .map(::PsiElementResolveResult)
             .toTypedArray()
 }
