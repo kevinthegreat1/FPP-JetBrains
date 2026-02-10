@@ -5,7 +5,7 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface FPPComponentInstanceDefinition extends PsiElement {
+public interface FPPComponentInstanceDefinition extends FPPNamedElement {
 
   @NotNull
   List<FPPExpression> getExpressionList();

@@ -5,7 +5,7 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface FPPStructTypeMember extends PsiElement {
+public interface FPPStructTypeMember extends FPPNamedElement {
 
   @Nullable
   FPPExpression getExpression();

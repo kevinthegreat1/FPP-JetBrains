@@ -5,7 +5,7 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface FPPStateMachineDefinition extends PsiElement {
+public interface FPPStateMachineDefinition extends FPPNamedElement {
 
   @NotNull
   FPPIdentifierDefinition getIdentifierDefinition();

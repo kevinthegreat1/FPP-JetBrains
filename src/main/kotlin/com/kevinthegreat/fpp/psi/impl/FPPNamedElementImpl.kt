@@ -8,13 +8,17 @@ import com.kevinthegreat.fpp.psi.FPPElementFactory
 import com.kevinthegreat.fpp.psi.FPPNamedElement
 
 abstract class FPPNamedElementImpl(node: ASTNode) : ASTWrapperPsiElement(node), FPPNamedElement {
-    override fun getName(): String? = text
+    override fun getName(): String? = FPPUtil.getUnqualifiedName(this)
 
     override fun setName(name: String): PsiElement {
+        val oldIdDef = FPPUtil.getUnqualifiedNameElement(this) ?: return this
         val newModuleDef = FPPElementFactory.createModuleDef(project, name)
         val newIdDef = FPPUtil.getUnqualifiedNameElement(newModuleDef) ?: return this
-        return replace(newIdDef)
+        oldIdDef.replace(newIdDef)
+        return this
     }
 
-    override fun getNameIdentifier(): PsiElement? = this
+    override fun getNameIdentifier(): PsiElement? = FPPUtil.getUnqualifiedNameElement(this)
+
+    override fun getTextOffset(): Int = nameIdentifier?.textOffset ?: super.getTextOffset()
 }

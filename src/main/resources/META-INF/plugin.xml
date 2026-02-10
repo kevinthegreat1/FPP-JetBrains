@@ -49,6 +49,16 @@
                 implementation="com.kevinthegreat.fpp.FPPReferenceContributor"/>
     </extensions>
     <extensions defaultExtensionNs="com.intellij">
+        <lang.findUsagesProvider
+                language="FPP"
+                implementationClass="com.kevinthegreat.fpp.FPPFindUsagesProvider"/>
+    </extensions>
+    <extensions defaultExtensionNs="com.intellij">
+        <lang.refactoringSupport
+                language="FPP"
+                implementationClass="com.kevinthegreat.fpp.FPPRefactoringSupportProvider"/>
+    </extensions>
+    <extensions defaultExtensionNs="com.intellij">
         <lang.elementManipulator
                 forClass="com.kevinthegreat.fpp.psi.FPPQualifiedIdentifier"
                 implementationClass="com.kevinthegreat.fpp.psi.FPPQualifiedIdentifierManipulator"/>

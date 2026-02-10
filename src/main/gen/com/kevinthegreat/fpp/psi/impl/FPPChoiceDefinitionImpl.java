@@ -8,12 +8,11 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.kevinthegreat.fpp.psi.FPPTypes.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.kevinthegreat.fpp.psi.*;
 
-public class FPPChoiceDefinitionImpl extends ASTWrapperPsiElement implements FPPChoiceDefinition {
+public class FPPChoiceDefinitionImpl extends FPPNamedElementImpl implements FPPChoiceDefinition {
 
-  public FPPChoiceDefinitionImpl(@NotNull ASTNode node) {
+  public FPPChoiceDefinitionImpl(ASTNode node) {
     super(node);
   }
 

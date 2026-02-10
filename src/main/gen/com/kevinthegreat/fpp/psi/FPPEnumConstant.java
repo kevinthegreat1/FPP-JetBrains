@@ -5,7 +5,7 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface FPPEnumConstant extends PsiElement {
+public interface FPPEnumConstant extends FPPNamedElement {
 
   @Nullable
   FPPExpression getExpression();

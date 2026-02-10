@@ -8,12 +8,11 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.kevinthegreat.fpp.psi.FPPTypes.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.kevinthegreat.fpp.psi.*;
 
-public class FPPPortInterfaceDefinitionImpl extends ASTWrapperPsiElement implements FPPPortInterfaceDefinition {
+public class FPPPortInterfaceDefinitionImpl extends FPPNamedElementImpl implements FPPPortInterfaceDefinition {
 
-  public FPPPortInterfaceDefinitionImpl(@NotNull ASTNode node) {
+  public FPPPortInterfaceDefinitionImpl(ASTNode node) {
     super(node);
   }
 

@@ -12,7 +12,7 @@ public class FPPVisitor extends PsiElementVisitor {
   }
 
   public void visitActionDefinition(@NotNull FPPActionDefinition o) {
-    visitPsiElement(o);
+    visitNamedElement(o);
   }
 
   public void visitActionSequence(@NotNull FPPActionSequence o) {
@@ -52,7 +52,7 @@ public class FPPVisitor extends PsiElementVisitor {
   }
 
   public void visitChoiceDefinition(@NotNull FPPChoiceDefinition o) {
-    visitPsiElement(o);
+    visitNamedElement(o);
   }
 
   public void visitCommandKind(@NotNull FPPCommandKind o) {
@@ -68,7 +68,7 @@ public class FPPVisitor extends PsiElementVisitor {
   }
 
   public void visitComponentInstanceDefinition(@NotNull FPPComponentInstanceDefinition o) {
-    visitPsiElement(o);
+    visitNamedElement(o);
   }
 
   public void visitComponentInstanceLocationSpecifier(@NotNull FPPComponentInstanceLocationSpecifier o) {
@@ -108,7 +108,7 @@ public class FPPVisitor extends PsiElementVisitor {
   }
 
   public void visitConstantDefinition(@NotNull FPPConstantDefinition o) {
-    visitPsiElement(o);
+    visitNamedElement(o);
   }
 
   public void visitConstantLocationSpecifier(@NotNull FPPConstantLocationSpecifier o) {
@@ -128,7 +128,7 @@ public class FPPVisitor extends PsiElementVisitor {
   }
 
   public void visitEnumConstant(@NotNull FPPEnumConstant o) {
-    visitPsiElement(o);
+    visitNamedElement(o);
   }
 
   public void visitEnumConstantSequence(@NotNull FPPEnumConstantSequence o) {
@@ -136,7 +136,7 @@ public class FPPVisitor extends PsiElementVisitor {
   }
 
   public void visitEnumDefinition(@NotNull FPPEnumDefinition o) {
-    visitPsiElement(o);
+    visitNamedElement(o);
   }
 
   public void visitEventSeverity(@NotNull FPPEventSeverity o) {
@@ -176,11 +176,11 @@ public class FPPVisitor extends PsiElementVisitor {
   }
 
   public void visitGuardDefinition(@NotNull FPPGuardDefinition o) {
-    visitPsiElement(o);
+    visitNamedElement(o);
   }
 
   public void visitIdentifierDefinition(@NotNull FPPIdentifierDefinition o) {
-    visitNamedElement(o);
+    visitPsiElement(o);
   }
 
   public void visitIncludeSpecifier(@NotNull FPPIncludeSpecifier o) {
@@ -216,7 +216,7 @@ public class FPPVisitor extends PsiElementVisitor {
   }
 
   public void visitModuleDefinition(@NotNull FPPModuleDefinition o) {
-    visitPsiElement(o);
+    visitNamedElement(o);
   }
 
   public void visitModuleMember(@NotNull FPPModuleMember o) {
@@ -248,7 +248,7 @@ public class FPPVisitor extends PsiElementVisitor {
   }
 
   public void visitPortDefinition(@NotNull FPPPortDefinition o) {
-    visitPsiElement(o);
+    visitNamedElement(o);
   }
 
   public void visitPortInstanceIdentifier(@NotNull FPPPortInstanceIdentifier o) {
@@ -264,7 +264,7 @@ public class FPPVisitor extends PsiElementVisitor {
   }
 
   public void visitPortInterfaceDefinition(@NotNull FPPPortInterfaceDefinition o) {
-    visitPsiElement(o);
+    visitNamedElement(o);
   }
 
   public void visitPortInterfaceLocationSpecifier(@NotNull FPPPortInterfaceLocationSpecifier o) {
@@ -344,7 +344,7 @@ public class FPPVisitor extends PsiElementVisitor {
   }
 
   public void visitSignalDefinition(@NotNull FPPSignalDefinition o) {
-    visitPsiElement(o);
+    visitNamedElement(o);
   }
 
   public void visitSpecialPortInputKind(@NotNull FPPSpecialPortInputKind o) {
@@ -356,7 +356,7 @@ public class FPPVisitor extends PsiElementVisitor {
   }
 
   public void visitStateDefinition(@NotNull FPPStateDefinition o) {
-    visitPsiElement(o);
+    visitNamedElement(o);
   }
 
   public void visitStateDefinitionMember(@NotNull FPPStateDefinitionMember o) {
@@ -376,7 +376,7 @@ public class FPPVisitor extends PsiElementVisitor {
   }
 
   public void visitStateMachineDefinition(@NotNull FPPStateMachineDefinition o) {
-    visitPsiElement(o);
+    visitNamedElement(o);
   }
 
   public void visitStateMachineInstanceSpecifier(@NotNull FPPStateMachineInstanceSpecifier o) {
@@ -404,7 +404,7 @@ public class FPPVisitor extends PsiElementVisitor {
   }
 
   public void visitStructDefinition(@NotNull FPPStructDefinition o) {
-    visitPsiElement(o);
+    visitNamedElement(o);
   }
 
   public void visitStructElement(@NotNull FPPStructElement o) {
@@ -420,7 +420,7 @@ public class FPPVisitor extends PsiElementVisitor {
   }
 
   public void visitStructTypeMember(@NotNull FPPStructTypeMember o) {
-    visitPsiElement(o);
+    visitNamedElement(o);
   }
 
   public void visitStructTypeMemberSequence(@NotNull FPPStructTypeMemberSequence o) {
@@ -476,7 +476,7 @@ public class FPPVisitor extends PsiElementVisitor {
   }
 
   public void visitTopologyDefinition(@NotNull FPPTopologyDefinition o) {
-    visitPsiElement(o);
+    visitNamedElement(o);
   }
 
   public void visitTopologyImportSpecifier(@NotNull FPPTopologyImportSpecifier o) {

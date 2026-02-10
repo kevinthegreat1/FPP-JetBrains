@@ -8,12 +8,11 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.kevinthegreat.fpp.psi.FPPTypes.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.kevinthegreat.fpp.psi.*;
 
-public class FPPActionDefinitionImpl extends ASTWrapperPsiElement implements FPPActionDefinition {
+public class FPPActionDefinitionImpl extends FPPNamedElementImpl implements FPPActionDefinition {
 
-  public FPPActionDefinitionImpl(@NotNull ASTNode node) {
+  public FPPActionDefinitionImpl(ASTNode node) {
     super(node);
   }
 

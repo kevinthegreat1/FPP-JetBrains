@@ -197,17 +197,32 @@ component_member ::= constant_definition
                   | internal_port_specifier
                   | interface_import_specifier
 // 5.5. Component Instance Definitions
-component_instance_definition ::= INSTANCE identifier_definition COLON qualified_identifier_component_definition BASE ID expression [ TYPE STRING_LITERAL ] [ AT STRING_LITERAL ] [ QUEUE SIZE expression ] [ STACK SIZE expression ] [ PRIORITY expression ] [ CPU expression ] [ LEFT_BRACE init_specifier_sequence RIGHT_BRACE ]
+component_instance_definition ::= INSTANCE identifier_definition COLON qualified_identifier_component_definition BASE ID expression [ TYPE STRING_LITERAL ] [ AT STRING_LITERAL ] [ QUEUE SIZE expression ] [ STACK SIZE expression ] [ PRIORITY expression ] [ CPU expression ] [ LEFT_BRACE init_specifier_sequence RIGHT_BRACE ] {
+    mixin="com.kevinthegreat.fpp.psi.impl.FPPNamedElementImpl"
+    implements="com.kevinthegreat.fpp.psi.FPPNamedElement"
+}
 init_specifier_sequence ::= (init_specifier (SEMICOLON | END_OF_LINE)*)*
 // 5.6. Constant Definitions
-constant_definition ::= [ DICTIONARY ] CONSTANT identifier_definition ASSIGN expression
+constant_definition ::= [ DICTIONARY ] CONSTANT identifier_definition ASSIGN expression {
+    mixin="com.kevinthegreat.fpp.psi.impl.FPPNamedElementImpl"
+    implements="com.kevinthegreat.fpp.psi.FPPNamedElement"
+}
 // 5.7. Enum Definitions
-enum_definition ::= [ DICTIONARY ] ENUM identifier_definition [ COLON type_name ] LEFT_BRACE enum_constant_sequence RIGHT_BRACE [ DEFAULT expression ]
+enum_definition ::= [ DICTIONARY ] ENUM identifier_definition [ COLON type_name ] LEFT_BRACE enum_constant_sequence RIGHT_BRACE [ DEFAULT expression ] {
+    mixin="com.kevinthegreat.fpp.psi.impl.FPPNamedElementImpl"
+    implements="com.kevinthegreat.fpp.psi.FPPNamedElement"
+}
 enum_constant_sequence ::= (enum_constant (COMMA | END_OF_LINE)*)*
 // 5.8. Enumerated Constant Definitions
-enum_constant ::= identifier_definition [ ASSIGN expression ]
+enum_constant ::= identifier_definition [ ASSIGN expression ] {
+    mixin="com.kevinthegreat.fpp.psi.impl.FPPNamedElementImpl"
+    implements="com.kevinthegreat.fpp.psi.FPPNamedElement"
+}
 // 5.9. Module Definitions
-module_definition ::= MODULE identifier_definition LEFT_BRACE module_member_sequence RIGHT_BRACE
+module_definition ::= MODULE identifier_definition LEFT_BRACE module_member_sequence RIGHT_BRACE {
+    mixin="com.kevinthegreat.fpp.psi.impl.FPPNamedElementImpl"
+    implements="com.kevinthegreat.fpp.psi.FPPNamedElement"
+}
 module_member_sequence ::= (module_member (SEMICOLON | END_OF_LINE)*)*
 module_member ::= component_definition
                  | component_instance_definition
@@ -225,14 +240,23 @@ module_member ::= component_definition
                  | enum_definition
                  | include_specifier
 // 5.10. Port Definitions
-port_definition ::= PORT identifier_definition [ LEFT_PAREN param_list RIGHT_PAREN ] [ ARROW type_name ]
+port_definition ::= PORT identifier_definition [ LEFT_PAREN param_list RIGHT_PAREN ] [ ARROW type_name ] {
+    mixin="com.kevinthegreat.fpp.psi.impl.FPPNamedElementImpl"
+    implements="com.kevinthegreat.fpp.psi.FPPNamedElement"
+}
 // 5.11. Port Interface Definitions
-port_interface_definition ::= INTERFACE identifier_definition LEFT_BRACE port_interface_member_sequence RIGHT_BRACE
+port_interface_definition ::= INTERFACE identifier_definition LEFT_BRACE port_interface_member_sequence RIGHT_BRACE {
+    mixin="com.kevinthegreat.fpp.psi.impl.FPPNamedElementImpl"
+    implements="com.kevinthegreat.fpp.psi.FPPNamedElement"
+}
 port_interface_member_sequence ::= (port_interface_member (SEMICOLON | END_OF_LINE)*)*
 port_interface_member ::= port_instance_specifier
                         | interface_import_specifier
 // 5.12. State Machine Definitions
-state_machine_definition ::= STATE MACHINE identifier_definition [ LEFT_BRACE state_machine_member_sequence RIGHT_BRACE ]
+state_machine_definition ::= STATE MACHINE identifier_definition [ LEFT_BRACE state_machine_member_sequence RIGHT_BRACE ] {
+    mixin="com.kevinthegreat.fpp.psi.impl.FPPNamedElementImpl"
+    implements="com.kevinthegreat.fpp.psi.FPPNamedElement"
+}
 state_machine_member_sequence ::= (state_machine_member (SEMICOLON | END_OF_LINE)*)*
 state_machine_member ::= choice_definition
                         | guard_definition
@@ -241,11 +265,20 @@ state_machine_member ::= choice_definition
                         | state_definition
                         | action_definition
 // 5.13. Struct Definitions
-struct_definition ::= [ DICTIONARY ] STRUCT identifier_definition LEFT_BRACE struct_type_member_sequence RIGHT_BRACE [ DEFAULT expression ]
+struct_definition ::= [ DICTIONARY ] STRUCT identifier_definition LEFT_BRACE struct_type_member_sequence RIGHT_BRACE [ DEFAULT expression ] {
+    mixin="com.kevinthegreat.fpp.psi.impl.FPPNamedElementImpl"
+    implements="com.kevinthegreat.fpp.psi.FPPNamedElement"
+}
 struct_type_member_sequence ::= (struct_type_member (COMMA | END_OF_LINE)*)*
-struct_type_member ::= identifier_definition COLON [ LEFT_BRACKET expression RIGHT_BRACKET ] type_name [ FORMAT STRING_LITERAL ]
+struct_type_member ::= identifier_definition COLON [ LEFT_BRACKET expression RIGHT_BRACKET ] type_name [ FORMAT STRING_LITERAL ] {
+    mixin="com.kevinthegreat.fpp.psi.impl.FPPNamedElementImpl"
+    implements="com.kevinthegreat.fpp.psi.FPPNamedElement"
+}
 // 5.14. Topology Definitions
-topology_definition ::= TOPOLOGY identifier_definition LEFT_BRACE topology_member_sequence RIGHT_BRACE
+topology_definition ::= TOPOLOGY identifier_definition LEFT_BRACE topology_member_sequence RIGHT_BRACE {
+    mixin="com.kevinthegreat.fpp.psi.impl.FPPNamedElementImpl"
+    implements="com.kevinthegreat.fpp.psi.FPPNamedElement"
+}
 topology_member_sequence ::= (topology_member (SEMICOLON | END_OF_LINE)*)*
 topology_member ::= component_instance_specifier
                     | connection_graph_specifier
@@ -255,20 +288,35 @@ topology_member ::= component_instance_specifier
 
 // 6. State Machine Behavior Elements
 // 6.1. Action Definitions
-action_definition ::= ACTION identifier_definition [ COLON type_name ]
+action_definition ::= ACTION identifier_definition [ COLON type_name ] {
+    mixin="com.kevinthegreat.fpp.psi.impl.FPPNamedElementImpl"
+    implements="com.kevinthegreat.fpp.psi.FPPNamedElement"
+}
 // 6.2. Choice Definitions
-choice_definition ::= CHOICE identifier_definition LEFT_BRACE IF IDENTIFIER transition_expression ELSE transition_expression RIGHT_BRACE
+choice_definition ::= CHOICE identifier_definition LEFT_BRACE IF IDENTIFIER transition_expression ELSE transition_expression RIGHT_BRACE {
+    mixin="com.kevinthegreat.fpp.psi.impl.FPPNamedElementImpl"
+    implements="com.kevinthegreat.fpp.psi.FPPNamedElement"
+}
 // 6.3. Do Expressions
 do_expression ::= DO LEFT_BRACE action_sequence RIGHT_BRACE
 action_sequence ::= (IDENTIFIER (COMMA | END_OF_LINE)*)*
 // 6.4. Guard Definitions
-guard_definition ::= GUARD identifier_definition [ COLON type_name ]
+guard_definition ::= GUARD identifier_definition [ COLON type_name ] {
+    mixin="com.kevinthegreat.fpp.psi.impl.FPPNamedElementImpl"
+    implements="com.kevinthegreat.fpp.psi.FPPNamedElement"
+}
 // 6.5. Initial Transition Specifiers
 initial_transition_specifier ::= INITIAL transition_expression
 // 6.6. Signal Definitions
-signal_definition ::= SIGNAL identifier_definition [ COLON type_name ]
+signal_definition ::= SIGNAL identifier_definition [ COLON type_name ] {
+    mixin="com.kevinthegreat.fpp.psi.impl.FPPNamedElementImpl"
+    implements="com.kevinthegreat.fpp.psi.FPPNamedElement"
+}
 // 6.7. State Definitions
-state_definition ::= STATE identifier_definition [ LEFT_BRACE state_definition_member_sequence RIGHT_BRACE ]
+state_definition ::= STATE identifier_definition [ LEFT_BRACE state_definition_member_sequence RIGHT_BRACE ] {
+    mixin="com.kevinthegreat.fpp.psi.impl.FPPNamedElementImpl"
+    implements="com.kevinthegreat.fpp.psi.FPPNamedElement"
+}
 state_definition_member_sequence ::= (state_definition_member (SEMICOLON | END_OF_LINE)*)*
 state_definition_member ::= initial_transition_specifier
                         | choice_definition
@@ -457,10 +505,7 @@ qualified_identifier ::= IDENTIFIER (DOT IDENTIFIER)* {
 }
 
 // Reference Support
-identifier_definition ::= IDENTIFIER {
-    mixin="com.kevinthegreat.fpp.psi.impl.FPPNamedElementImpl"
-    implements="com.kevinthegreat.fpp.psi.FPPNamedElement"
-}
+identifier_definition ::= IDENTIFIER
 qualified_identifier_type_name ::= qualified_identifier
 qualified_identifier_component_definition ::= qualified_identifier
 qualified_identifier_state_or_choice_definition ::= qualified_identifier

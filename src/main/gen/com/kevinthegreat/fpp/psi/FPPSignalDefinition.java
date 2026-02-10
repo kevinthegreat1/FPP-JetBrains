@@ -5,7 +5,7 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface FPPSignalDefinition extends PsiElement {
+public interface FPPSignalDefinition extends FPPNamedElement {
 
   @NotNull
   FPPIdentifierDefinition getIdentifierDefinition();

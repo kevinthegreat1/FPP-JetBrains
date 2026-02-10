@@ -5,7 +5,7 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface FPPEnumDefinition extends PsiElement {
+public interface FPPEnumDefinition extends FPPNamedElement {
 
   @NotNull
   FPPEnumConstantSequence getEnumConstantSequence();

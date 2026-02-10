@@ -5,7 +5,7 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface FPPPortDefinition extends PsiElement {
+public interface FPPPortDefinition extends FPPNamedElement {
 
   @NotNull
   FPPIdentifierDefinition getIdentifierDefinition();
