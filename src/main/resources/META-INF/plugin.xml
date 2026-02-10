@@ -44,6 +44,11 @@
                 implementationClass="com.kevinthegreat.fpp.FPPAnnotator"/>
     </extensions>
     <extensions defaultExtensionNs="com.intellij">
+        <psi.referenceContributor
+                language="FPP"
+                implementation="com.kevinthegreat.fpp.FPPReferenceContributor"/>
+    </extensions>
+    <extensions defaultExtensionNs="com.intellij">
         <lang.commenter
                 language="FPP"
                 implementationClass="com.kevinthegreat.fpp.FPPCommenter"/>

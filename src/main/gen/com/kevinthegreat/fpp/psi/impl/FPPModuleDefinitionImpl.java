@@ -29,14 +29,14 @@ public class FPPModuleDefinitionImpl extends ASTWrapperPsiElement implements FPP
 
   @Override
   @NotNull
-  public FPPModuleMemberSequence getModuleMemberSequence() {
-    return findNotNullChildByClass(FPPModuleMemberSequence.class);
+  public FPPIdentifierDefinition getIdentifierDefinition() {
+    return findNotNullChildByClass(FPPIdentifierDefinition.class);
   }
 
   @Override
   @NotNull
-  public PsiElement getIdentifier() {
-    return findNotNullChildByType(IDENTIFIER);
+  public FPPModuleMemberSequence getModuleMemberSequence() {
+    return findNotNullChildByClass(FPPModuleMemberSequence.class);
   }
 
 }

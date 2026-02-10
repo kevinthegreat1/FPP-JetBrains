@@ -7,10 +7,10 @@ import com.intellij.psi.PsiElement;
 
 public interface FPPGuardDefinition extends PsiElement {
 
+  @NotNull
+  FPPIdentifierDefinition getIdentifierDefinition();
+
   @Nullable
   FPPTypeName getTypeName();
-
-  @NotNull
-  PsiElement getIdentifier();
 
 }

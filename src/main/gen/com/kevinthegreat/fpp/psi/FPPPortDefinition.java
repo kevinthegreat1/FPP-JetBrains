@@ -7,13 +7,13 @@ import com.intellij.psi.PsiElement;
 
 public interface FPPPortDefinition extends PsiElement {
 
+  @NotNull
+  FPPIdentifierDefinition getIdentifierDefinition();
+
   @Nullable
   FPPParamList getParamList();
 
   @Nullable
   FPPTypeName getTypeName();
-
-  @NotNull
-  PsiElement getIdentifier();
 
 }

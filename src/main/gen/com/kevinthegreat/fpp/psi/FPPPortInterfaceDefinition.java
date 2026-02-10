@@ -8,9 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface FPPPortInterfaceDefinition extends PsiElement {
 
   @NotNull
-  FPPPortInterfaceMemberSequence getPortInterfaceMemberSequence();
+  FPPIdentifierDefinition getIdentifierDefinition();
 
   @NotNull
-  PsiElement getIdentifier();
+  FPPPortInterfaceMemberSequence getPortInterfaceMemberSequence();
 
 }

@@ -8,12 +8,11 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.kevinthegreat.fpp.psi.FPPTypes.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.kevinthegreat.fpp.psi.*;
 
-public class FPPQualifiedIdentifierTypeNameImpl extends ASTWrapperPsiElement implements FPPQualifiedIdentifierTypeName {
+public class FPPQualifiedIdentifierTypeNameImpl extends FPPNavigatableElementImpl implements FPPQualifiedIdentifierTypeName {
 
-  public FPPQualifiedIdentifierTypeNameImpl(@NotNull ASTNode node) {
+  public FPPQualifiedIdentifierTypeNameImpl(ASTNode node) {
     super(node);
   }
 

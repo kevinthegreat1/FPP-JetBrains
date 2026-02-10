@@ -10,13 +10,13 @@ public interface FPPComponentInstanceDefinition extends PsiElement {
   @NotNull
   List<FPPExpression> getExpressionList();
 
+  @NotNull
+  FPPIdentifierDefinition getIdentifierDefinition();
+
   @Nullable
   FPPInitSpecifierSequence getInitSpecifierSequence();
 
   @NotNull
   FPPQualifiedIdentifierComponentDefinition getQualifiedIdentifierComponentDefinition();
-
-  @NotNull
-  PsiElement getIdentifier();
 
 }

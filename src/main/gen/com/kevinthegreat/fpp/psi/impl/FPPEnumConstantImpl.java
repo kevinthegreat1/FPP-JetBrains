@@ -35,8 +35,8 @@ public class FPPEnumConstantImpl extends ASTWrapperPsiElement implements FPPEnum
 
   @Override
   @NotNull
-  public PsiElement getIdentifier() {
-    return findNotNullChildByType(IDENTIFIER);
+  public FPPIdentifierDefinition getIdentifierDefinition() {
+    return findNotNullChildByClass(FPPIdentifierDefinition.class);
   }
 
 }

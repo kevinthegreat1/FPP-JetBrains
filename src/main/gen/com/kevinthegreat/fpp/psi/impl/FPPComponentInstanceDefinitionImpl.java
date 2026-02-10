@@ -34,6 +34,12 @@ public class FPPComponentInstanceDefinitionImpl extends ASTWrapperPsiElement imp
   }
 
   @Override
+  @NotNull
+  public FPPIdentifierDefinition getIdentifierDefinition() {
+    return findNotNullChildByClass(FPPIdentifierDefinition.class);
+  }
+
+  @Override
   @Nullable
   public FPPInitSpecifierSequence getInitSpecifierSequence() {
     return findChildByClass(FPPInitSpecifierSequence.class);
@@ -43,12 +49,6 @@ public class FPPComponentInstanceDefinitionImpl extends ASTWrapperPsiElement imp
   @NotNull
   public FPPQualifiedIdentifierComponentDefinition getQualifiedIdentifierComponentDefinition() {
     return findNotNullChildByClass(FPPQualifiedIdentifierComponentDefinition.class);
-  }
-
-  @Override
-  @NotNull
-  public PsiElement getIdentifier() {
-    return findNotNullChildByType(IDENTIFIER);
   }
 
 }

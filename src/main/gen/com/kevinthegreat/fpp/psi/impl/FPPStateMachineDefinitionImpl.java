@@ -28,15 +28,15 @@ public class FPPStateMachineDefinitionImpl extends ASTWrapperPsiElement implemen
   }
 
   @Override
-  @Nullable
-  public FPPStateMachineMemberSequence getStateMachineMemberSequence() {
-    return findChildByClass(FPPStateMachineMemberSequence.class);
+  @NotNull
+  public FPPIdentifierDefinition getIdentifierDefinition() {
+    return findNotNullChildByClass(FPPIdentifierDefinition.class);
   }
 
   @Override
-  @NotNull
-  public PsiElement getIdentifier() {
-    return findNotNullChildByType(IDENTIFIER);
+  @Nullable
+  public FPPStateMachineMemberSequence getStateMachineMemberSequence() {
+    return findChildByClass(FPPStateMachineMemberSequence.class);
   }
 
 }

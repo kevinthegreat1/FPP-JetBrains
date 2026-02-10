@@ -11,9 +11,9 @@ public interface FPPStructDefinition extends PsiElement {
   FPPExpression getExpression();
 
   @NotNull
-  FPPStructTypeMemberSequence getStructTypeMemberSequence();
+  FPPIdentifierDefinition getIdentifierDefinition();
 
   @NotNull
-  PsiElement getIdentifier();
+  FPPStructTypeMemberSequence getStructTypeMemberSequence();
 
 }

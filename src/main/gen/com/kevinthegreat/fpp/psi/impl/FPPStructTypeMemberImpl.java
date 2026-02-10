@@ -35,14 +35,14 @@ public class FPPStructTypeMemberImpl extends ASTWrapperPsiElement implements FPP
 
   @Override
   @NotNull
-  public FPPTypeName getTypeName() {
-    return findNotNullChildByClass(FPPTypeName.class);
+  public FPPIdentifierDefinition getIdentifierDefinition() {
+    return findNotNullChildByClass(FPPIdentifierDefinition.class);
   }
 
   @Override
   @NotNull
-  public PsiElement getIdentifier() {
-    return findNotNullChildByType(IDENTIFIER);
+  public FPPTypeName getTypeName() {
+    return findNotNullChildByClass(FPPTypeName.class);
   }
 
   @Override

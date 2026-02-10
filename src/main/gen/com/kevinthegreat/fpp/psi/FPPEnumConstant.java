@@ -11,6 +11,6 @@ public interface FPPEnumConstant extends PsiElement {
   FPPExpression getExpression();
 
   @NotNull
-  PsiElement getIdentifier();
+  FPPIdentifierDefinition getIdentifierDefinition();
 
 }

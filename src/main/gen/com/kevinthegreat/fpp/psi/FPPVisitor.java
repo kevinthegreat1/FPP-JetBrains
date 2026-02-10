@@ -179,6 +179,10 @@ public class FPPVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitIdentifierDefinition(@NotNull FPPIdentifierDefinition o) {
+    visitNamedElement(o);
+  }
+
   public void visitIncludeSpecifier(@NotNull FPPIncludeSpecifier o) {
     visitPsiElement(o);
   }
@@ -292,43 +296,43 @@ public class FPPVisitor extends PsiElementVisitor {
   }
 
   public void visitQualifiedIdentifierComponentDefinition(@NotNull FPPQualifiedIdentifierComponentDefinition o) {
-    visitPsiElement(o);
+    visitNavigatableElement(o);
   }
 
   public void visitQualifiedIdentifierComponentInstanceDefinition(@NotNull FPPQualifiedIdentifierComponentInstanceDefinition o) {
-    visitPsiElement(o);
+    visitNavigatableElement(o);
   }
 
   public void visitQualifiedIdentifierConstantDefinition(@NotNull FPPQualifiedIdentifierConstantDefinition o) {
-    visitPsiElement(o);
+    visitNavigatableElement(o);
   }
 
   public void visitQualifiedIdentifierPortDefinition(@NotNull FPPQualifiedIdentifierPortDefinition o) {
-    visitPsiElement(o);
+    visitNavigatableElement(o);
   }
 
   public void visitQualifiedIdentifierPortInterfaceDefinition(@NotNull FPPQualifiedIdentifierPortInterfaceDefinition o) {
-    visitPsiElement(o);
+    visitNavigatableElement(o);
   }
 
   public void visitQualifiedIdentifierStateMachineDefinition(@NotNull FPPQualifiedIdentifierStateMachineDefinition o) {
-    visitPsiElement(o);
+    visitNavigatableElement(o);
   }
 
   public void visitQualifiedIdentifierStateOrChoiceDefinition(@NotNull FPPQualifiedIdentifierStateOrChoiceDefinition o) {
-    visitPsiElement(o);
+    visitNavigatableElement(o);
   }
 
   public void visitQualifiedIdentifierTopologyDefinition(@NotNull FPPQualifiedIdentifierTopologyDefinition o) {
-    visitPsiElement(o);
+    visitNavigatableElement(o);
   }
 
   public void visitQualifiedIdentifierTypeLocationSpecifier(@NotNull FPPQualifiedIdentifierTypeLocationSpecifier o) {
-    visitPsiElement(o);
+    visitNavigatableElement(o);
   }
 
   public void visitQualifiedIdentifierTypeName(@NotNull FPPQualifiedIdentifierTypeName o) {
-    visitPsiElement(o);
+    visitNavigatableElement(o);
   }
 
   public void visitQueueFullBehavior(@NotNull FPPQueueFullBehavior o) {
@@ -512,6 +516,14 @@ public class FPPVisitor extends PsiElementVisitor {
   }
 
   public void visitTypeName(@NotNull FPPTypeName o) {
+    visitPsiElement(o);
+  }
+
+  public void visitNamedElement(@NotNull FPPNamedElement o) {
+    visitPsiElement(o);
+  }
+
+  public void visitNavigatableElement(@NotNull FPPNavigatableElement o) {
     visitPsiElement(o);
   }
 

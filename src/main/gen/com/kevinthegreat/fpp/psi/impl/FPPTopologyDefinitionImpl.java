@@ -29,14 +29,14 @@ public class FPPTopologyDefinitionImpl extends ASTWrapperPsiElement implements F
 
   @Override
   @NotNull
-  public FPPTopologyMemberSequence getTopologyMemberSequence() {
-    return findNotNullChildByClass(FPPTopologyMemberSequence.class);
+  public FPPIdentifierDefinition getIdentifierDefinition() {
+    return findNotNullChildByClass(FPPIdentifierDefinition.class);
   }
 
   @Override
   @NotNull
-  public PsiElement getIdentifier() {
-    return findNotNullChildByType(IDENTIFIER);
+  public FPPTopologyMemberSequence getTopologyMemberSequence() {
+    return findNotNullChildByClass(FPPTopologyMemberSequence.class);
   }
 
 }

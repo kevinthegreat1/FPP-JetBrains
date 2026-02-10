@@ -28,6 +28,12 @@ public class FPPPortDefinitionImpl extends ASTWrapperPsiElement implements FPPPo
   }
 
   @Override
+  @NotNull
+  public FPPIdentifierDefinition getIdentifierDefinition() {
+    return findNotNullChildByClass(FPPIdentifierDefinition.class);
+  }
+
+  @Override
   @Nullable
   public FPPParamList getParamList() {
     return findChildByClass(FPPParamList.class);
@@ -37,12 +43,6 @@ public class FPPPortDefinitionImpl extends ASTWrapperPsiElement implements FPPPo
   @Nullable
   public FPPTypeName getTypeName() {
     return findChildByClass(FPPTypeName.class);
-  }
-
-  @Override
-  @NotNull
-  public PsiElement getIdentifier() {
-    return findNotNullChildByType(IDENTIFIER);
   }
 
 }

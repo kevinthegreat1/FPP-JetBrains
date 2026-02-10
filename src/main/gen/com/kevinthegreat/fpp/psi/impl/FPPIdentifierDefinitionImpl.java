@@ -8,17 +8,16 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.kevinthegreat.fpp.psi.FPPTypes.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.kevinthegreat.fpp.psi.*;
 
-public class FPPActionDefinitionImpl extends ASTWrapperPsiElement implements FPPActionDefinition {
+public class FPPIdentifierDefinitionImpl extends FPPNamedElementImpl implements FPPIdentifierDefinition {
 
-  public FPPActionDefinitionImpl(@NotNull ASTNode node) {
+  public FPPIdentifierDefinitionImpl(ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull FPPVisitor visitor) {
-    visitor.visitActionDefinition(this);
+    visitor.visitIdentifierDefinition(this);
   }
 
   @Override
@@ -29,14 +28,8 @@ public class FPPActionDefinitionImpl extends ASTWrapperPsiElement implements FPP
 
   @Override
   @NotNull
-  public FPPIdentifierDefinition getIdentifierDefinition() {
-    return findNotNullChildByClass(FPPIdentifierDefinition.class);
-  }
-
-  @Override
-  @Nullable
-  public FPPTypeName getTypeName() {
-    return findChildByClass(FPPTypeName.class);
+  public PsiElement getIdentifier() {
+    return findNotNullChildByType(IDENTIFIER);
   }
 
 }

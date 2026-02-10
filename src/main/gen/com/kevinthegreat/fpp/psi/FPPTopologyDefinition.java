@@ -8,9 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface FPPTopologyDefinition extends PsiElement {
 
   @NotNull
-  FPPTopologyMemberSequence getTopologyMemberSequence();
+  FPPIdentifierDefinition getIdentifierDefinition();
 
   @NotNull
-  PsiElement getIdentifier();
+  FPPTopologyMemberSequence getTopologyMemberSequence();
 
 }

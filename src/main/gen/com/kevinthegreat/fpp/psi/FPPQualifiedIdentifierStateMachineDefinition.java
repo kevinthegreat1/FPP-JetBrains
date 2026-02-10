@@ -5,7 +5,7 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface FPPQualifiedIdentifierStateMachineDefinition extends PsiElement {
+public interface FPPQualifiedIdentifierStateMachineDefinition extends FPPNavigatableElement {
 
   @NotNull
   FPPQualifiedIdentifier getQualifiedIdentifier();

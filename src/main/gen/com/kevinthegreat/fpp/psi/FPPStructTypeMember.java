@@ -11,10 +11,10 @@ public interface FPPStructTypeMember extends PsiElement {
   FPPExpression getExpression();
 
   @NotNull
-  FPPTypeName getTypeName();
+  FPPIdentifierDefinition getIdentifierDefinition();
 
   @NotNull
-  PsiElement getIdentifier();
+  FPPTypeName getTypeName();
 
   @Nullable
   PsiElement getStringLiteral();

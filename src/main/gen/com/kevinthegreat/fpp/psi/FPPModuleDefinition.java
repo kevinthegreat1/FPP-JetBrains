@@ -8,9 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface FPPModuleDefinition extends PsiElement {
 
   @NotNull
-  FPPModuleMemberSequence getModuleMemberSequence();
+  FPPIdentifierDefinition getIdentifierDefinition();
 
   @NotNull
-  PsiElement getIdentifier();
+  FPPModuleMemberSequence getModuleMemberSequence();
 
 }

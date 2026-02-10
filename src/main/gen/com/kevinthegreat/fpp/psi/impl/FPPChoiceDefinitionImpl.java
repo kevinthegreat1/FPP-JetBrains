@@ -29,8 +29,20 @@ public class FPPChoiceDefinitionImpl extends ASTWrapperPsiElement implements FPP
 
   @Override
   @NotNull
+  public FPPIdentifierDefinition getIdentifierDefinition() {
+    return findNotNullChildByClass(FPPIdentifierDefinition.class);
+  }
+
+  @Override
+  @NotNull
   public List<FPPTransitionExpression> getTransitionExpressionList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, FPPTransitionExpression.class);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getIdentifier() {
+    return findNotNullChildByType(IDENTIFIER);
   }
 
 }

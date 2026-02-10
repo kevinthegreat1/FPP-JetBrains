@@ -11,6 +11,6 @@ public interface FPPConstantDefinition extends PsiElement {
   FPPExpression getExpression();
 
   @NotNull
-  PsiElement getIdentifier();
+  FPPIdentifierDefinition getIdentifierDefinition();
 
 }

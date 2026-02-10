@@ -35,8 +35,8 @@ public class FPPConstantDefinitionImpl extends ASTWrapperPsiElement implements F
 
   @Override
   @NotNull
-  public PsiElement getIdentifier() {
-    return findNotNullChildByType(IDENTIFIER);
+  public FPPIdentifierDefinition getIdentifierDefinition() {
+    return findNotNullChildByClass(FPPIdentifierDefinition.class);
   }
 
 }

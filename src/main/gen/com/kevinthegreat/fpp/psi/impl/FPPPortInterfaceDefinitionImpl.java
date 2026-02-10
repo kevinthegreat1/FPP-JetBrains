@@ -29,14 +29,14 @@ public class FPPPortInterfaceDefinitionImpl extends ASTWrapperPsiElement impleme
 
   @Override
   @NotNull
-  public FPPPortInterfaceMemberSequence getPortInterfaceMemberSequence() {
-    return findNotNullChildByClass(FPPPortInterfaceMemberSequence.class);
+  public FPPIdentifierDefinition getIdentifierDefinition() {
+    return findNotNullChildByClass(FPPIdentifierDefinition.class);
   }
 
   @Override
   @NotNull
-  public PsiElement getIdentifier() {
-    return findNotNullChildByType(IDENTIFIER);
+  public FPPPortInterfaceMemberSequence getPortInterfaceMemberSequence() {
+    return findNotNullChildByClass(FPPPortInterfaceMemberSequence.class);
   }
 
 }

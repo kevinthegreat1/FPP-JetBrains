@@ -8,6 +8,12 @@ import com.intellij.psi.PsiElement;
 public interface FPPChoiceDefinition extends PsiElement {
 
   @NotNull
+  FPPIdentifierDefinition getIdentifierDefinition();
+
+  @NotNull
   List<FPPTransitionExpression> getTransitionExpressionList();
+
+  @NotNull
+  PsiElement getIdentifier();
 
 }

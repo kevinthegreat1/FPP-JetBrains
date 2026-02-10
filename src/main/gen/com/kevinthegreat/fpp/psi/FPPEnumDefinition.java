@@ -13,10 +13,10 @@ public interface FPPEnumDefinition extends PsiElement {
   @Nullable
   FPPExpression getExpression();
 
+  @NotNull
+  FPPIdentifierDefinition getIdentifierDefinition();
+
   @Nullable
   FPPTypeName getTypeName();
-
-  @NotNull
-  PsiElement getIdentifier();
 
 }

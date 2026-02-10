@@ -51,6 +51,7 @@ public interface FPPTypes {
   IElementType FORMAL_PARAMETER = new FPPElementType("FORMAL_PARAMETER");
   IElementType GENERAL_PORT_KIND = new FPPElementType("GENERAL_PORT_KIND");
   IElementType GUARD_DEFINITION = new FPPElementType("GUARD_DEFINITION");
+  IElementType IDENTIFIER_DEFINITION = new FPPElementType("IDENTIFIER_DEFINITION");
   IElementType INCLUDE_SPECIFIER = new FPPElementType("INCLUDE_SPECIFIER");
   IElementType INITIAL_TRANSITION_SPECIFIER = new FPPElementType("INITIAL_TRANSITION_SPECIFIER");
   IElementType INIT_SPECIFIER = new FPPElementType("INIT_SPECIFIER");
@@ -404,6 +405,9 @@ public interface FPPTypes {
       }
       else if (type == GUARD_DEFINITION) {
         return new FPPGuardDefinitionImpl(node);
+      }
+      else if (type == IDENTIFIER_DEFINITION) {
+        return new FPPIdentifierDefinitionImpl(node);
       }
       else if (type == INCLUDE_SPECIFIER) {
         return new FPPIncludeSpecifierImpl(node);

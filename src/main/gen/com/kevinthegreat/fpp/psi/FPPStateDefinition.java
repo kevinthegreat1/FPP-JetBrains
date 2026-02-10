@@ -7,10 +7,10 @@ import com.intellij.psi.PsiElement;
 
 public interface FPPStateDefinition extends PsiElement {
 
+  @NotNull
+  FPPIdentifierDefinition getIdentifierDefinition();
+
   @Nullable
   FPPStateDefinitionMemberSequence getStateDefinitionMemberSequence();
-
-  @NotNull
-  PsiElement getIdentifier();
 
 }

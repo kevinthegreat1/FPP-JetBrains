@@ -40,15 +40,15 @@ public class FPPEnumDefinitionImpl extends ASTWrapperPsiElement implements FPPEn
   }
 
   @Override
-  @Nullable
-  public FPPTypeName getTypeName() {
-    return findChildByClass(FPPTypeName.class);
+  @NotNull
+  public FPPIdentifierDefinition getIdentifierDefinition() {
+    return findNotNullChildByClass(FPPIdentifierDefinition.class);
   }
 
   @Override
-  @NotNull
-  public PsiElement getIdentifier() {
-    return findNotNullChildByType(IDENTIFIER);
+  @Nullable
+  public FPPTypeName getTypeName() {
+    return findChildByClass(FPPTypeName.class);
   }
 
 }
