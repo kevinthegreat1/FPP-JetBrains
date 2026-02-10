@@ -292,47 +292,47 @@ public class FPPVisitor extends PsiElementVisitor {
   }
 
   public void visitQualifiedIdentifier(@NotNull FPPQualifiedIdentifier o) {
-    visitPsiElement(o);
+    visitNavigatableElement(o);
   }
 
   public void visitQualifiedIdentifierComponentDefinition(@NotNull FPPQualifiedIdentifierComponentDefinition o) {
-    visitNavigatableElement(o);
+    visitPsiElement(o);
   }
 
   public void visitQualifiedIdentifierComponentInstanceDefinition(@NotNull FPPQualifiedIdentifierComponentInstanceDefinition o) {
-    visitNavigatableElement(o);
+    visitPsiElement(o);
   }
 
   public void visitQualifiedIdentifierConstantDefinition(@NotNull FPPQualifiedIdentifierConstantDefinition o) {
-    visitNavigatableElement(o);
+    visitPsiElement(o);
   }
 
   public void visitQualifiedIdentifierPortDefinition(@NotNull FPPQualifiedIdentifierPortDefinition o) {
-    visitNavigatableElement(o);
+    visitPsiElement(o);
   }
 
   public void visitQualifiedIdentifierPortInterfaceDefinition(@NotNull FPPQualifiedIdentifierPortInterfaceDefinition o) {
-    visitNavigatableElement(o);
+    visitPsiElement(o);
   }
 
   public void visitQualifiedIdentifierStateMachineDefinition(@NotNull FPPQualifiedIdentifierStateMachineDefinition o) {
-    visitNavigatableElement(o);
+    visitPsiElement(o);
   }
 
   public void visitQualifiedIdentifierStateOrChoiceDefinition(@NotNull FPPQualifiedIdentifierStateOrChoiceDefinition o) {
-    visitNavigatableElement(o);
+    visitPsiElement(o);
   }
 
   public void visitQualifiedIdentifierTopologyDefinition(@NotNull FPPQualifiedIdentifierTopologyDefinition o) {
-    visitNavigatableElement(o);
+    visitPsiElement(o);
   }
 
   public void visitQualifiedIdentifierTypeLocationSpecifier(@NotNull FPPQualifiedIdentifierTypeLocationSpecifier o) {
-    visitNavigatableElement(o);
+    visitPsiElement(o);
   }
 
   public void visitQualifiedIdentifierTypeName(@NotNull FPPQualifiedIdentifierTypeName o) {
-    visitNavigatableElement(o);
+    visitPsiElement(o);
   }
 
   public void visitQueueFullBehavior(@NotNull FPPQueueFullBehavior o) {

@@ -11,6 +11,7 @@ import com.intellij.psi.util.elementType
 import com.intellij.psi.util.parents
 import com.intellij.psi.util.siblings
 import com.kevinthegreat.fpp.psi.FPPModuleDefinition
+import com.kevinthegreat.fpp.psi.FPPTokenSets
 import com.kevinthegreat.fpp.psi.FPPTypes
 
 object FPPUtil {
@@ -28,7 +29,7 @@ object FPPUtil {
         if (!isDef(def)) return null
 
         return PsiTreeUtil.getChildrenOfTypeAsList(def, PsiElement::class.java)
-            .find { it.elementType == FPPTypes.IDENTIFIER || it.elementType == FPPTypes.IDENTIFIER_DEFINITION }
+            .find { FPPTokenSets.IDENTIFIERS.contains(it.elementType) }
     }
 
     fun getUnqualifiedName(def: PsiElement): String? = getUnqualifiedNameElement(def)?.text

@@ -12,8 +12,8 @@ abstract class FPPNamedElementImpl(node: ASTNode) : ASTWrapperPsiElement(node), 
 
     override fun setName(name: String): PsiElement {
         val newModuleDef = FPPElementFactory.createModuleDef(project, name)
-        val newId = FPPUtil.getUnqualifiedNameElement(newModuleDef) ?: return this
-        return replace(newId)
+        val newIdDef = FPPUtil.getUnqualifiedNameElement(newModuleDef) ?: return this
+        return replace(newIdDef)
     }
 
     override fun getNameIdentifier(): PsiElement? = this

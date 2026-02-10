@@ -49,6 +49,11 @@
                 implementation="com.kevinthegreat.fpp.FPPReferenceContributor"/>
     </extensions>
     <extensions defaultExtensionNs="com.intellij">
+        <lang.elementManipulator
+                forClass="com.kevinthegreat.fpp.psi.FPPQualifiedIdentifier"
+                implementationClass="com.kevinthegreat.fpp.psi.FPPQualifiedIdentifierManipulator"/>
+    </extensions>
+    <extensions defaultExtensionNs="com.intellij">
         <lang.commenter
                 language="FPP"
                 implementationClass="com.kevinthegreat.fpp.FPPCommenter"/>

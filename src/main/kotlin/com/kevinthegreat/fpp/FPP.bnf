@@ -451,50 +451,23 @@ translation_unit ::= (translation_unit_member (SEMICOLON | END_OF_LINE)*)*
 translation_unit_member ::= module_member
 
 // 15.1. Qualified Identifiers
-qualified_identifier ::= IDENTIFIER (DOT IDENTIFIER)*
+qualified_identifier ::= IDENTIFIER (DOT IDENTIFIER)* {
+    mixin="com.kevinthegreat.fpp.psi.impl.FPPNavigatableElementImpl"
+    implements="com.kevinthegreat.fpp.psi.FPPNavigatableElement"
+}
 
 // Reference Support
 identifier_definition ::= IDENTIFIER {
     mixin="com.kevinthegreat.fpp.psi.impl.FPPNamedElementImpl"
     implements="com.kevinthegreat.fpp.psi.FPPNamedElement"
 }
-qualified_identifier_type_name ::= qualified_identifier {
-    mixin="com.kevinthegreat.fpp.psi.impl.FPPNavigatableElementImpl"
-    implements="com.kevinthegreat.fpp.psi.FPPNavigatableElement"
-}
-qualified_identifier_component_definition ::= qualified_identifier {
-    mixin="com.kevinthegreat.fpp.psi.impl.FPPNavigatableElementImpl"
-    implements="com.kevinthegreat.fpp.psi.FPPNavigatableElement"
-}
-qualified_identifier_state_or_choice_definition ::= qualified_identifier {
-    mixin="com.kevinthegreat.fpp.psi.impl.FPPNavigatableElementImpl"
-    implements="com.kevinthegreat.fpp.psi.FPPNavigatableElement"
-}
-qualified_identifier_component_instance_definition ::= qualified_identifier {
-    mixin="com.kevinthegreat.fpp.psi.impl.FPPNavigatableElementImpl"
-    implements="com.kevinthegreat.fpp.psi.FPPNavigatableElement"
-}
-qualified_identifier_port_interface_definition ::= qualified_identifier {
-    mixin="com.kevinthegreat.fpp.psi.impl.FPPNavigatableElementImpl"
-    implements="com.kevinthegreat.fpp.psi.FPPNavigatableElement"
-}
-qualified_identifier_constant_definition ::= qualified_identifier {
-    mixin="com.kevinthegreat.fpp.psi.impl.FPPNavigatableElementImpl"
-    implements="com.kevinthegreat.fpp.psi.FPPNavigatableElement"
-}
-qualified_identifier_port_definition ::= qualified_identifier {
-    mixin="com.kevinthegreat.fpp.psi.impl.FPPNavigatableElementImpl"
-    implements="com.kevinthegreat.fpp.psi.FPPNavigatableElement"
-}
-qualified_identifier_state_machine_definition ::= qualified_identifier {
-    mixin="com.kevinthegreat.fpp.psi.impl.FPPNavigatableElementImpl"
-    implements="com.kevinthegreat.fpp.psi.FPPNavigatableElement"
-}
-qualified_identifier_topology_definition ::= qualified_identifier {
-    mixin="com.kevinthegreat.fpp.psi.impl.FPPNavigatableElementImpl"
-    implements="com.kevinthegreat.fpp.psi.FPPNavigatableElement"
-}
-qualified_identifier_type_location_specifier ::= qualified_identifier {
-    mixin="com.kevinthegreat.fpp.psi.impl.FPPNavigatableElementImpl"
-    implements="com.kevinthegreat.fpp.psi.FPPNavigatableElement"
-}
+qualified_identifier_type_name ::= qualified_identifier
+qualified_identifier_component_definition ::= qualified_identifier
+qualified_identifier_state_or_choice_definition ::= qualified_identifier
+qualified_identifier_component_instance_definition ::= qualified_identifier
+qualified_identifier_port_interface_definition ::= qualified_identifier
+qualified_identifier_constant_definition ::= qualified_identifier
+qualified_identifier_port_definition ::= qualified_identifier
+qualified_identifier_state_machine_definition ::= qualified_identifier
+qualified_identifier_topology_definition ::= qualified_identifier
+qualified_identifier_type_location_specifier ::= qualified_identifier
