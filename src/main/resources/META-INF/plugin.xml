@@ -64,6 +64,16 @@
                 implementationClass="com.kevinthegreat.fpp.psi.FPPQualifiedIdentifierManipulator"/>
     </extensions>
     <extensions defaultExtensionNs="com.intellij">
+        <lang.foldingBuilder
+                language="FPP"
+                implementationClass="com.kevinthegreat.fpp.FPPFoldingBuilder"/>
+    </extensions>
+    <extensions defaultExtensionNs="com.intellij">
+        <lang.braceMatcher
+                language="FPP"
+                implementationClass="com.kevinthegreat.fpp.FPPPairedBraceMatcher"/>
+    </extensions>
+    <extensions defaultExtensionNs="com.intellij">
         <lang.commenter
                 language="FPP"
                 implementationClass="com.kevinthegreat.fpp.FPPCommenter"/>
