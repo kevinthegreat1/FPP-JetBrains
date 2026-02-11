@@ -11,9 +11,9 @@ public interface FPPChoiceDefinition extends FPPNamedElement {
   FPPIdentifierDefinition getIdentifierDefinition();
 
   @NotNull
-  List<FPPTransitionExpression> getTransitionExpressionList();
+  FPPIdentifierGuardDefinition getIdentifierGuardDefinition();
 
   @NotNull
-  PsiElement getIdentifier();
+  List<FPPTransitionExpression> getTransitionExpressionList();
 
 }

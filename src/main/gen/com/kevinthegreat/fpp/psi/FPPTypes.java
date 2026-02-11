@@ -49,9 +49,14 @@ public interface FPPTypes {
   IElementType EXPRESSION_PRIMARY = new FPPElementType("EXPRESSION_PRIMARY");
   IElementType FLOATING_POINT_TYPE_NAME = new FPPElementType("FLOATING_POINT_TYPE_NAME");
   IElementType FORMAL_PARAMETER = new FPPElementType("FORMAL_PARAMETER");
+  IElementType GENERAL_PORT_INSTANCE_SPECIFIER = new FPPElementType("GENERAL_PORT_INSTANCE_SPECIFIER");
   IElementType GENERAL_PORT_KIND = new FPPElementType("GENERAL_PORT_KIND");
   IElementType GUARD_DEFINITION = new FPPElementType("GUARD_DEFINITION");
+  IElementType IDENTIFIER_ACTION_DEFINITION = new FPPElementType("IDENTIFIER_ACTION_DEFINITION");
   IElementType IDENTIFIER_DEFINITION = new FPPElementType("IDENTIFIER_DEFINITION");
+  IElementType IDENTIFIER_GENERAL_PORT_INSTANCE = new FPPElementType("IDENTIFIER_GENERAL_PORT_INSTANCE");
+  IElementType IDENTIFIER_GUARD_DEFINITION = new FPPElementType("IDENTIFIER_GUARD_DEFINITION");
+  IElementType IDENTIFIER_SIGNAL_DEFINITION = new FPPElementType("IDENTIFIER_SIGNAL_DEFINITION");
   IElementType INCLUDE_SPECIFIER = new FPPElementType("INCLUDE_SPECIFIER");
   IElementType INITIAL_TRANSITION_SPECIFIER = new FPPElementType("INITIAL_TRANSITION_SPECIFIER");
   IElementType INIT_SPECIFIER = new FPPElementType("INIT_SPECIFIER");
@@ -94,6 +99,7 @@ public interface FPPTypes {
   IElementType RECORD_SPECIFIER = new FPPElementType("RECORD_SPECIFIER");
   IElementType SIGNAL_DEFINITION = new FPPElementType("SIGNAL_DEFINITION");
   IElementType SPECIAL_PORT_INPUT_KIND = new FPPElementType("SPECIAL_PORT_INPUT_KIND");
+  IElementType SPECIAL_PORT_INSTANCE_SPECIFIER = new FPPElementType("SPECIAL_PORT_INSTANCE_SPECIFIER");
   IElementType SPECIAL_PORT_KIND = new FPPElementType("SPECIAL_PORT_KIND");
   IElementType STATE_DEFINITION = new FPPElementType("STATE_DEFINITION");
   IElementType STATE_DEFINITION_MEMBER = new FPPElementType("STATE_DEFINITION_MEMBER");
@@ -400,14 +406,29 @@ public interface FPPTypes {
       else if (type == FORMAL_PARAMETER) {
         return new FPPFormalParameterImpl(node);
       }
+      else if (type == GENERAL_PORT_INSTANCE_SPECIFIER) {
+        return new FPPGeneralPortInstanceSpecifierImpl(node);
+      }
       else if (type == GENERAL_PORT_KIND) {
         return new FPPGeneralPortKindImpl(node);
       }
       else if (type == GUARD_DEFINITION) {
         return new FPPGuardDefinitionImpl(node);
       }
+      else if (type == IDENTIFIER_ACTION_DEFINITION) {
+        return new FPPIdentifierActionDefinitionImpl(node);
+      }
       else if (type == IDENTIFIER_DEFINITION) {
         return new FPPIdentifierDefinitionImpl(node);
+      }
+      else if (type == IDENTIFIER_GENERAL_PORT_INSTANCE) {
+        return new FPPIdentifierGeneralPortInstanceImpl(node);
+      }
+      else if (type == IDENTIFIER_GUARD_DEFINITION) {
+        return new FPPIdentifierGuardDefinitionImpl(node);
+      }
+      else if (type == IDENTIFIER_SIGNAL_DEFINITION) {
+        return new FPPIdentifierSignalDefinitionImpl(node);
       }
       else if (type == INCLUDE_SPECIFIER) {
         return new FPPIncludeSpecifierImpl(node);
@@ -534,6 +555,9 @@ public interface FPPTypes {
       }
       else if (type == SPECIAL_PORT_INPUT_KIND) {
         return new FPPSpecialPortInputKindImpl(node);
+      }
+      else if (type == SPECIAL_PORT_INSTANCE_SPECIFIER) {
+        return new FPPSpecialPortInstanceSpecifierImpl(node);
       }
       else if (type == SPECIAL_PORT_KIND) {
         return new FPPSpecialPortKindImpl(node);

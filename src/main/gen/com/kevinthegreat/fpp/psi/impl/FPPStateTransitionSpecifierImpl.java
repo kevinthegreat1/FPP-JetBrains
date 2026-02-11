@@ -28,6 +28,18 @@ public class FPPStateTransitionSpecifierImpl extends ASTWrapperPsiElement implem
   }
 
   @Override
+  @Nullable
+  public FPPIdentifierGuardDefinition getIdentifierGuardDefinition() {
+    return findChildByClass(FPPIdentifierGuardDefinition.class);
+  }
+
+  @Override
+  @NotNull
+  public FPPIdentifierSignalDefinition getIdentifierSignalDefinition() {
+    return findNotNullChildByClass(FPPIdentifierSignalDefinition.class);
+  }
+
+  @Override
   @NotNull
   public FPPTransitionOrDo getTransitionOrDo() {
     return findNotNullChildByClass(FPPTransitionOrDo.class);

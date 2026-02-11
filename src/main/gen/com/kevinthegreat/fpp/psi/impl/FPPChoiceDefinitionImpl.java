@@ -34,14 +34,14 @@ public class FPPChoiceDefinitionImpl extends FPPNamedElementImpl implements FPPC
 
   @Override
   @NotNull
-  public List<FPPTransitionExpression> getTransitionExpressionList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, FPPTransitionExpression.class);
+  public FPPIdentifierGuardDefinition getIdentifierGuardDefinition() {
+    return findNotNullChildByClass(FPPIdentifierGuardDefinition.class);
   }
 
   @Override
   @NotNull
-  public PsiElement getIdentifier() {
-    return findNotNullChildByType(IDENTIFIER);
+  public List<FPPTransitionExpression> getTransitionExpressionList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, FPPTransitionExpression.class);
   }
 
 }

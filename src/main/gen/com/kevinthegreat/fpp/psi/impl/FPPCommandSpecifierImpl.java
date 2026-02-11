@@ -8,12 +8,11 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.kevinthegreat.fpp.psi.FPPTypes.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.kevinthegreat.fpp.psi.*;
 
-public class FPPCommandSpecifierImpl extends ASTWrapperPsiElement implements FPPCommandSpecifier {
+public class FPPCommandSpecifierImpl extends FPPNamedElementImpl implements FPPCommandSpecifier {
 
-  public FPPCommandSpecifierImpl(@NotNull ASTNode node) {
+  public FPPCommandSpecifierImpl(ASTNode node) {
     super(node);
   }
 
@@ -40,6 +39,12 @@ public class FPPCommandSpecifierImpl extends ASTWrapperPsiElement implements FPP
   }
 
   @Override
+  @NotNull
+  public FPPIdentifierDefinition getIdentifierDefinition() {
+    return findNotNullChildByClass(FPPIdentifierDefinition.class);
+  }
+
+  @Override
   @Nullable
   public FPPParamList getParamList() {
     return findChildByClass(FPPParamList.class);
@@ -49,12 +54,6 @@ public class FPPCommandSpecifierImpl extends ASTWrapperPsiElement implements FPP
   @Nullable
   public FPPQueueFullBehavior getQueueFullBehavior() {
     return findChildByClass(FPPQueueFullBehavior.class);
-  }
-
-  @Override
-  @NotNull
-  public PsiElement getIdentifier() {
-    return findNotNullChildByType(IDENTIFIER);
   }
 
 }

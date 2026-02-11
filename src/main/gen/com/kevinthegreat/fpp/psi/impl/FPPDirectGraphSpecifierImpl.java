@@ -8,12 +8,11 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.kevinthegreat.fpp.psi.FPPTypes.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.kevinthegreat.fpp.psi.*;
 
-public class FPPDirectGraphSpecifierImpl extends ASTWrapperPsiElement implements FPPDirectGraphSpecifier {
+public class FPPDirectGraphSpecifierImpl extends FPPNamedElementImpl implements FPPDirectGraphSpecifier {
 
-  public FPPDirectGraphSpecifierImpl(@NotNull ASTNode node) {
+  public FPPDirectGraphSpecifierImpl(ASTNode node) {
     super(node);
   }
 
@@ -35,8 +34,8 @@ public class FPPDirectGraphSpecifierImpl extends ASTWrapperPsiElement implements
 
   @Override
   @NotNull
-  public PsiElement getIdentifier() {
-    return findNotNullChildByType(IDENTIFIER);
+  public FPPIdentifierDefinition getIdentifierDefinition() {
+    return findNotNullChildByClass(FPPIdentifierDefinition.class);
   }
 
 }

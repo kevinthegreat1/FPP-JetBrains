@@ -10,14 +10,14 @@ import com.intellij.psi.util.PsiTreeUtil;
 import static com.kevinthegreat.fpp.psi.FPPTypes.*;
 import com.kevinthegreat.fpp.psi.*;
 
-public class FPPAliasTypeDefinitionImpl extends FPPNamedElementImpl implements FPPAliasTypeDefinition {
+public class FPPSpecialPortInstanceSpecifierImpl extends FPPNamedElementImpl implements FPPSpecialPortInstanceSpecifier {
 
-  public FPPAliasTypeDefinitionImpl(ASTNode node) {
+  public FPPSpecialPortInstanceSpecifierImpl(ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull FPPVisitor visitor) {
-    visitor.visitAliasTypeDefinition(this);
+    visitor.visitSpecialPortInstanceSpecifier(this);
   }
 
   @Override
@@ -27,15 +27,33 @@ public class FPPAliasTypeDefinitionImpl extends FPPNamedElementImpl implements F
   }
 
   @Override
+  @Nullable
+  public FPPExpression getExpression() {
+    return findChildByClass(FPPExpression.class);
+  }
+
+  @Override
   @NotNull
   public FPPIdentifierDefinition getIdentifierDefinition() {
     return findNotNullChildByClass(FPPIdentifierDefinition.class);
   }
 
   @Override
+  @Nullable
+  public FPPQueueFullBehavior getQueueFullBehavior() {
+    return findChildByClass(FPPQueueFullBehavior.class);
+  }
+
+  @Override
+  @Nullable
+  public FPPSpecialPortInputKind getSpecialPortInputKind() {
+    return findChildByClass(FPPSpecialPortInputKind.class);
+  }
+
+  @Override
   @NotNull
-  public FPPTypeName getTypeName() {
-    return findNotNullChildByClass(FPPTypeName.class);
+  public FPPSpecialPortKind getSpecialPortKind() {
+    return findNotNullChildByClass(FPPSpecialPortKind.class);
   }
 
 }

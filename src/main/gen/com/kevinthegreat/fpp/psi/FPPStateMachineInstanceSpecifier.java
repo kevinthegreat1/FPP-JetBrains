@@ -5,18 +5,18 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface FPPStateMachineInstanceSpecifier extends PsiElement {
+public interface FPPStateMachineInstanceSpecifier extends FPPNamedElement {
 
   @Nullable
   FPPExpression getExpression();
+
+  @NotNull
+  FPPIdentifierDefinition getIdentifierDefinition();
 
   @NotNull
   FPPQualifiedIdentifierStateMachineDefinition getQualifiedIdentifierStateMachineDefinition();
 
   @Nullable
   FPPQueueFullBehavior getQueueFullBehavior();
-
-  @NotNull
-  PsiElement getIdentifier();
 
 }

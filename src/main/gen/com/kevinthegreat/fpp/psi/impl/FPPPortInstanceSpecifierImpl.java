@@ -28,45 +28,15 @@ public class FPPPortInstanceSpecifierImpl extends ASTWrapperPsiElement implement
   }
 
   @Override
-  @NotNull
-  public List<FPPExpression> getExpressionList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, FPPExpression.class);
+  @Nullable
+  public FPPGeneralPortInstanceSpecifier getGeneralPortInstanceSpecifier() {
+    return findChildByClass(FPPGeneralPortInstanceSpecifier.class);
   }
 
   @Override
   @Nullable
-  public FPPGeneralPortKind getGeneralPortKind() {
-    return findChildByClass(FPPGeneralPortKind.class);
-  }
-
-  @Override
-  @Nullable
-  public FPPPortInstanceType getPortInstanceType() {
-    return findChildByClass(FPPPortInstanceType.class);
-  }
-
-  @Override
-  @Nullable
-  public FPPQueueFullBehavior getQueueFullBehavior() {
-    return findChildByClass(FPPQueueFullBehavior.class);
-  }
-
-  @Override
-  @Nullable
-  public FPPSpecialPortInputKind getSpecialPortInputKind() {
-    return findChildByClass(FPPSpecialPortInputKind.class);
-  }
-
-  @Override
-  @Nullable
-  public FPPSpecialPortKind getSpecialPortKind() {
-    return findChildByClass(FPPSpecialPortKind.class);
-  }
-
-  @Override
-  @NotNull
-  public PsiElement getIdentifier() {
-    return findNotNullChildByType(IDENTIFIER);
+  public FPPSpecialPortInstanceSpecifier getSpecialPortInstanceSpecifier() {
+    return findChildByClass(FPPSpecialPortInstanceSpecifier.class);
   }
 
 }

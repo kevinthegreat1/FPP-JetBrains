@@ -5,10 +5,13 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface FPPTelemetryChannelSpecifier extends PsiElement {
+public interface FPPTelemetryChannelSpecifier extends FPPNamedElement {
 
   @Nullable
   FPPExpression getExpression();
+
+  @NotNull
+  FPPIdentifierDefinition getIdentifierDefinition();
 
   @NotNull
   List<FPPTelemetryLimitSequence> getTelemetryLimitSequenceList();
@@ -18,9 +21,6 @@ public interface FPPTelemetryChannelSpecifier extends PsiElement {
 
   @NotNull
   FPPTypeName getTypeName();
-
-  @NotNull
-  PsiElement getIdentifier();
 
   @Nullable
   PsiElement getStringLiteral();

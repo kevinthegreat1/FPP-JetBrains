@@ -8,12 +8,11 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.kevinthegreat.fpp.psi.FPPTypes.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.kevinthegreat.fpp.psi.*;
 
-public class FPPAbstractTypeDefinitionImpl extends ASTWrapperPsiElement implements FPPAbstractTypeDefinition {
+public class FPPAbstractTypeDefinitionImpl extends FPPNamedElementImpl implements FPPAbstractTypeDefinition {
 
-  public FPPAbstractTypeDefinitionImpl(@NotNull ASTNode node) {
+  public FPPAbstractTypeDefinitionImpl(ASTNode node) {
     super(node);
   }
 
@@ -29,8 +28,8 @@ public class FPPAbstractTypeDefinitionImpl extends ASTWrapperPsiElement implemen
 
   @Override
   @NotNull
-  public PsiElement getIdentifier() {
-    return findNotNullChildByType(IDENTIFIER);
+  public FPPIdentifierDefinition getIdentifierDefinition() {
+    return findNotNullChildByClass(FPPIdentifierDefinition.class);
   }
 
 }

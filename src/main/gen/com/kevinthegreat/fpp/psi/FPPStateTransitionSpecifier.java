@@ -7,6 +7,12 @@ import com.intellij.psi.PsiElement;
 
 public interface FPPStateTransitionSpecifier extends PsiElement {
 
+  @Nullable
+  FPPIdentifierGuardDefinition getIdentifierGuardDefinition();
+
+  @NotNull
+  FPPIdentifierSignalDefinition getIdentifierSignalDefinition();
+
   @NotNull
   FPPTransitionOrDo getTransitionOrDo();
 

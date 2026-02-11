@@ -5,15 +5,15 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface FPPParameterSpecifier extends PsiElement {
+public interface FPPParameterSpecifier extends FPPNamedElement {
 
   @NotNull
   List<FPPExpression> getExpressionList();
 
   @NotNull
-  FPPTypeName getTypeName();
+  FPPIdentifierDefinition getIdentifierDefinition();
 
   @NotNull
-  PsiElement getIdentifier();
+  FPPTypeName getTypeName();
 
 }

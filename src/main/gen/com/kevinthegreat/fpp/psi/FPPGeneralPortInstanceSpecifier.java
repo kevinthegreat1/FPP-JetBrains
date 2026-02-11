@@ -5,18 +5,21 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface FPPArrayDefinition extends FPPNamedElement {
+public interface FPPGeneralPortInstanceSpecifier extends FPPNamedElement {
 
   @NotNull
   List<FPPExpression> getExpressionList();
 
   @NotNull
+  FPPGeneralPortKind getGeneralPortKind();
+
+  @NotNull
   FPPIdentifierDefinition getIdentifierDefinition();
 
   @NotNull
-  FPPTypeName getTypeName();
+  FPPPortInstanceType getPortInstanceType();
 
   @Nullable
-  PsiElement getStringLiteral();
+  FPPQueueFullBehavior getQueueFullBehavior();
 
 }

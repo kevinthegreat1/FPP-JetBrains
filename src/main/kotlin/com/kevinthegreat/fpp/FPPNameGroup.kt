@@ -32,6 +32,10 @@ enum class FPPNameGroup(vararg val types: IElementType) {
 
         fun getDefTypes(qualId: PsiElement): List<IElementType>? {
             return when (qualId) {
+                is FPPIdentifierGuardDefinition -> listOf(FPPTypes.GUARD_DEFINITION)
+                is FPPIdentifierActionDefinition -> listOf(FPPTypes.ACTION_DEFINITION)
+                is FPPIdentifierSignalDefinition -> listOf(FPPTypes.SIGNAL_DEFINITION)
+                is FPPIdentifierGeneralPortInstance -> listOf(FPPTypes.GENERAL_PORT_INSTANCE_SPECIFIER)
                 is FPPQualifiedIdentifierTypeName -> listOf(
                     FPPTypes.ABSTRACT_TYPE_DEFINITION,
                     FPPTypes.ALIAS_TYPE_DEFINITION,

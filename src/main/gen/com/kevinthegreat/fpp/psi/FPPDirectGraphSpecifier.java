@@ -5,12 +5,12 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface FPPDirectGraphSpecifier extends PsiElement {
+public interface FPPDirectGraphSpecifier extends FPPNamedElement {
 
   @NotNull
   FPPConnectionSequence getConnectionSequence();
 
   @NotNull
-  PsiElement getIdentifier();
+  FPPIdentifierDefinition getIdentifierDefinition();
 
 }

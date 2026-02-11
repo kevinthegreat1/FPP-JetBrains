@@ -5,7 +5,7 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface FPPCommandSpecifier extends PsiElement {
+public interface FPPCommandSpecifier extends FPPNamedElement {
 
   @NotNull
   FPPCommandKind getCommandKind();
@@ -13,13 +13,13 @@ public interface FPPCommandSpecifier extends PsiElement {
   @NotNull
   List<FPPExpression> getExpressionList();
 
+  @NotNull
+  FPPIdentifierDefinition getIdentifierDefinition();
+
   @Nullable
   FPPParamList getParamList();
 
   @Nullable
   FPPQueueFullBehavior getQueueFullBehavior();
-
-  @NotNull
-  PsiElement getIdentifier();
 
 }

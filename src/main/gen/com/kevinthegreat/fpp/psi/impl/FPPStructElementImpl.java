@@ -8,12 +8,11 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.kevinthegreat.fpp.psi.FPPTypes.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.kevinthegreat.fpp.psi.*;
 
-public class FPPStructElementImpl extends ASTWrapperPsiElement implements FPPStructElement {
+public class FPPStructElementImpl extends FPPNamedElementImpl implements FPPStructElement {
 
-  public FPPStructElementImpl(@NotNull ASTNode node) {
+  public FPPStructElementImpl(ASTNode node) {
     super(node);
   }
 
@@ -35,8 +34,8 @@ public class FPPStructElementImpl extends ASTWrapperPsiElement implements FPPStr
 
   @Override
   @NotNull
-  public PsiElement getIdentifier() {
-    return findNotNullChildByType(IDENTIFIER);
+  public FPPIdentifierDefinition getIdentifierDefinition() {
+    return findNotNullChildByClass(FPPIdentifierDefinition.class);
   }
 
 }

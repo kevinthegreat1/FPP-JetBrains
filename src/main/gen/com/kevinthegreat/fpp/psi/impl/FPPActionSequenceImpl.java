@@ -27,4 +27,10 @@ public class FPPActionSequenceImpl extends ASTWrapperPsiElement implements FPPAc
     else super.accept(visitor);
   }
 
+  @Override
+  @NotNull
+  public List<FPPIdentifierActionDefinition> getIdentifierActionDefinitionList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, FPPIdentifierActionDefinition.class);
+  }
+
 }

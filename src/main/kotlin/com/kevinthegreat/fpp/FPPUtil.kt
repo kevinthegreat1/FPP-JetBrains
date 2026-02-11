@@ -10,13 +10,13 @@ import com.intellij.psi.util.PsiTreeUtil
 import com.intellij.psi.util.elementType
 import com.intellij.psi.util.parents
 import com.intellij.psi.util.siblings
-import com.kevinthegreat.fpp.psi.FPPModuleDefinition
+import com.kevinthegreat.fpp.psi.FPPNamedElement
 import com.kevinthegreat.fpp.psi.FPPTokenSets
 import com.kevinthegreat.fpp.psi.FPPTypes
 
 object FPPUtil {
     fun isDef(element: PsiElement): Boolean =
-        element is FPPModuleDefinition || element.elementType in FPPNameGroup.DEF_TYPES
+        element is FPPNamedElement || element.elementType in FPPNameGroup.DEF_TYPES
 
     fun getEnclosingDef(element: PsiElement): PsiElement? = element.parents(true)
         .find { it.siblings(false).any { it.elementType == FPPTypes.LEFT_BRACE } }

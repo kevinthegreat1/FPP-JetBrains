@@ -10,14 +10,14 @@ import com.intellij.psi.util.PsiTreeUtil;
 import static com.kevinthegreat.fpp.psi.FPPTypes.*;
 import com.kevinthegreat.fpp.psi.*;
 
-public class FPPEventSpecifierImpl extends FPPNamedElementImpl implements FPPEventSpecifier {
+public class FPPGeneralPortInstanceSpecifierImpl extends FPPNamedElementImpl implements FPPGeneralPortInstanceSpecifier {
 
-  public FPPEventSpecifierImpl(ASTNode node) {
+  public FPPGeneralPortInstanceSpecifierImpl(ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull FPPVisitor visitor) {
-    visitor.visitEventSpecifier(this);
+    visitor.visitGeneralPortInstanceSpecifier(this);
   }
 
   @Override
@@ -28,14 +28,14 @@ public class FPPEventSpecifierImpl extends FPPNamedElementImpl implements FPPEve
 
   @Override
   @NotNull
-  public FPPEventSeverity getEventSeverity() {
-    return findNotNullChildByClass(FPPEventSeverity.class);
+  public List<FPPExpression> getExpressionList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, FPPExpression.class);
   }
 
   @Override
   @NotNull
-  public List<FPPExpression> getExpressionList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, FPPExpression.class);
+  public FPPGeneralPortKind getGeneralPortKind() {
+    return findNotNullChildByClass(FPPGeneralPortKind.class);
   }
 
   @Override
@@ -45,15 +45,15 @@ public class FPPEventSpecifierImpl extends FPPNamedElementImpl implements FPPEve
   }
 
   @Override
-  @Nullable
-  public FPPParamList getParamList() {
-    return findChildByClass(FPPParamList.class);
+  @NotNull
+  public FPPPortInstanceType getPortInstanceType() {
+    return findNotNullChildByClass(FPPPortInstanceType.class);
   }
 
   @Override
-  @NotNull
-  public PsiElement getStringLiteral() {
-    return findNotNullChildByType(STRING_LITERAL);
+  @Nullable
+  public FPPQueueFullBehavior getQueueFullBehavior() {
+    return findChildByClass(FPPQueueFullBehavior.class);
   }
 
 }

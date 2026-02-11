@@ -7,4 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface FPPPortMatchingSpecifier extends PsiElement {
 
+  @NotNull
+  List<FPPIdentifierGeneralPortInstance> getIdentifierGeneralPortInstanceList();
+
 }

@@ -5,7 +5,7 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface FPPRecordSpecifier extends FPPNamedElement {
+public interface FPPSpecialPortInstanceSpecifier extends FPPNamedElement {
 
   @Nullable
   FPPExpression getExpression();
@@ -13,7 +13,13 @@ public interface FPPRecordSpecifier extends FPPNamedElement {
   @NotNull
   FPPIdentifierDefinition getIdentifierDefinition();
 
+  @Nullable
+  FPPQueueFullBehavior getQueueFullBehavior();
+
+  @Nullable
+  FPPSpecialPortInputKind getSpecialPortInputKind();
+
   @NotNull
-  FPPTypeName getTypeName();
+  FPPSpecialPortKind getSpecialPortKind();
 
 }

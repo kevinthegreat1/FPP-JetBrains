@@ -7,25 +7,10 @@ import com.intellij.psi.PsiElement;
 
 public interface FPPPortInstanceSpecifier extends PsiElement {
 
-  @NotNull
-  List<FPPExpression> getExpressionList();
+  @Nullable
+  FPPGeneralPortInstanceSpecifier getGeneralPortInstanceSpecifier();
 
   @Nullable
-  FPPGeneralPortKind getGeneralPortKind();
-
-  @Nullable
-  FPPPortInstanceType getPortInstanceType();
-
-  @Nullable
-  FPPQueueFullBehavior getQueueFullBehavior();
-
-  @Nullable
-  FPPSpecialPortInputKind getSpecialPortInputKind();
-
-  @Nullable
-  FPPSpecialPortKind getSpecialPortKind();
-
-  @NotNull
-  PsiElement getIdentifier();
+  FPPSpecialPortInstanceSpecifier getSpecialPortInstanceSpecifier();
 
 }

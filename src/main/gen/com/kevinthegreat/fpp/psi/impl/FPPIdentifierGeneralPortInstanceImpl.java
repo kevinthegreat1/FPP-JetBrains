@@ -10,14 +10,14 @@ import com.intellij.psi.util.PsiTreeUtil;
 import static com.kevinthegreat.fpp.psi.FPPTypes.*;
 import com.kevinthegreat.fpp.psi.*;
 
-public class FPPAliasTypeDefinitionImpl extends FPPNamedElementImpl implements FPPAliasTypeDefinition {
+public class FPPIdentifierGeneralPortInstanceImpl extends FPPNavigatableElementImpl implements FPPIdentifierGeneralPortInstance {
 
-  public FPPAliasTypeDefinitionImpl(ASTNode node) {
+  public FPPIdentifierGeneralPortInstanceImpl(ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull FPPVisitor visitor) {
-    visitor.visitAliasTypeDefinition(this);
+    visitor.visitIdentifierGeneralPortInstance(this);
   }
 
   @Override
@@ -28,14 +28,8 @@ public class FPPAliasTypeDefinitionImpl extends FPPNamedElementImpl implements F
 
   @Override
   @NotNull
-  public FPPIdentifierDefinition getIdentifierDefinition() {
-    return findNotNullChildByClass(FPPIdentifierDefinition.class);
-  }
-
-  @Override
-  @NotNull
-  public FPPTypeName getTypeName() {
-    return findNotNullChildByClass(FPPTypeName.class);
+  public PsiElement getIdentifier() {
+    return findNotNullChildByType(IDENTIFIER);
   }
 
 }

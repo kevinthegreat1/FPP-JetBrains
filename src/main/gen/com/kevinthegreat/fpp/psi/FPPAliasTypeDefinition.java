@@ -5,12 +5,12 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface FPPAliasTypeDefinition extends PsiElement {
+public interface FPPAliasTypeDefinition extends FPPNamedElement {
+
+  @NotNull
+  FPPIdentifierDefinition getIdentifierDefinition();
 
   @NotNull
   FPPTypeName getTypeName();
-
-  @NotNull
-  PsiElement getIdentifier();
 
 }

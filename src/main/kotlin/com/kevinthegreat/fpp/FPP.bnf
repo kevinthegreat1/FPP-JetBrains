@@ -168,13 +168,25 @@ fpp_file ::= END_OF_LINE* translation_unit
 
 // 5. Definitions
 // 5.1. Abstract Type Definitions
-abstract_type_definition ::= TYPE IDENTIFIER
+abstract_type_definition ::= TYPE identifier_definition {
+    mixin="com.kevinthegreat.fpp.psi.impl.FPPNamedElementImpl"
+    implements="com.kevinthegreat.fpp.psi.FPPNamedElement"
+}
 // 5.2. Alias Type Definitions
-alias_type_definition ::= [ DICTIONARY ] TYPE IDENTIFIER ASSIGN type_name
+alias_type_definition ::= [ DICTIONARY ] TYPE identifier_definition ASSIGN type_name {
+    mixin="com.kevinthegreat.fpp.psi.impl.FPPNamedElementImpl"
+    implements="com.kevinthegreat.fpp.psi.FPPNamedElement"
+}
 // 5.3. Array Definitions
-array_definition ::= [ DICTIONARY ] ARRAY IDENTIFIER ASSIGN LEFT_BRACKET expression RIGHT_BRACKET type_name [ DEFAULT expression ] [ FORMAT STRING_LITERAL ]
+array_definition ::= [ DICTIONARY ] ARRAY identifier_definition ASSIGN LEFT_BRACKET expression RIGHT_BRACKET type_name [ DEFAULT expression ] [ FORMAT STRING_LITERAL ] {
+    mixin="com.kevinthegreat.fpp.psi.impl.FPPNamedElementImpl"
+    implements="com.kevinthegreat.fpp.psi.FPPNamedElement"
+}
 // 5.4. Component Definitions
-component_definition ::= component_kind COMPONENT IDENTIFIER LEFT_BRACE component_member_sequence RIGHT_BRACE
+component_definition ::= component_kind COMPONENT identifier_definition LEFT_BRACE component_member_sequence RIGHT_BRACE {
+    mixin="com.kevinthegreat.fpp.psi.impl.FPPNamedElementImpl"
+    implements="com.kevinthegreat.fpp.psi.FPPNamedElement"
+}
 component_kind ::= ACTIVE | PASSIVE | QUEUED
 component_member_sequence ::= (component_member (SEMICOLON | END_OF_LINE)*)*
 component_member ::= constant_definition
@@ -293,13 +305,13 @@ action_definition ::= ACTION identifier_definition [ COLON type_name ] {
     implements="com.kevinthegreat.fpp.psi.FPPNamedElement"
 }
 // 6.2. Choice Definitions
-choice_definition ::= CHOICE identifier_definition LEFT_BRACE IF IDENTIFIER transition_expression ELSE transition_expression RIGHT_BRACE {
+choice_definition ::= CHOICE identifier_definition LEFT_BRACE IF identifier_guard_definition transition_expression ELSE transition_expression RIGHT_BRACE {
     mixin="com.kevinthegreat.fpp.psi.impl.FPPNamedElementImpl"
     implements="com.kevinthegreat.fpp.psi.FPPNamedElement"
 }
 // 6.3. Do Expressions
 do_expression ::= DO LEFT_BRACE action_sequence RIGHT_BRACE
-action_sequence ::= (IDENTIFIER (COMMA | END_OF_LINE)*)*
+action_sequence ::= (identifier_action_definition (COMMA | END_OF_LINE)*)*
 // 6.4. Guard Definitions
 guard_definition ::= GUARD identifier_definition [ COLON type_name ] {
     mixin="com.kevinthegreat.fpp.psi.impl.FPPNamedElementImpl"
@@ -329,7 +341,7 @@ state_entry_specifier ::= ENTRY do_expression
 // 6.9. State Exit Specifiers
 state_exit_specifier ::= EXIT do_expression
 // 6.10. State Transition Specifiers
-state_transition_specifier ::= ON IDENTIFIER [ IF IDENTIFIER ] transition_or_do
+state_transition_specifier ::= ON identifier_signal_definition [ IF identifier_guard_definition ] transition_or_do
 transition_or_do ::= transition_expression
                     | do_expression
 // 6.11. Transition Expressions
@@ -337,14 +349,20 @@ transition_expression ::= [ do_expression ] ENTER qualified_identifier_state_or_
 
 // 7. Specifiers
 // 7.1. Command Specifiers
-command_specifier ::= command_kind COMMAND IDENTIFIER [ LEFT_PAREN param_list RIGHT_PAREN ] [ OPCODE expression ] [ PRIORITY expression ] [ queue_full_behavior ]
+command_specifier ::= command_kind COMMAND identifier_definition [ LEFT_PAREN param_list RIGHT_PAREN ] [ OPCODE expression ] [ PRIORITY expression ] [ queue_full_behavior ] {
+    mixin="com.kevinthegreat.fpp.psi.impl.FPPNamedElementImpl"
+    implements="com.kevinthegreat.fpp.psi.FPPNamedElement"
+}
 command_kind ::= ASYNC | GUARDED | SYNC
 // 7.2. Component Instance Specifiers
 component_instance_specifier ::= [ PRIVATE ] INSTANCE qualified_identifier_component_instance_definition
 // 7.3. Connection Graph Specifiers
 connection_graph_specifier ::= direct_graph_specifier
                                 | pattern_graph_specifier
-direct_graph_specifier ::= CONNECTIONS IDENTIFIER LEFT_BRACE connection_sequence RIGHT_BRACE
+direct_graph_specifier ::= CONNECTIONS identifier_definition LEFT_BRACE connection_sequence RIGHT_BRACE {
+    mixin="com.kevinthegreat.fpp.psi.impl.FPPNamedElementImpl"
+    implements="com.kevinthegreat.fpp.psi.FPPNamedElement"
+}
 connection_sequence ::= (connection (COMMA | END_OF_LINE)*)*
 connection ::= [ UNMATCHED ] port_instance_identifier [ LEFT_BRACKET expression RIGHT_BRACKET ] ARROW port_instance_identifier [ LEFT_BRACKET expression RIGHT_BRACKET ]
 pattern_graph_specifier ::= pattern_kind CONNECTIONS INSTANCE qualified_identifier_component_instance_definition [ LEFT_BRACE instance_sequence RIGHT_BRACE ]
@@ -357,9 +375,15 @@ pattern_kind ::= COMMAND
                 | TIME
 instance_sequence ::= (qualified_identifier_component_instance_definition (COMMA | END_OF_LINE)*)*
 // 7.4. Container Specifiers
-container_specifier ::= PRODUCT IDENTIFIER [ ID expression ] [ DEFAULT PRIORITY expression ]
+container_specifier ::= PRODUCT identifier_definition [ ID expression ] [ DEFAULT PRIORITY expression ] {
+    mixin="com.kevinthegreat.fpp.psi.impl.FPPNamedElementImpl"
+    implements="com.kevinthegreat.fpp.psi.FPPNamedElement"
+}
 // 7.5. Event Specifiers
-event_specifier ::= EVENT IDENTIFIER [ LEFT_PAREN param_list RIGHT_PAREN ] SEVERITY event_severity [ ID expression ] FORMAT STRING_LITERAL [ THROTTLE expression ]
+event_specifier ::= EVENT identifier_definition [ LEFT_PAREN param_list RIGHT_PAREN ] SEVERITY event_severity [ ID expression ] FORMAT STRING_LITERAL [ THROTTLE expression ] {
+    mixin="com.kevinthegreat.fpp.psi.impl.FPPNamedElementImpl"
+    implements="com.kevinthegreat.fpp.psi.FPPNamedElement"
+}
 event_severity ::= ACTIVITY HIGH
             | ACTIVITY LOW
             | COMMAND
@@ -374,7 +398,10 @@ init_specifier ::= PHASE expression STRING_LITERAL
 // 7.8. Interface Import Specifiers
 interface_import_specifier ::= IMPORT qualified_identifier_port_interface_definition
 // 7.9. Internal Port Specifiers
-internal_port_specifier ::= INTERNAL PORT IDENTIFIER [ LEFT_PAREN param_list RIGHT_PAREN ] [ PRIORITY expression ] [ queue_full_behavior ]
+internal_port_specifier ::= INTERNAL PORT identifier_definition [ LEFT_PAREN param_list RIGHT_PAREN ] [ PRIORITY expression ] [ queue_full_behavior ] {
+    mixin="com.kevinthegreat.fpp.psi.impl.FPPNamedElementImpl"
+    implements="com.kevinthegreat.fpp.psi.FPPNamedElement"
+}
 // 7.10. Location Specifiers
 location_specifier ::= component_instance_location_specifier
                         | component_location_specifier
@@ -393,10 +420,20 @@ state_machine_location_specifier ::= LOCATE STATE MACHINE qualified_identifier_s
 topology_location_specifier ::= LOCATE TOPOLOGY qualified_identifier_topology_definition AT STRING_LITERAL
 type_location_specifier ::= LOCATE [ DICTIONARY ] TYPE qualified_identifier_type_location_specifier AT STRING_LITERAL
 // 7.11. Parameter Specifiers
-parameter_specifier ::= [ EXTERNAL ] PARAM IDENTIFIER COLON type_name [ DEFAULT expression ] [ ID expression ] [ SET OPCODE expression ] [ SAVE OPCODE expression ]
+parameter_specifier ::= [ EXTERNAL ] PARAM identifier_definition COLON type_name [ DEFAULT expression ] [ ID expression ] [ SET OPCODE expression ] [ SAVE OPCODE expression ] {
+    mixin="com.kevinthegreat.fpp.psi.impl.FPPNamedElementImpl"
+    implements="com.kevinthegreat.fpp.psi.FPPNamedElement"
+}
 // 7.12. Port Instance Specifiers
-port_instance_specifier ::= general_port_kind PORT IDENTIFIER COLON [ LEFT_BRACKET expression RIGHT_BRACKET ] port_instance_type [ PRIORITY expression ] [ queue_full_behavior ]
-                            | [ special_port_input_kind ] special_port_kind PORT IDENTIFIER [ PRIORITY expression ] [ queue_full_behavior ]
+port_instance_specifier ::= general_port_instance_specifier | special_port_instance_specifier
+general_port_instance_specifier ::= general_port_kind PORT identifier_definition COLON [ LEFT_BRACKET expression RIGHT_BRACKET ] port_instance_type [ PRIORITY expression ] [ queue_full_behavior ] {
+    mixin="com.kevinthegreat.fpp.psi.impl.FPPNamedElementImpl"
+    implements="com.kevinthegreat.fpp.psi.FPPNamedElement"
+}
+special_port_instance_specifier ::= [ special_port_input_kind ] special_port_kind PORT identifier_definition [ PRIORITY expression ] [ queue_full_behavior ] {
+    mixin="com.kevinthegreat.fpp.psi.impl.FPPNamedElementImpl"
+    implements="com.kevinthegreat.fpp.psi.FPPNamedElement"
+}
 general_port_kind ::= ASYNC INPUT
                         | GUARDED INPUT
                         | OUTPUT
@@ -419,13 +456,22 @@ special_port_kind ::= COMMAND RECV
                         | TEXT EVENT
                         | TIME GET
 // 7.13. Port Matching Specifiers
-port_matching_specifier ::= MATCH IDENTIFIER WITH IDENTIFIER
+port_matching_specifier ::= MATCH identifier_general_port_instance WITH identifier_general_port_instance
 // 7.14. Record Specifiers
-record_specifier ::= PRODUCT RECORD IDENTIFIER COLON type_name [ ARRAY ] [ ID expression ]
+record_specifier ::= PRODUCT RECORD identifier_definition COLON type_name [ ARRAY ] [ ID expression ] {
+    mixin="com.kevinthegreat.fpp.psi.impl.FPPNamedElementImpl"
+    implements="com.kevinthegreat.fpp.psi.FPPNamedElement"
+}
 // 7.15. State Machine Instance Specifiers
-state_machine_instance_specifier ::= STATE MACHINE INSTANCE IDENTIFIER COLON qualified_identifier_state_machine_definition [ PRIORITY expression ] [ queue_full_behavior ]
+state_machine_instance_specifier ::= STATE MACHINE INSTANCE identifier_definition COLON qualified_identifier_state_machine_definition [ PRIORITY expression ] [ queue_full_behavior ] {
+    mixin="com.kevinthegreat.fpp.psi.impl.FPPNamedElementImpl"
+    implements="com.kevinthegreat.fpp.psi.FPPNamedElement"
+}
 // 7.16. Telemetry Channel Specifiers
-telemetry_channel_specifier ::= TELEMETRY IDENTIFIER COLON type_name [ ID expression ] [ UPDATE telemetry_update ] [ FORMAT STRING_LITERAL ] [ LOW LEFT_BRACE telemetry_limit_sequence RIGHT_BRACE ] [ HIGH LEFT_BRACE telemetry_limit_sequence RIGHT_BRACE ]
+telemetry_channel_specifier ::= TELEMETRY identifier_definition COLON type_name [ ID expression ] [ UPDATE telemetry_update ] [ FORMAT STRING_LITERAL ] [ LOW LEFT_BRACE telemetry_limit_sequence RIGHT_BRACE ] [ HIGH LEFT_BRACE telemetry_limit_sequence RIGHT_BRACE ] {
+    mixin="com.kevinthegreat.fpp.psi.impl.FPPNamedElementImpl"
+    implements="com.kevinthegreat.fpp.psi.FPPNamedElement"
+}
 telemetry_update ::= ALWAYS | ON CHANGE
 telemetry_limit_sequence ::= (telemetry_limit (COMMA | END_OF_LINE)*)*
 telemetry_limit ::= RED expression
@@ -488,11 +534,17 @@ boolean_literal ::= TRUE | FALSE
 // 10.11. Struct Expressions
 struct_expression ::= LEFT_BRACE struct_element_sequence RIGHT_BRACE
 struct_element_sequence ::= (struct_element (COMMA | END_OF_LINE)*)*
-struct_element ::= IDENTIFIER ASSIGN expression
+struct_element ::= identifier_definition ASSIGN expression {
+    mixin="com.kevinthegreat.fpp.psi.impl.FPPNamedElementImpl"
+    implements="com.kevinthegreat.fpp.psi.FPPNamedElement"
+}
 
 // 11. Formal Parameter Lists
 param_list ::= (formal_parameter (COMMA | END_OF_LINE)*)*
-formal_parameter ::= [ REF ] IDENTIFIER COLON type_name
+formal_parameter ::= [ REF ] identifier_definition COLON type_name {
+    mixin="com.kevinthegreat.fpp.psi.impl.FPPNamedElementImpl"
+    implements="com.kevinthegreat.fpp.psi.FPPNamedElement"
+}
 
 // 14.1. Translation Units
 translation_unit ::= (translation_unit_member (SEMICOLON | END_OF_LINE)*)*
@@ -506,6 +558,22 @@ qualified_identifier ::= IDENTIFIER (DOT IDENTIFIER)* {
 
 // Reference Support
 identifier_definition ::= IDENTIFIER
+identifier_guard_definition ::= IDENTIFIER {
+    mixin="com.kevinthegreat.fpp.psi.impl.FPPNavigatableElementImpl"
+    implements="com.kevinthegreat.fpp.psi.FPPNavigatableElement"
+}
+identifier_action_definition ::= IDENTIFIER {
+    mixin="com.kevinthegreat.fpp.psi.impl.FPPNavigatableElementImpl"
+    implements="com.kevinthegreat.fpp.psi.FPPNavigatableElement"
+}
+identifier_signal_definition ::= IDENTIFIER {
+    mixin="com.kevinthegreat.fpp.psi.impl.FPPNavigatableElementImpl"
+    implements="com.kevinthegreat.fpp.psi.FPPNavigatableElement"
+}
+identifier_general_port_instance ::= IDENTIFIER {
+    mixin="com.kevinthegreat.fpp.psi.impl.FPPNavigatableElementImpl"
+    implements="com.kevinthegreat.fpp.psi.FPPNavigatableElement"
+}
 qualified_identifier_type_name ::= qualified_identifier
 qualified_identifier_component_definition ::= qualified_identifier
 qualified_identifier_state_or_choice_definition ::= qualified_identifier

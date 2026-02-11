@@ -5,7 +5,7 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface FPPEventSpecifier extends PsiElement {
+public interface FPPEventSpecifier extends FPPNamedElement {
 
   @NotNull
   FPPEventSeverity getEventSeverity();
@@ -13,11 +13,11 @@ public interface FPPEventSpecifier extends PsiElement {
   @NotNull
   List<FPPExpression> getExpressionList();
 
+  @NotNull
+  FPPIdentifierDefinition getIdentifierDefinition();
+
   @Nullable
   FPPParamList getParamList();
-
-  @NotNull
-  PsiElement getIdentifier();
 
   @NotNull
   PsiElement getStringLiteral();

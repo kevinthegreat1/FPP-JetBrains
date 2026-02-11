@@ -8,12 +8,11 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.kevinthegreat.fpp.psi.FPPTypes.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.kevinthegreat.fpp.psi.*;
 
-public class FPPStateMachineInstanceSpecifierImpl extends ASTWrapperPsiElement implements FPPStateMachineInstanceSpecifier {
+public class FPPStateMachineInstanceSpecifierImpl extends FPPNamedElementImpl implements FPPStateMachineInstanceSpecifier {
 
-  public FPPStateMachineInstanceSpecifierImpl(@NotNull ASTNode node) {
+  public FPPStateMachineInstanceSpecifierImpl(ASTNode node) {
     super(node);
   }
 
@@ -35,6 +34,12 @@ public class FPPStateMachineInstanceSpecifierImpl extends ASTWrapperPsiElement i
 
   @Override
   @NotNull
+  public FPPIdentifierDefinition getIdentifierDefinition() {
+    return findNotNullChildByClass(FPPIdentifierDefinition.class);
+  }
+
+  @Override
+  @NotNull
   public FPPQualifiedIdentifierStateMachineDefinition getQualifiedIdentifierStateMachineDefinition() {
     return findNotNullChildByClass(FPPQualifiedIdentifierStateMachineDefinition.class);
   }
@@ -43,12 +48,6 @@ public class FPPStateMachineInstanceSpecifierImpl extends ASTWrapperPsiElement i
   @Nullable
   public FPPQueueFullBehavior getQueueFullBehavior() {
     return findChildByClass(FPPQueueFullBehavior.class);
-  }
-
-  @Override
-  @NotNull
-  public PsiElement getIdentifier() {
-    return findNotNullChildByType(IDENTIFIER);
   }
 
 }

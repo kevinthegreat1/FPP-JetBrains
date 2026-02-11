@@ -8,12 +8,11 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.kevinthegreat.fpp.psi.FPPTypes.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.kevinthegreat.fpp.psi.*;
 
-public class FPPInternalPortSpecifierImpl extends ASTWrapperPsiElement implements FPPInternalPortSpecifier {
+public class FPPInternalPortSpecifierImpl extends FPPNamedElementImpl implements FPPInternalPortSpecifier {
 
-  public FPPInternalPortSpecifierImpl(@NotNull ASTNode node) {
+  public FPPInternalPortSpecifierImpl(ASTNode node) {
     super(node);
   }
 
@@ -34,6 +33,12 @@ public class FPPInternalPortSpecifierImpl extends ASTWrapperPsiElement implement
   }
 
   @Override
+  @NotNull
+  public FPPIdentifierDefinition getIdentifierDefinition() {
+    return findNotNullChildByClass(FPPIdentifierDefinition.class);
+  }
+
+  @Override
   @Nullable
   public FPPParamList getParamList() {
     return findChildByClass(FPPParamList.class);
@@ -43,12 +48,6 @@ public class FPPInternalPortSpecifierImpl extends ASTWrapperPsiElement implement
   @Nullable
   public FPPQueueFullBehavior getQueueFullBehavior() {
     return findChildByClass(FPPQueueFullBehavior.class);
-  }
-
-  @Override
-  @NotNull
-  public PsiElement getIdentifier() {
-    return findNotNullChildByType(IDENTIFIER);
   }
 
 }

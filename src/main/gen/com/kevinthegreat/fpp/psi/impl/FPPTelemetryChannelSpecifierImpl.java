@@ -8,12 +8,11 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.kevinthegreat.fpp.psi.FPPTypes.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.kevinthegreat.fpp.psi.*;
 
-public class FPPTelemetryChannelSpecifierImpl extends ASTWrapperPsiElement implements FPPTelemetryChannelSpecifier {
+public class FPPTelemetryChannelSpecifierImpl extends FPPNamedElementImpl implements FPPTelemetryChannelSpecifier {
 
-  public FPPTelemetryChannelSpecifierImpl(@NotNull ASTNode node) {
+  public FPPTelemetryChannelSpecifierImpl(ASTNode node) {
     super(node);
   }
 
@@ -35,6 +34,12 @@ public class FPPTelemetryChannelSpecifierImpl extends ASTWrapperPsiElement imple
 
   @Override
   @NotNull
+  public FPPIdentifierDefinition getIdentifierDefinition() {
+    return findNotNullChildByClass(FPPIdentifierDefinition.class);
+  }
+
+  @Override
+  @NotNull
   public List<FPPTelemetryLimitSequence> getTelemetryLimitSequenceList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, FPPTelemetryLimitSequence.class);
   }
@@ -49,12 +54,6 @@ public class FPPTelemetryChannelSpecifierImpl extends ASTWrapperPsiElement imple
   @NotNull
   public FPPTypeName getTypeName() {
     return findNotNullChildByClass(FPPTypeName.class);
-  }
-
-  @Override
-  @NotNull
-  public PsiElement getIdentifier() {
-    return findNotNullChildByType(IDENTIFIER);
   }
 
   @Override

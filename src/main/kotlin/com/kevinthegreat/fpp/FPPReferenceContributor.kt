@@ -13,8 +13,10 @@ class FPPReferenceContributor : PsiReferenceContributor() {
                 context: ProcessingContext
             ): Array<out PsiReference?> {
                 // The element containing the qualified identifier tells us the definition types that the qualified identifier can resolve to.
-                // This also acts as a filter to only add references to qualified identifiers.
-                val types = FPPNameGroup.getDefTypes(element.parent) ?: return emptyArray()
+                // This also acts as a filter to only add references to elements with definition types assigned.
+                val types = FPPNameGroup.getDefTypes(element)
+                    ?: FPPNameGroup.getDefTypes(element.parent)
+                    ?: return emptyArray()
                 val qualId = element.text
 
                 return qualId.split(".")
