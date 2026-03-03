@@ -4,8 +4,8 @@ import com.intellij.openapi.util.TextRange
 import com.intellij.patterns.PlatformPatterns
 import com.intellij.psi.*
 import com.intellij.util.ProcessingContext
-import com.kevinthegreat.fpp.psi.FPPComponentInstanceDefinition
 import com.kevinthegreat.fpp.psi.FPPPortInstanceIdentifier
+import com.kevinthegreat.fpp.psi.FPPTelemetryChannelIdentifier
 import com.kevinthegreat.fpp.psi.FPPTypes
 
 class FPPReferenceContributor : PsiReferenceContributor() {
@@ -35,24 +35,13 @@ class FPPReferenceContributor : PsiReferenceContributor() {
             }
         })
 
+        // 8.1. Port Instance Identifiers
         registrar.registerReferenceProvider(
             PlatformPatterns.psiElement(FPPPortInstanceIdentifier::class.java), object : PsiReferenceProvider() {
                 override fun getReferencesByElement(
                     element: PsiElement, context: ProcessingContext
                 ): Array<out PsiReference?> {
                     element as FPPPortInstanceIdentifier
-
-                    val componentInstanceDef = FPPUtil.resolveQualifiedIdentifier(
-                        element.qualifiedIdentifierComponentInstanceDefinitionQualifier.text,
-                        element,
-                        listOf(FPPTypes.COMPONENT_INSTANCE_DEFINITION)
-                    ).map { it as FPPComponentInstanceDefinition }
-
-                    val componentDef = componentInstanceDef.flatMap {
-                        FPPUtil.resolveQualifiedIdentifier(
-                            it.qualifiedIdentifierComponentDefinition.text, it, listOf(FPPTypes.COMPONENT_DEFINITION)
-                        )
-                    }
 
                     return arrayOf(
                         FPPReference(
@@ -64,10 +53,32 @@ class FPPReferenceContributor : PsiReferenceContributor() {
                                 FPPTypes.GENERAL_PORT_INSTANCE_SPECIFIER,
                                 FPPTypes.SPECIAL_PORT_INSTANCE_SPECIFIER
                             ),
-                            componentDef
+                            element.getComponentDef()
                         )
                     )
                 }
-            })
+            }
+        )
+
+        // 8.2. Telemetry Channel Identifiers
+        registrar.registerReferenceProvider(
+            PlatformPatterns.psiElement(FPPTelemetryChannelIdentifier::class.java), object : PsiReferenceProvider() {
+                override fun getReferencesByElement(
+                    element: PsiElement, context: ProcessingContext
+                ): Array<out PsiReference?> {
+                    element as FPPTelemetryChannelIdentifier
+
+                    return arrayOf(
+                        FPPReference(
+                            element,
+                            TextRange(element.textLength - element.identifier.textLength, element.textLength),
+                            element.identifier.text,
+                            listOf(FPPTypes.TELEMETRY_CHANNEL_SPECIFIER),
+                            element.getComponentDef()
+                        )
+                    )
+                }
+            }
+        )
     }
 }

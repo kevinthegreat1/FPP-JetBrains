@@ -10,7 +10,7 @@ import com.intellij.psi.util.PsiTreeUtil;
 import static com.kevinthegreat.fpp.psi.FPPTypes.*;
 import com.kevinthegreat.fpp.psi.*;
 
-public class FPPTelemetryChannelIdentifierImpl extends FPPNavigatableElementImpl implements FPPTelemetryChannelIdentifier {
+public class FPPTelemetryChannelIdentifierImpl extends FPPTelemetryChannelIdentifierMixinImpl implements FPPTelemetryChannelIdentifier {
 
   public FPPTelemetryChannelIdentifierImpl(ASTNode node) {
     super(node);

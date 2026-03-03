@@ -494,13 +494,13 @@ topology_import_specifier ::= IMPORT qualified_identifier_topology_definition
 
 // 8.1. Port Instance Identifiers
 port_instance_identifier ::= qualified_identifier_component_instance_definition_qualifier DOT IDENTIFIER {
-    mixin="com.kevinthegreat.fpp.psi.impl.FPPNavigatableElementImpl"
-    implements="com.kevinthegreat.fpp.psi.FPPNavigatableElement"
+    mixin="com.kevinthegreat.fpp.psi.impl.FPPPortInstanceIdentifierMixinImpl"
+    implements="com.kevinthegreat.fpp.psi.FPPComponentDefinitionProvider"
 }
 // 8.2. Telemetry Channel Identifiers
 telemetry_channel_identifier ::= qualified_identifier_component_instance_definition_qualifier DOT IDENTIFIER {
-    mixin="com.kevinthegreat.fpp.psi.impl.FPPNavigatableElementImpl"
-    implements="com.kevinthegreat.fpp.psi.FPPNavigatableElement"
+    mixin="com.kevinthegreat.fpp.psi.impl.FPPTelemetryChannelIdentifierMixinImpl"
+    implements="com.kevinthegreat.fpp.psi.FPPComponentDefinitionProvider"
 }
 
 // 9. Type Names

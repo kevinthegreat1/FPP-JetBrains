@@ -10,7 +10,7 @@ import com.intellij.psi.util.PsiTreeUtil;
 import static com.kevinthegreat.fpp.psi.FPPTypes.*;
 import com.kevinthegreat.fpp.psi.*;
 
-public class FPPPortInstanceIdentifierImpl extends FPPNavigatableElementImpl implements FPPPortInstanceIdentifier {
+public class FPPPortInstanceIdentifierImpl extends FPPPortInstanceIdentifierMixinImpl implements FPPPortInstanceIdentifier {
 
   public FPPPortInstanceIdentifierImpl(ASTNode node) {
     super(node);

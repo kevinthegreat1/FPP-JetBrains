@@ -272,7 +272,7 @@ public class FPPVisitor extends PsiElementVisitor {
   }
 
   public void visitPortInstanceIdentifier(@NotNull FPPPortInstanceIdentifier o) {
-    visitNavigatableElement(o);
+    visitComponentDefinitionProvider(o);
   }
 
   public void visitPortInstanceSpecifier(@NotNull FPPPortInstanceSpecifier o) {
@@ -460,7 +460,7 @@ public class FPPVisitor extends PsiElementVisitor {
   }
 
   public void visitTelemetryChannelIdentifier(@NotNull FPPTelemetryChannelIdentifier o) {
-    visitNavigatableElement(o);
+    visitComponentDefinitionProvider(o);
   }
 
   public void visitTelemetryChannelIdentifierSequence(@NotNull FPPTelemetryChannelIdentifierSequence o) {
@@ -548,6 +548,10 @@ public class FPPVisitor extends PsiElementVisitor {
   }
 
   public void visitTypeName(@NotNull FPPTypeName o) {
+    visitPsiElement(o);
+  }
+
+  public void visitComponentDefinitionProvider(@NotNull FPPComponentDefinitionProvider o) {
     visitPsiElement(o);
   }
 
