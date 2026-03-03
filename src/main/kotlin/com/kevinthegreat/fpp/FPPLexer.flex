@@ -22,6 +22,9 @@ import static com.kevinthegreat.fpp.psi.FPPTypes.*;
 %state COMMENT_STATE
 // 3.8. Automatic Suppression of Newlines
 %state AFTER_EOL_SUPPRESSOR
+// 10.10. String Literals
+%state SINGLE_LINE_STRING_LITERAL
+%state MULTILINE_STRING_LITERAL
 
 IDENTIFIER      = [$a-zA-Z_]\w*
 END_OF_LINE     = (\r?\n)
@@ -34,10 +37,6 @@ WHITESPACE      = [ ]
 FLOATING_POINT_LITERAL = [+-]?[0-9]*(\.[0-9]*)?([eE][+-]?[0-9]+)?
 // 10.8. Integer Literals
 INTEGER_LITERAL = [+-]?(0[xX][0-9a-fA-F]+|\d+)
-// 10.10. String Literals
-SINGLE_LINE_STRING_LITERAL = "\"" ( [^\"\\\n] | "\\" [^\n] )* "\""
-MULTILINE_STRING_LITERAL = "\"\"\"" ( [^\"\\] | "\\" . )* "\"\"\""
-STRING_LITERAL = {SINGLE_LINE_STRING_LITERAL} | {MULTILINE_STRING_LITERAL}
 
 
 %%
@@ -192,14 +191,15 @@ STRING_LITERAL = {SINGLE_LINE_STRING_LITERAL} | {MULTILINE_STRING_LITERAL}
     // This is the same reason for explicit line continuations and automatic suppression of newlines.
     {WHITESPACE}+       { return TokenType.WHITE_SPACE; }
     // 3.7. Explicit Line Continuations
-    "\\" {END_OF_LINE}  { return TokenType.WHITE_SPACE; }
+    "\\" {WHITESPACE}* {END_OF_LINE}  { return TokenType.WHITE_SPACE; }
 
     // 10.6. Floating-Point Literals
     {FLOATING_POINT_LITERAL}    { return FLOATING_POINT_LITERAL; }
     // 10.8. Integer Literals
     {INTEGER_LITERAL}           { return INTEGER_LITERAL; }
     // 10.10. String Literals
-    {STRING_LITERAL}            { return STRING_LITERAL; }
+    "\"\"\""  { yybegin(MULTILINE_STRING_LITERAL); }
+    "\""      { yybegin(SINGLE_LINE_STRING_LITERAL); }
 
     .   { return TokenType.BAD_CHARACTER; }
 }
@@ -220,4 +220,18 @@ STRING_LITERAL = {SINGLE_LINE_STRING_LITERAL} | {MULTILINE_STRING_LITERAL}
     {PRE_ANNOTATION}                { return PRE_ANNOTATION; }
     // Anything else
     .                               { yybegin(YYINITIAL); yypushback(1); }
+}
+
+// 10.10. String Literals
+// 10.10.1. Single-Line String Literals
+<SINGLE_LINE_STRING_LITERAL> {
+    "\""        { yybegin(YYINITIAL); return STRING_LITERAL; }
+    [^\n\"\\]   {}
+    "\\" [^\n]  {}
+}
+// 10.10.2. Multiline String Literals
+<MULTILINE_STRING_LITERAL> {
+    "\"\"\""  { yybegin(YYINITIAL); return STRING_LITERAL; }
+    [^\\]     {}
+    "\\" [^]  {}
 }

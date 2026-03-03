@@ -712,8 +712,8 @@ public class FPPParser implements PsiParser, LightPsiParser {
   //                   | record_specifier
   //                   | state_machine_instance_specifier
   //                   | telemetry_channel_specifier
+  //                   | alias_type_definition // Put alias type definitions first or else they will be incorrectly parsed as abstract type definitions
   //                   | abstract_type_definition
-  //                   | alias_type_definition
   //                   | array_definition
   //                   | enum_definition
   //                   | event_specifier
@@ -735,8 +735,8 @@ public class FPPParser implements PsiParser, LightPsiParser {
     if (!result_) result_ = record_specifier(builder_, level_ + 1);
     if (!result_) result_ = state_machine_instance_specifier(builder_, level_ + 1);
     if (!result_) result_ = telemetry_channel_specifier(builder_, level_ + 1);
-    if (!result_) result_ = abstract_type_definition(builder_, level_ + 1);
     if (!result_) result_ = alias_type_definition(builder_, level_ + 1);
+    if (!result_) result_ = abstract_type_definition(builder_, level_ + 1);
     if (!result_) result_ = array_definition(builder_, level_ + 1);
     if (!result_) result_ = enum_definition(builder_, level_ + 1);
     if (!result_) result_ = event_specifier(builder_, level_ + 1);
@@ -959,30 +959,30 @@ public class FPPParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // PRODUCT identifier_definition [ ID expression ] [ DEFAULT PRIORITY expression ]
+  // PRODUCT CONTAINER identifier_definition [ ID expression ] [ DEFAULT PRIORITY expression ]
   public static boolean container_specifier(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "container_specifier")) return false;
     if (!nextTokenIs(builder_, PRODUCT)) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_);
-    result_ = consumeToken(builder_, PRODUCT);
+    result_ = consumeTokens(builder_, 0, PRODUCT, CONTAINER);
     result_ = result_ && identifier_definition(builder_, level_ + 1);
-    result_ = result_ && container_specifier_2(builder_, level_ + 1);
     result_ = result_ && container_specifier_3(builder_, level_ + 1);
+    result_ = result_ && container_specifier_4(builder_, level_ + 1);
     exit_section_(builder_, marker_, CONTAINER_SPECIFIER, result_);
     return result_;
   }
 
   // [ ID expression ]
-  private static boolean container_specifier_2(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "container_specifier_2")) return false;
-    container_specifier_2_0(builder_, level_ + 1);
+  private static boolean container_specifier_3(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "container_specifier_3")) return false;
+    container_specifier_3_0(builder_, level_ + 1);
     return true;
   }
 
   // ID expression
-  private static boolean container_specifier_2_0(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "container_specifier_2_0")) return false;
+  private static boolean container_specifier_3_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "container_specifier_3_0")) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_);
     result_ = consumeToken(builder_, ID);
@@ -992,15 +992,15 @@ public class FPPParser implements PsiParser, LightPsiParser {
   }
 
   // [ DEFAULT PRIORITY expression ]
-  private static boolean container_specifier_3(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "container_specifier_3")) return false;
-    container_specifier_3_0(builder_, level_ + 1);
+  private static boolean container_specifier_4(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "container_specifier_4")) return false;
+    container_specifier_4_0(builder_, level_ + 1);
     return true;
   }
 
   // DEFAULT PRIORITY expression
-  private static boolean container_specifier_3_0(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "container_specifier_3_0")) return false;
+  private static boolean container_specifier_4_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "container_specifier_4_0")) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_);
     result_ = consumeTokens(builder_, 0, DEFAULT, PRIORITY);

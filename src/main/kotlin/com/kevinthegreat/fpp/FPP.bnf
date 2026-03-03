@@ -200,8 +200,8 @@ component_member ::= constant_definition
                   | record_specifier
                   | state_machine_instance_specifier
                   | telemetry_channel_specifier
+                  | alias_type_definition // Put alias type definitions first or else they will be incorrectly parsed as abstract type definitions
                   | abstract_type_definition
-                  | alias_type_definition
                   | array_definition
                   | enum_definition
                   | event_specifier
@@ -375,7 +375,7 @@ pattern_kind ::= COMMAND
                 | TIME
 instance_sequence ::= (qualified_identifier_component_instance_definition (COMMA | END_OF_LINE)*)*
 // 7.4. Container Specifiers
-container_specifier ::= PRODUCT identifier_definition [ ID expression ] [ DEFAULT PRIORITY expression ] {
+container_specifier ::= PRODUCT CONTAINER identifier_definition [ ID expression ] [ DEFAULT PRIORITY expression ] {
     mixin="com.kevinthegreat.fpp.psi.impl.FPPNamedElementImpl"
     implements="com.kevinthegreat.fpp.psi.FPPNamedElement"
 }
