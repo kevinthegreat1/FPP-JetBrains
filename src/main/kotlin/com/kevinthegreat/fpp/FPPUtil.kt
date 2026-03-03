@@ -51,6 +51,10 @@ object FPPUtil {
         }
 
         val enclosingDef = getEnclosingDef(location) ?: return emptyList()
+        return resolveIdentifierInEnclosingDef(id, enclosingDef, defTypes)
+    }
+
+    fun resolveIdentifierInEnclosingDef(id: String, enclosingDef: PsiElement, defTypes: List<IElementType>): List<PsiElement> {
         val enclosingQualName = getQualifiedName(enclosingDef) ?: return emptyList()
         if (isTopLevel(enclosingDef)) {
             return findDefinitions("$enclosingQualName.$id", enclosingDef.project, defTypes) +
@@ -69,10 +73,24 @@ object FPPUtil {
         }
 
         val enclosingQualId = idSplit.dropLast(1).joinToString(".")
-        val enclosingDef = resolveQualifiedIdentifier(enclosingQualId, location, emptyList())
+        val enclosingQualIdDef = resolveQualifiedIdentifier(enclosingQualId, location, emptyList())
 
         // Find identifier starting from parents' children because we are looking for the identifier inside the parents
-        return enclosingDef.filter(::isDef)
+        return enclosingQualIdDef.filter(::isDef)
+            .flatMap { it.children.flatMap { findDefinitions(idSplit.last(), it, defTypes) } }
+    }
+
+    fun resolveQualifiedIdentifierInEnclosingDef(qualId: String, enclosingDef: PsiElement, defTypes: List<IElementType>): List<PsiElement> {
+        val idSplit = qualId.split(".")
+        if (idSplit.size == 1) {
+            return resolveIdentifierInEnclosingDef(qualId, enclosingDef, defTypes)
+        }
+
+        val enclosingQualId = idSplit.dropLast(1).joinToString(".")
+        val enclosingQualIdDef = resolveQualifiedIdentifierInEnclosingDef(enclosingQualId, enclosingDef, emptyList())
+
+        // Find identifier starting from parents' children because we are looking for the identifier inside the parents
+        return enclosingQualIdDef.filter(::isDef)
             .flatMap { it.children.flatMap { findDefinitions(idSplit.last(), it, defTypes) } }
     }
 

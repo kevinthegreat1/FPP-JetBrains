@@ -8,12 +8,11 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.kevinthegreat.fpp.psi.FPPTypes.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.kevinthegreat.fpp.psi.*;
 
-public class FPPTelemetryChannelIdentifierImpl extends ASTWrapperPsiElement implements FPPTelemetryChannelIdentifier {
+public class FPPTelemetryChannelIdentifierImpl extends FPPNavigatableElementImpl implements FPPTelemetryChannelIdentifier {
 
-  public FPPTelemetryChannelIdentifierImpl(@NotNull ASTNode node) {
+  public FPPTelemetryChannelIdentifierImpl(ASTNode node) {
     super(node);
   }
 
@@ -29,8 +28,8 @@ public class FPPTelemetryChannelIdentifierImpl extends ASTWrapperPsiElement impl
 
   @Override
   @NotNull
-  public FPPQualifiedIdentifierComponentInstanceDefinition getQualifiedIdentifierComponentInstanceDefinition() {
-    return findNotNullChildByClass(FPPQualifiedIdentifierComponentInstanceDefinition.class);
+  public FPPQualifiedIdentifierComponentInstanceDefinitionQualifier getQualifiedIdentifierComponentInstanceDefinitionQualifier() {
+    return findNotNullChildByClass(FPPQualifiedIdentifierComponentInstanceDefinitionQualifier.class);
   }
 
   @Override

@@ -10,32 +10,20 @@ import com.intellij.psi.util.PsiTreeUtil;
 import static com.kevinthegreat.fpp.psi.FPPTypes.*;
 import com.kevinthegreat.fpp.psi.*;
 
-public class FPPPortInstanceIdentifierImpl extends FPPNavigatableElementImpl implements FPPPortInstanceIdentifier {
+public class FPPQualifiedIdentifierQualifierImpl extends FPPNavigatableElementImpl implements FPPQualifiedIdentifierQualifier {
 
-  public FPPPortInstanceIdentifierImpl(ASTNode node) {
+  public FPPQualifiedIdentifierQualifierImpl(ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull FPPVisitor visitor) {
-    visitor.visitPortInstanceIdentifier(this);
+    visitor.visitQualifiedIdentifierQualifier(this);
   }
 
   @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof FPPVisitor) accept((FPPVisitor)visitor);
     else super.accept(visitor);
-  }
-
-  @Override
-  @NotNull
-  public FPPQualifiedIdentifierComponentInstanceDefinitionQualifier getQualifiedIdentifierComponentInstanceDefinitionQualifier() {
-    return findNotNullChildByClass(FPPQualifiedIdentifierComponentInstanceDefinitionQualifier.class);
-  }
-
-  @Override
-  @NotNull
-  public PsiElement getIdentifier() {
-    return findNotNullChildByType(IDENTIFIER);
   }
 
 }

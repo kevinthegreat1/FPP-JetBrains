@@ -5,10 +5,10 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface FPPPortInstanceIdentifier extends PsiElement {
+public interface FPPPortInstanceIdentifier extends FPPNavigatableElement {
 
   @NotNull
-  FPPQualifiedIdentifierComponentInstanceDefinition getQualifiedIdentifierComponentInstanceDefinition();
+  FPPQualifiedIdentifierComponentInstanceDefinitionQualifier getQualifiedIdentifierComponentInstanceDefinitionQualifier();
 
   @NotNull
   PsiElement getIdentifier();

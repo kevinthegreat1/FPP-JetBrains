@@ -493,9 +493,15 @@ non_annotatable_include_specifier ::= include_specifier
 topology_import_specifier ::= IMPORT qualified_identifier_topology_definition
 
 // 8.1. Port Instance Identifiers
-port_instance_identifier ::= qualified_identifier_component_instance_definition DOT IDENTIFIER
+port_instance_identifier ::= qualified_identifier_component_instance_definition_qualifier DOT IDENTIFIER {
+    mixin="com.kevinthegreat.fpp.psi.impl.FPPNavigatableElementImpl"
+    implements="com.kevinthegreat.fpp.psi.FPPNavigatableElement"
+}
 // 8.2. Telemetry Channel Identifiers
-telemetry_channel_identifier ::= qualified_identifier_component_instance_definition DOT IDENTIFIER
+telemetry_channel_identifier ::= qualified_identifier_component_instance_definition_qualifier DOT IDENTIFIER {
+    mixin="com.kevinthegreat.fpp.psi.impl.FPPNavigatableElementImpl"
+    implements="com.kevinthegreat.fpp.psi.FPPNavigatableElement"
+}
 
 // 9. Type Names
 type_name ::= primitive_integer_type_name
@@ -555,6 +561,10 @@ qualified_identifier ::= IDENTIFIER (DOT IDENTIFIER)* {
     mixin="com.kevinthegreat.fpp.psi.impl.FPPNavigatableElementImpl"
     implements="com.kevinthegreat.fpp.psi.FPPNavigatableElement"
 }
+qualified_identifier_qualifier ::= IDENTIFIER (DOT IDENTIFIER &(DOT IDENTIFIER))* {
+    mixin="com.kevinthegreat.fpp.psi.impl.FPPNavigatableElementImpl"
+    implements="com.kevinthegreat.fpp.psi.FPPNavigatableElement"
+}
 
 // Reference Support
 identifier_definition ::= IDENTIFIER
@@ -578,6 +588,7 @@ qualified_identifier_type_name ::= qualified_identifier
 qualified_identifier_component_definition ::= qualified_identifier
 qualified_identifier_state_or_choice_definition ::= qualified_identifier
 qualified_identifier_component_instance_definition ::= qualified_identifier
+qualified_identifier_component_instance_definition_qualifier ::= qualified_identifier_qualifier
 qualified_identifier_port_interface_definition ::= qualified_identifier
 qualified_identifier_constant_definition ::= qualified_identifier
 qualified_identifier_port_definition ::= qualified_identifier

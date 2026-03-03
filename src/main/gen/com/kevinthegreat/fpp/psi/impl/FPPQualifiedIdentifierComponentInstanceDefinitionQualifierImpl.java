@@ -8,16 +8,17 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.kevinthegreat.fpp.psi.FPPTypes.*;
+import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.kevinthegreat.fpp.psi.*;
 
-public class FPPPortInstanceIdentifierImpl extends FPPNavigatableElementImpl implements FPPPortInstanceIdentifier {
+public class FPPQualifiedIdentifierComponentInstanceDefinitionQualifierImpl extends ASTWrapperPsiElement implements FPPQualifiedIdentifierComponentInstanceDefinitionQualifier {
 
-  public FPPPortInstanceIdentifierImpl(ASTNode node) {
+  public FPPQualifiedIdentifierComponentInstanceDefinitionQualifierImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull FPPVisitor visitor) {
-    visitor.visitPortInstanceIdentifier(this);
+    visitor.visitQualifiedIdentifierComponentInstanceDefinitionQualifier(this);
   }
 
   @Override
@@ -28,14 +29,8 @@ public class FPPPortInstanceIdentifierImpl extends FPPNavigatableElementImpl imp
 
   @Override
   @NotNull
-  public FPPQualifiedIdentifierComponentInstanceDefinitionQualifier getQualifiedIdentifierComponentInstanceDefinitionQualifier() {
-    return findNotNullChildByClass(FPPQualifiedIdentifierComponentInstanceDefinitionQualifier.class);
-  }
-
-  @Override
-  @NotNull
-  public PsiElement getIdentifier() {
-    return findNotNullChildByType(IDENTIFIER);
+  public FPPQualifiedIdentifierQualifier getQualifiedIdentifierQualifier() {
+    return findNotNullChildByClass(FPPQualifiedIdentifierQualifier.class);
   }
 
 }
