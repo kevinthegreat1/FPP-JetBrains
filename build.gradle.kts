@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "com.kevinthegreat"
-version = "0.2.0"
+version = "0.2.1"
 
 repositories {
     mavenCentral()
@@ -42,7 +42,8 @@ intellijPlatform {
         }
 
         changeNotes = """
-            Add reference checking, find declaration, find usages, and refactor support
+            Add folding support<br>
+            Fix various bugs
         """.trimIndent()
     }
 
