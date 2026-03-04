@@ -17,7 +17,7 @@ public interface FPPExpressionPrimary extends PsiElement {
   FPPExpression getExpression();
 
   @Nullable
-  FPPQualifiedIdentifier getQualifiedIdentifier();
+  FPPQualifiedIdentifierConstantOrEnumConstantDefinition getQualifiedIdentifierConstantOrEnumConstantDefinition();
 
   @Nullable
   FPPStructExpression getStructExpression();

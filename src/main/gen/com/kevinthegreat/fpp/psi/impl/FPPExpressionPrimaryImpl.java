@@ -47,8 +47,8 @@ public class FPPExpressionPrimaryImpl extends ASTWrapperPsiElement implements FP
 
   @Override
   @Nullable
-  public FPPQualifiedIdentifier getQualifiedIdentifier() {
-    return findChildByClass(FPPQualifiedIdentifier.class);
+  public FPPQualifiedIdentifierConstantOrEnumConstantDefinition getQualifiedIdentifierConstantOrEnumConstantDefinition() {
+    return findChildByClass(FPPQualifiedIdentifierConstantOrEnumConstantDefinition.class);
   }
 
   @Override

@@ -1407,7 +1407,7 @@ public class FPPParser implements PsiParser, LightPsiParser {
   // array_expression
   //                     | boolean_literal // 10.4. Boolean Literals
   //                     | FLOATING_POINT_LITERAL // 10.6. Floating-Point Literals
-  //                     | qualified_identifier // 10.7. Identifier Expressions
+  //                     | qualified_identifier_constant_or_enum_constant_definition // 10.7. Identifier Expressions
   //                     | INTEGER_LITERAL // 10.8. Integer Literals
   //                     | LEFT_PAREN expression RIGHT_PAREN // 10.9. Parenthesis Expressions
   //                     | STRING_LITERAL // 10.10. String Literals
@@ -1419,7 +1419,7 @@ public class FPPParser implements PsiParser, LightPsiParser {
     result_ = array_expression(builder_, level_ + 1);
     if (!result_) result_ = boolean_literal(builder_, level_ + 1);
     if (!result_) result_ = consumeToken(builder_, FLOATING_POINT_LITERAL);
-    if (!result_) result_ = qualified_identifier(builder_, level_ + 1);
+    if (!result_) result_ = qualified_identifier_constant_or_enum_constant_definition(builder_, level_ + 1);
     if (!result_) result_ = consumeToken(builder_, INTEGER_LITERAL);
     if (!result_) result_ = expression_primary_5(builder_, level_ + 1);
     if (!result_) result_ = consumeToken(builder_, STRING_LITERAL);
@@ -2533,6 +2533,18 @@ public class FPPParser implements PsiParser, LightPsiParser {
     Marker marker_ = enter_section_(builder_);
     result_ = qualified_identifier(builder_, level_ + 1);
     exit_section_(builder_, marker_, QUALIFIED_IDENTIFIER_CONSTANT_DEFINITION, result_);
+    return result_;
+  }
+
+  /* ********************************************************** */
+  // qualified_identifier
+  public static boolean qualified_identifier_constant_or_enum_constant_definition(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "qualified_identifier_constant_or_enum_constant_definition")) return false;
+    if (!nextTokenIs(builder_, IDENTIFIER)) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = qualified_identifier(builder_, level_ + 1);
+    exit_section_(builder_, marker_, QUALIFIED_IDENTIFIER_CONSTANT_OR_ENUM_CONSTANT_DEFINITION, result_);
     return result_;
   }
 

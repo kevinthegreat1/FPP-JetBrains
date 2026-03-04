@@ -51,6 +51,7 @@ enum class FPPNameGroup(vararg val types: IElementType) {
                 is FPPQualifiedIdentifierComponentInstanceDefinition, is FPPQualifiedIdentifierComponentInstanceDefinitionQualifier -> listOf(FPPTypes.COMPONENT_INSTANCE_DEFINITION)
                 is FPPQualifiedIdentifierPortInterfaceDefinition -> listOf(FPPTypes.PORT_INTERFACE_DEFINITION)
                 is FPPQualifiedIdentifierConstantDefinition -> listOf(FPPTypes.CONSTANT_DEFINITION)
+                is FPPQualifiedIdentifierConstantOrEnumConstantDefinition -> listOf(FPPTypes.CONSTANT_DEFINITION, FPPTypes.ENUM_CONSTANT)
                 is FPPQualifiedIdentifierPortDefinition -> listOf(FPPTypes.PORT_DEFINITION)
                 is FPPQualifiedIdentifierStateMachineDefinition -> listOf(FPPTypes.STATE_MACHINE_DEFINITION)
                 is FPPQualifiedIdentifierTopologyDefinition -> listOf(FPPTypes.TOPOLOGY_DEFINITION)

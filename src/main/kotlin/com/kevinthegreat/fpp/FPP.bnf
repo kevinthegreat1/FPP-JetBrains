@@ -539,7 +539,7 @@ expression_postfix_operations ::= expression LEFT_BRACKET expression RIGHT_BRACK
 expression_primary ::= array_expression
                     | boolean_literal // 10.4. Boolean Literals
                     | FLOATING_POINT_LITERAL // 10.6. Floating-Point Literals
-                    | qualified_identifier // 10.7. Identifier Expressions
+                    | qualified_identifier_constant_or_enum_constant_definition // 10.7. Identifier Expressions
                     | INTEGER_LITERAL // 10.8. Integer Literals
                     | LEFT_PAREN expression RIGHT_PAREN // 10.9. Parenthesis Expressions
                     | STRING_LITERAL // 10.10. String Literals
@@ -603,6 +603,7 @@ qualified_identifier_component_instance_definition ::= qualified_identifier
 qualified_identifier_component_instance_definition_qualifier ::= qualified_identifier_qualifier
 qualified_identifier_port_interface_definition ::= qualified_identifier
 qualified_identifier_constant_definition ::= qualified_identifier
+qualified_identifier_constant_or_enum_constant_definition ::= qualified_identifier
 qualified_identifier_port_definition ::= qualified_identifier
 qualified_identifier_state_machine_definition ::= qualified_identifier
 qualified_identifier_topology_definition ::= qualified_identifier

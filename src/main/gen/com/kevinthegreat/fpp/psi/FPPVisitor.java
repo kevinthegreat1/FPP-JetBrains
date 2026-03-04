@@ -339,6 +339,10 @@ public class FPPVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitQualifiedIdentifierConstantOrEnumConstantDefinition(@NotNull FPPQualifiedIdentifierConstantOrEnumConstantDefinition o) {
+    visitPsiElement(o);
+  }
+
   public void visitQualifiedIdentifierPortDefinition(@NotNull FPPQualifiedIdentifierPortDefinition o) {
     visitPsiElement(o);
   }
