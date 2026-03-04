@@ -4,6 +4,7 @@ import com.intellij.codeInspection.ProblemHighlightType
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.Annotator
 import com.intellij.lang.annotation.HighlightSeverity
+import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiElement
 import com.intellij.psi.impl.source.resolve.reference.impl.providers.FileReferenceSet
 import com.kevinthegreat.fpp.psi.FPPIncludeSpecifier
@@ -23,14 +24,30 @@ class FPPAnnotator : Annotator {
 
     private fun annotateReference(element: PsiElement, holder: AnnotationHolder) {
         val defTypes = FPPNameGroup.getDefTypes(element) ?: return
-        val resolved = FPPUtil.resolveQualifiedIdentifier(element.text, element, defTypes)
+        val qualId = element.text
 
-        if (resolved.isEmpty()) {
+        val notResolved = qualId.split(".")
+            .scan(-1 to -1) { prevRange, id -> prevRange.second + 1 to prevRange.second + 1 + id.length }
+            .drop(1)
+            .firstOrNull { (_, end) ->
+                FPPUtil.resolveQualifiedIdentifier(
+                    qualId.substring(0, end),
+                    element,
+                    if (end == qualId.length) defTypes else emptyList()
+                ).isEmpty()
+            }
+
+        if (notResolved != null) {
             holder.newAnnotation(
                 HighlightSeverity.ERROR,
                 "Unresolved type reference '${element.text}', expected one of: '${defTypes.joinToString("', '")}'"
             )
-                .range(element)
+                .range(
+                    TextRange(
+                        element.textRange.startOffset + notResolved.first,
+                        element.textRange.startOffset + notResolved.second
+                    )
+                )
                 .highlightType(ProblemHighlightType.LIKE_UNKNOWN_SYMBOL)
                 .create()
         } else {
