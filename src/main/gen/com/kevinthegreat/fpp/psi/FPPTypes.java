@@ -30,6 +30,7 @@ public interface FPPTypes {
   IElementType COMPONENT_LOCATION_SPECIFIER = new FPPElementType("COMPONENT_LOCATION_SPECIFIER");
   IElementType COMPONENT_MEMBER = new FPPElementType("COMPONENT_MEMBER");
   IElementType COMPONENT_MEMBER_SEQUENCE = new FPPElementType("COMPONENT_MEMBER_SEQUENCE");
+  IElementType COMPONENT_MEMBER_SEQUENCE_NON_EMPTY = new FPPElementType("COMPONENT_MEMBER_SEQUENCE_NON_EMPTY");
   IElementType CONNECTION = new FPPElementType("CONNECTION");
   IElementType CONNECTION_GRAPH_SPECIFIER = new FPPElementType("CONNECTION_GRAPH_SPECIFIER");
   IElementType CONNECTION_SEQUENCE = new FPPElementType("CONNECTION_SEQUENCE");
@@ -49,6 +50,7 @@ public interface FPPTypes {
   IElementType EXPRESSION_PRIMARY = new FPPElementType("EXPRESSION_PRIMARY");
   IElementType FLOATING_POINT_TYPE_NAME = new FPPElementType("FLOATING_POINT_TYPE_NAME");
   IElementType FORMAL_PARAMETER = new FPPElementType("FORMAL_PARAMETER");
+  IElementType FPP_FILE = new FPPElementType("FPP_FILE");
   IElementType GENERAL_PORT_INSTANCE_SPECIFIER = new FPPElementType("GENERAL_PORT_INSTANCE_SPECIFIER");
   IElementType GENERAL_PORT_KIND = new FPPElementType("GENERAL_PORT_KIND");
   IElementType GUARD_DEFINITION = new FPPElementType("GUARD_DEFINITION");
@@ -128,8 +130,10 @@ public interface FPPTypes {
   IElementType TELEMETRY_LIMIT_SEQUENCE = new FPPElementType("TELEMETRY_LIMIT_SEQUENCE");
   IElementType TELEMETRY_PACKET_GROUP_MEMBER = new FPPElementType("TELEMETRY_PACKET_GROUP_MEMBER");
   IElementType TELEMETRY_PACKET_GROUP_MEMBER_SEQUENCE = new FPPElementType("TELEMETRY_PACKET_GROUP_MEMBER_SEQUENCE");
+  IElementType TELEMETRY_PACKET_GROUP_MEMBER_SEQUENCE_NON_EMPTY = new FPPElementType("TELEMETRY_PACKET_GROUP_MEMBER_SEQUENCE_NON_EMPTY");
   IElementType TELEMETRY_PACKET_MEMBER = new FPPElementType("TELEMETRY_PACKET_MEMBER");
   IElementType TELEMETRY_PACKET_MEMBER_SEQUENCE = new FPPElementType("TELEMETRY_PACKET_MEMBER_SEQUENCE");
+  IElementType TELEMETRY_PACKET_MEMBER_SEQUENCE_NON_EMPTY = new FPPElementType("TELEMETRY_PACKET_MEMBER_SEQUENCE_NON_EMPTY");
   IElementType TELEMETRY_PACKET_SET_SPECIFIER = new FPPElementType("TELEMETRY_PACKET_SET_SPECIFIER");
   IElementType TELEMETRY_PACKET_SPECIFIER = new FPPElementType("TELEMETRY_PACKET_SPECIFIER");
   IElementType TELEMETRY_UPDATE = new FPPElementType("TELEMETRY_UPDATE");
@@ -138,6 +142,7 @@ public interface FPPTypes {
   IElementType TOPOLOGY_LOCATION_SPECIFIER = new FPPElementType("TOPOLOGY_LOCATION_SPECIFIER");
   IElementType TOPOLOGY_MEMBER = new FPPElementType("TOPOLOGY_MEMBER");
   IElementType TOPOLOGY_MEMBER_SEQUENCE = new FPPElementType("TOPOLOGY_MEMBER_SEQUENCE");
+  IElementType TOPOLOGY_MEMBER_SEQUENCE_NON_EMPTY = new FPPElementType("TOPOLOGY_MEMBER_SEQUENCE_NON_EMPTY");
   IElementType TRANSITION_EXPRESSION = new FPPElementType("TRANSITION_EXPRESSION");
   IElementType TRANSITION_OR_DO = new FPPElementType("TRANSITION_OR_DO");
   IElementType TRANSLATION_UNIT = new FPPElementType("TRANSLATION_UNIT");
@@ -351,6 +356,9 @@ public interface FPPTypes {
       else if (type == COMPONENT_MEMBER_SEQUENCE) {
         return new FPPComponentMemberSequenceImpl(node);
       }
+      else if (type == COMPONENT_MEMBER_SEQUENCE_NON_EMPTY) {
+        return new FPPComponentMemberSequenceNonEmptyImpl(node);
+      }
       else if (type == CONNECTION) {
         return new FPPConnectionImpl(node);
       }
@@ -407,6 +415,9 @@ public interface FPPTypes {
       }
       else if (type == FORMAL_PARAMETER) {
         return new FPPFormalParameterImpl(node);
+      }
+      else if (type == FPP_FILE) {
+        return new FPPFppFileImpl(node);
       }
       else if (type == GENERAL_PORT_INSTANCE_SPECIFIER) {
         return new FPPGeneralPortInstanceSpecifierImpl(node);
@@ -645,11 +656,17 @@ public interface FPPTypes {
       else if (type == TELEMETRY_PACKET_GROUP_MEMBER_SEQUENCE) {
         return new FPPTelemetryPacketGroupMemberSequenceImpl(node);
       }
+      else if (type == TELEMETRY_PACKET_GROUP_MEMBER_SEQUENCE_NON_EMPTY) {
+        return new FPPTelemetryPacketGroupMemberSequenceNonEmptyImpl(node);
+      }
       else if (type == TELEMETRY_PACKET_MEMBER) {
         return new FPPTelemetryPacketMemberImpl(node);
       }
       else if (type == TELEMETRY_PACKET_MEMBER_SEQUENCE) {
         return new FPPTelemetryPacketMemberSequenceImpl(node);
+      }
+      else if (type == TELEMETRY_PACKET_MEMBER_SEQUENCE_NON_EMPTY) {
+        return new FPPTelemetryPacketMemberSequenceNonEmptyImpl(node);
       }
       else if (type == TELEMETRY_PACKET_SET_SPECIFIER) {
         return new FPPTelemetryPacketSetSpecifierImpl(node);
@@ -674,6 +691,9 @@ public interface FPPTypes {
       }
       else if (type == TOPOLOGY_MEMBER_SEQUENCE) {
         return new FPPTopologyMemberSequenceImpl(node);
+      }
+      else if (type == TOPOLOGY_MEMBER_SEQUENCE_NON_EMPTY) {
+        return new FPPTopologyMemberSequenceNonEmptyImpl(node);
       }
       else if (type == TRANSITION_EXPRESSION) {
         return new FPPTransitionExpressionImpl(node);

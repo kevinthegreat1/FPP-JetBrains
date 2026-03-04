@@ -5,9 +5,9 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface FPPIncludeSpecifier extends FPPNavigatableElement {
+public interface FPPTelemetryPacketMemberSequenceNonEmpty extends PsiElement {
 
   @NotNull
-  PsiElement getStringLiteral();
+  List<FPPTelemetryPacketMember> getTelemetryPacketMemberList();
 
 }

@@ -95,6 +95,10 @@ public class FPPVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitComponentMemberSequenceNonEmpty(@NotNull FPPComponentMemberSequenceNonEmpty o) {
+    visitPsiElement(o);
+  }
+
   public void visitConnection(@NotNull FPPConnection o) {
     visitPsiElement(o);
   }
@@ -171,6 +175,10 @@ public class FPPVisitor extends PsiElementVisitor {
     visitNamedElement(o);
   }
 
+  public void visitFppFile(@NotNull FPPFppFile o) {
+    visitPsiElement(o);
+  }
+
   public void visitGeneralPortInstanceSpecifier(@NotNull FPPGeneralPortInstanceSpecifier o) {
     visitNamedElement(o);
   }
@@ -204,7 +212,7 @@ public class FPPVisitor extends PsiElementVisitor {
   }
 
   public void visitIncludeSpecifier(@NotNull FPPIncludeSpecifier o) {
-    visitPsiElement(o);
+    visitNavigatableElement(o);
   }
 
   public void visitInitSpecifier(@NotNull FPPInitSpecifier o) {
@@ -487,11 +495,19 @@ public class FPPVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitTelemetryPacketGroupMemberSequenceNonEmpty(@NotNull FPPTelemetryPacketGroupMemberSequenceNonEmpty o) {
+    visitPsiElement(o);
+  }
+
   public void visitTelemetryPacketMember(@NotNull FPPTelemetryPacketMember o) {
     visitPsiElement(o);
   }
 
   public void visitTelemetryPacketMemberSequence(@NotNull FPPTelemetryPacketMemberSequence o) {
+    visitPsiElement(o);
+  }
+
+  public void visitTelemetryPacketMemberSequenceNonEmpty(@NotNull FPPTelemetryPacketMemberSequenceNonEmpty o) {
     visitPsiElement(o);
   }
 
@@ -524,6 +540,10 @@ public class FPPVisitor extends PsiElementVisitor {
   }
 
   public void visitTopologyMemberSequence(@NotNull FPPTopologyMemberSequence o) {
+    visitPsiElement(o);
+  }
+
+  public void visitTopologyMemberSequenceNonEmpty(@NotNull FPPTopologyMemberSequenceNonEmpty o) {
     visitPsiElement(o);
   }
 

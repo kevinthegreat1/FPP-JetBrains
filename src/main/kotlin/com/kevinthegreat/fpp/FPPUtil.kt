@@ -1,6 +1,7 @@
 package com.kevinthegreat.fpp
 
 import com.intellij.openapi.project.Project
+import com.intellij.openapi.vfs.VfsUtil
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiManager
 import com.intellij.psi.search.FileTypeIndex
@@ -10,6 +11,7 @@ import com.intellij.psi.util.PsiTreeUtil
 import com.intellij.psi.util.elementType
 import com.intellij.psi.util.parents
 import com.intellij.psi.util.siblings
+import com.kevinthegreat.fpp.psi.FPPIncludeSpecifier
 import com.kevinthegreat.fpp.psi.FPPNamedElement
 import com.kevinthegreat.fpp.psi.FPPTokenSets
 import com.kevinthegreat.fpp.psi.FPPTypes
@@ -47,7 +49,7 @@ object FPPUtil {
     // 15.5. Resolution of Identifiers
     fun resolveIdentifier(id: String, location: PsiElement, defTypes: List<IElementType>): List<PsiElement> {
         if (isTopLevel(location)) {
-            return findDefinitions(id, location.project, defTypes)
+            return findDefinitions(id, location.project, defTypes).distinct()
         }
 
         val enclosingDef = getEnclosingDef(location) ?: return emptyList()
@@ -56,13 +58,16 @@ object FPPUtil {
 
     fun resolveIdentifierInEnclosingDef(id: String, enclosingDef: PsiElement, defTypes: List<IElementType>): List<PsiElement> {
         val enclosingQualName = getQualifiedName(enclosingDef) ?: return emptyList()
-        if (isTopLevel(enclosingDef)) {
-            return findDefinitions("$enclosingQualName.$id", enclosingDef.project, defTypes) +
+
+        val resolved = if (isTopLevel(enclosingDef)) {
+            findDefinitions("$enclosingQualName.$id", enclosingDef.project, defTypes) +
                     findDefinitions(id, enclosingDef.project, defTypes)
+        } else {
+            findDefinitions("$enclosingQualName.$id", enclosingDef.project, defTypes) +
+                    resolveIdentifier(id, enclosingDef, defTypes)
         }
 
-        return findDefinitions("$enclosingQualName.$id", enclosingDef.project, defTypes) +
-                resolveIdentifier(id, enclosingDef, defTypes)
+        return resolved.distinct()
     }
 
     // 15.6. Resolution of Qualified Identifiers
@@ -78,6 +83,7 @@ object FPPUtil {
         // Find identifier starting from parents' children because we are looking for the identifier inside the parents
         return enclosingQualIdDef.filter(::isDef)
             .flatMap { it.children.flatMap { findDefinitions(idSplit.last(), it, defTypes) } }
+            .distinct()
     }
 
     fun resolveQualifiedIdentifierInEnclosingDef(qualId: String, enclosingDef: PsiElement, defTypes: List<IElementType>): List<PsiElement> {
@@ -92,6 +98,7 @@ object FPPUtil {
         // Find identifier starting from parents' children because we are looking for the identifier inside the parents
         return enclosingQualIdDef.filter(::isDef)
             .flatMap { it.children.flatMap { findDefinitions(idSplit.last(), it, defTypes) } }
+            .distinct()
     }
 
     private fun findDefinitions(qualId: String, project: Project, defTypes: List<IElementType>): List<PsiElement> {
@@ -117,6 +124,12 @@ object FPPUtil {
                 return if (remainingTarget.isEmpty()) listOf(location)
                 else location.children.flatMap { findDefinitions(remainingTarget, it, defTypes) }
             }
+        } else if (location is FPPIncludeSpecifier) {
+            val relativePath = location.stringLiteral.text.substring(1, location.stringLiteral.textLength - 1)
+            val currentDir = location.containingFile.virtualFile.parent
+            val targetVirtualFile = VfsUtil.findRelativeFile(currentDir, *relativePath.split("/").toTypedArray()) ?: return emptyList()
+            val targetPsiFile = PsiManager.getInstance(location.project).findFile(targetVirtualFile) ?: return emptyList()
+            return findDefinitions(idSplit, targetPsiFile, defTypes)
         } else if (!isDef) {
             return location.children.flatMap { findDefinitions(idSplit, it, defTypes) }
         }

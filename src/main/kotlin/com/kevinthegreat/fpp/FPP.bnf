@@ -164,7 +164,12 @@
 
 // 14.1. Translation Units
 // Absorb leading eol tokens to fix comments at the beginning of files.
-fpp_file ::= END_OF_LINE* translation_unit
+fpp_file_with_leading_eol ::= END_OF_LINE* fpp_file
+fpp_file ::= translation_unit
+            | component_member_sequence_non_empty
+            | topology_member_sequence_non_empty
+            | telemetry_packet_group_member_sequence_non_empty
+            | telemetry_packet_member_sequence_non_empty
 
 // 5. Definitions
 // 5.1. Abstract Type Definitions
@@ -189,6 +194,7 @@ component_definition ::= component_kind COMPONENT identifier_definition LEFT_BRA
 }
 component_kind ::= ACTIVE | PASSIVE | QUEUED
 component_member_sequence ::= (component_member (SEMICOLON | END_OF_LINE)*)*
+component_member_sequence_non_empty ::= (component_member (SEMICOLON | END_OF_LINE)*)+
 component_member ::= constant_definition
                   | state_machine_definition
                   | struct_definition
@@ -292,6 +298,7 @@ topology_definition ::= TOPOLOGY identifier_definition LEFT_BRACE topology_membe
     implements="com.kevinthegreat.fpp.psi.FPPNamedElement"
 }
 topology_member_sequence ::= (topology_member (SEMICOLON | END_OF_LINE)*)*
+topology_member_sequence_non_empty ::= (topology_member (SEMICOLON | END_OF_LINE)*)+
 topology_member ::= component_instance_specifier
                     | connection_graph_specifier
                     | telemetry_packet_set_specifier
@@ -392,7 +399,10 @@ event_severity ::= ACTIVITY HIGH
             | WARNING HIGH
             | WARNING LOW
 // 7.6. Include Specifiers
-include_specifier ::= INCLUDE STRING_LITERAL
+include_specifier ::= INCLUDE STRING_LITERAL {
+    mixin="com.kevinthegreat.fpp.psi.impl.FPPNavigatableElementImpl"
+    implements="com.kevinthegreat.fpp.psi.FPPNavigatableElement"
+}
 // 7.7. Init Specifiers
 init_specifier ::= PHASE expression STRING_LITERAL
 // 7.8. Interface Import Specifiers
@@ -480,12 +490,14 @@ telemetry_limit ::= RED expression
 // 7.17. Telemetry Packet Set Specifiers
 telemetry_packet_set_specifier ::= TELEMETRY PACKETS IDENTIFIER LEFT_BRACE telemetry_packet_group_member_sequence RIGHT_BRACE [ OMIT LEFT_BRACE telemetry_channel_identifier_sequence RIGHT_BRACE ]
 telemetry_packet_group_member_sequence ::= (telemetry_packet_group_member (COMMA | END_OF_LINE)*)*
+telemetry_packet_group_member_sequence_non_empty ::= (telemetry_packet_group_member (COMMA | END_OF_LINE)*)+
 telemetry_packet_group_member ::= include_specifier
                                 | telemetry_packet_specifier
 telemetry_channel_identifier_sequence ::= (telemetry_channel_identifier (COMMA | END_OF_LINE)*)*
 // 7.18. Telemetry Packet Specifiers
 telemetry_packet_specifier ::= PACKET IDENTIFIER [ ID expression ] GROUP expression LEFT_BRACE telemetry_packet_member_sequence RIGHT_BRACE
 telemetry_packet_member_sequence ::= (telemetry_packet_member (COMMA | END_OF_LINE)*)*
+telemetry_packet_member_sequence_non_empty ::= (telemetry_packet_member (COMMA | END_OF_LINE)*)+
 telemetry_packet_member ::= non_annotatable_include_specifier
                             | telemetry_channel_identifier
 non_annotatable_include_specifier ::= include_specifier
@@ -553,7 +565,7 @@ formal_parameter ::= [ REF ] identifier_definition COLON type_name {
 }
 
 // 14.1. Translation Units
-translation_unit ::= (translation_unit_member (SEMICOLON | END_OF_LINE)*)*
+translation_unit ::= (translation_unit_member (SEMICOLON | END_OF_LINE)*)+
 translation_unit_member ::= module_member
 
 // 15.1. Qualified Identifiers

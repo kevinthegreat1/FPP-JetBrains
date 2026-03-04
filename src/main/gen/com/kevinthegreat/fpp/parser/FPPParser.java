@@ -32,7 +32,7 @@ public class FPPParser implements PsiParser, LightPsiParser {
   }
 
   static boolean parse_root_(IElementType root_, PsiBuilder builder_, int level_) {
-    return fpp_file(builder_, level_ + 1);
+    return fpp_file_with_leading_eol(builder_, level_ + 1);
   }
 
   /* ********************************************************** */
@@ -793,6 +793,53 @@ public class FPPParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // (component_member (SEMICOLON | END_OF_LINE)*)+
+  public static boolean component_member_sequence_non_empty(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "component_member_sequence_non_empty")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_, level_, _NONE_, COMPONENT_MEMBER_SEQUENCE_NON_EMPTY, "<component member sequence non empty>");
+    result_ = component_member_sequence_non_empty_0(builder_, level_ + 1);
+    while (result_) {
+      int pos_ = current_position_(builder_);
+      if (!component_member_sequence_non_empty_0(builder_, level_ + 1)) break;
+      if (!empty_element_parsed_guard_(builder_, "component_member_sequence_non_empty", pos_)) break;
+    }
+    exit_section_(builder_, level_, marker_, result_, false, null);
+    return result_;
+  }
+
+  // component_member (SEMICOLON | END_OF_LINE)*
+  private static boolean component_member_sequence_non_empty_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "component_member_sequence_non_empty_0")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = component_member(builder_, level_ + 1);
+    result_ = result_ && component_member_sequence_non_empty_0_1(builder_, level_ + 1);
+    exit_section_(builder_, marker_, null, result_);
+    return result_;
+  }
+
+  // (SEMICOLON | END_OF_LINE)*
+  private static boolean component_member_sequence_non_empty_0_1(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "component_member_sequence_non_empty_0_1")) return false;
+    while (true) {
+      int pos_ = current_position_(builder_);
+      if (!component_member_sequence_non_empty_0_1_0(builder_, level_ + 1)) break;
+      if (!empty_element_parsed_guard_(builder_, "component_member_sequence_non_empty_0_1", pos_)) break;
+    }
+    return true;
+  }
+
+  // SEMICOLON | END_OF_LINE
+  private static boolean component_member_sequence_non_empty_0_1_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "component_member_sequence_non_empty_0_1_0")) return false;
+    boolean result_;
+    result_ = consumeToken(builder_, SEMICOLON);
+    if (!result_) result_ = consumeToken(builder_, END_OF_LINE);
+    return result_;
+  }
+
+  /* ********************************************************** */
   // [ UNMATCHED ] port_instance_identifier [ LEFT_BRACKET expression RIGHT_BRACKET ] ARROW port_instance_identifier [ LEFT_BRACKET expression RIGHT_BRACKET ]
   public static boolean connection(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "connection")) return false;
@@ -1418,24 +1465,43 @@ public class FPPParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // END_OF_LINE* translation_unit
-  static boolean fpp_file(PsiBuilder builder_, int level_) {
+  // translation_unit
+  //             | component_member_sequence_non_empty
+  //             | topology_member_sequence_non_empty
+  //             | telemetry_packet_group_member_sequence_non_empty
+  //             | telemetry_packet_member_sequence_non_empty
+  public static boolean fpp_file(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "fpp_file")) return false;
     boolean result_;
+    Marker marker_ = enter_section_(builder_, level_, _NONE_, FPP_FILE, "<fpp file>");
+    result_ = translation_unit(builder_, level_ + 1);
+    if (!result_) result_ = component_member_sequence_non_empty(builder_, level_ + 1);
+    if (!result_) result_ = topology_member_sequence_non_empty(builder_, level_ + 1);
+    if (!result_) result_ = telemetry_packet_group_member_sequence_non_empty(builder_, level_ + 1);
+    if (!result_) result_ = telemetry_packet_member_sequence_non_empty(builder_, level_ + 1);
+    exit_section_(builder_, level_, marker_, result_, false, null);
+    return result_;
+  }
+
+  /* ********************************************************** */
+  // END_OF_LINE* fpp_file
+  static boolean fpp_file_with_leading_eol(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "fpp_file_with_leading_eol")) return false;
+    boolean result_;
     Marker marker_ = enter_section_(builder_);
-    result_ = fpp_file_0(builder_, level_ + 1);
-    result_ = result_ && translation_unit(builder_, level_ + 1);
+    result_ = fpp_file_with_leading_eol_0(builder_, level_ + 1);
+    result_ = result_ && fpp_file(builder_, level_ + 1);
     exit_section_(builder_, marker_, null, result_);
     return result_;
   }
 
   // END_OF_LINE*
-  private static boolean fpp_file_0(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "fpp_file_0")) return false;
+  private static boolean fpp_file_with_leading_eol_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "fpp_file_with_leading_eol_0")) return false;
     while (true) {
       int pos_ = current_position_(builder_);
       if (!consumeToken(builder_, END_OF_LINE)) break;
-      if (!empty_element_parsed_guard_(builder_, "fpp_file_0", pos_)) break;
+      if (!empty_element_parsed_guard_(builder_, "fpp_file_with_leading_eol_0", pos_)) break;
     }
     return true;
   }
@@ -3641,6 +3707,54 @@ public class FPPParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // (telemetry_packet_group_member (COMMA | END_OF_LINE)*)+
+  public static boolean telemetry_packet_group_member_sequence_non_empty(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "telemetry_packet_group_member_sequence_non_empty")) return false;
+    if (!nextTokenIs(builder_, "<telemetry packet group member sequence non empty>", INCLUDE, PACKET)) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_, level_, _NONE_, TELEMETRY_PACKET_GROUP_MEMBER_SEQUENCE_NON_EMPTY, "<telemetry packet group member sequence non empty>");
+    result_ = telemetry_packet_group_member_sequence_non_empty_0(builder_, level_ + 1);
+    while (result_) {
+      int pos_ = current_position_(builder_);
+      if (!telemetry_packet_group_member_sequence_non_empty_0(builder_, level_ + 1)) break;
+      if (!empty_element_parsed_guard_(builder_, "telemetry_packet_group_member_sequence_non_empty", pos_)) break;
+    }
+    exit_section_(builder_, level_, marker_, result_, false, null);
+    return result_;
+  }
+
+  // telemetry_packet_group_member (COMMA | END_OF_LINE)*
+  private static boolean telemetry_packet_group_member_sequence_non_empty_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "telemetry_packet_group_member_sequence_non_empty_0")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = telemetry_packet_group_member(builder_, level_ + 1);
+    result_ = result_ && telemetry_packet_group_member_sequence_non_empty_0_1(builder_, level_ + 1);
+    exit_section_(builder_, marker_, null, result_);
+    return result_;
+  }
+
+  // (COMMA | END_OF_LINE)*
+  private static boolean telemetry_packet_group_member_sequence_non_empty_0_1(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "telemetry_packet_group_member_sequence_non_empty_0_1")) return false;
+    while (true) {
+      int pos_ = current_position_(builder_);
+      if (!telemetry_packet_group_member_sequence_non_empty_0_1_0(builder_, level_ + 1)) break;
+      if (!empty_element_parsed_guard_(builder_, "telemetry_packet_group_member_sequence_non_empty_0_1", pos_)) break;
+    }
+    return true;
+  }
+
+  // COMMA | END_OF_LINE
+  private static boolean telemetry_packet_group_member_sequence_non_empty_0_1_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "telemetry_packet_group_member_sequence_non_empty_0_1_0")) return false;
+    boolean result_;
+    result_ = consumeToken(builder_, COMMA);
+    if (!result_) result_ = consumeToken(builder_, END_OF_LINE);
+    return result_;
+  }
+
+  /* ********************************************************** */
   // non_annotatable_include_specifier
   //                             | telemetry_channel_identifier
   public static boolean telemetry_packet_member(PsiBuilder builder_, int level_) {
@@ -3693,6 +3807,54 @@ public class FPPParser implements PsiParser, LightPsiParser {
   // COMMA | END_OF_LINE
   private static boolean telemetry_packet_member_sequence_0_1_0(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "telemetry_packet_member_sequence_0_1_0")) return false;
+    boolean result_;
+    result_ = consumeToken(builder_, COMMA);
+    if (!result_) result_ = consumeToken(builder_, END_OF_LINE);
+    return result_;
+  }
+
+  /* ********************************************************** */
+  // (telemetry_packet_member (COMMA | END_OF_LINE)*)+
+  public static boolean telemetry_packet_member_sequence_non_empty(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "telemetry_packet_member_sequence_non_empty")) return false;
+    if (!nextTokenIs(builder_, "<telemetry packet member sequence non empty>", IDENTIFIER, INCLUDE)) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_, level_, _NONE_, TELEMETRY_PACKET_MEMBER_SEQUENCE_NON_EMPTY, "<telemetry packet member sequence non empty>");
+    result_ = telemetry_packet_member_sequence_non_empty_0(builder_, level_ + 1);
+    while (result_) {
+      int pos_ = current_position_(builder_);
+      if (!telemetry_packet_member_sequence_non_empty_0(builder_, level_ + 1)) break;
+      if (!empty_element_parsed_guard_(builder_, "telemetry_packet_member_sequence_non_empty", pos_)) break;
+    }
+    exit_section_(builder_, level_, marker_, result_, false, null);
+    return result_;
+  }
+
+  // telemetry_packet_member (COMMA | END_OF_LINE)*
+  private static boolean telemetry_packet_member_sequence_non_empty_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "telemetry_packet_member_sequence_non_empty_0")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = telemetry_packet_member(builder_, level_ + 1);
+    result_ = result_ && telemetry_packet_member_sequence_non_empty_0_1(builder_, level_ + 1);
+    exit_section_(builder_, marker_, null, result_);
+    return result_;
+  }
+
+  // (COMMA | END_OF_LINE)*
+  private static boolean telemetry_packet_member_sequence_non_empty_0_1(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "telemetry_packet_member_sequence_non_empty_0_1")) return false;
+    while (true) {
+      int pos_ = current_position_(builder_);
+      if (!telemetry_packet_member_sequence_non_empty_0_1_0(builder_, level_ + 1)) break;
+      if (!empty_element_parsed_guard_(builder_, "telemetry_packet_member_sequence_non_empty_0_1", pos_)) break;
+    }
+    return true;
+  }
+
+  // COMMA | END_OF_LINE
+  private static boolean telemetry_packet_member_sequence_non_empty_0_1_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "telemetry_packet_member_sequence_non_empty_0_1_0")) return false;
     boolean result_;
     result_ = consumeToken(builder_, COMMA);
     if (!result_) result_ = consumeToken(builder_, END_OF_LINE);
@@ -3890,6 +4052,53 @@ public class FPPParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // (topology_member (SEMICOLON | END_OF_LINE)*)+
+  public static boolean topology_member_sequence_non_empty(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "topology_member_sequence_non_empty")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_, level_, _NONE_, TOPOLOGY_MEMBER_SEQUENCE_NON_EMPTY, "<topology member sequence non empty>");
+    result_ = topology_member_sequence_non_empty_0(builder_, level_ + 1);
+    while (result_) {
+      int pos_ = current_position_(builder_);
+      if (!topology_member_sequence_non_empty_0(builder_, level_ + 1)) break;
+      if (!empty_element_parsed_guard_(builder_, "topology_member_sequence_non_empty", pos_)) break;
+    }
+    exit_section_(builder_, level_, marker_, result_, false, null);
+    return result_;
+  }
+
+  // topology_member (SEMICOLON | END_OF_LINE)*
+  private static boolean topology_member_sequence_non_empty_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "topology_member_sequence_non_empty_0")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = topology_member(builder_, level_ + 1);
+    result_ = result_ && topology_member_sequence_non_empty_0_1(builder_, level_ + 1);
+    exit_section_(builder_, marker_, null, result_);
+    return result_;
+  }
+
+  // (SEMICOLON | END_OF_LINE)*
+  private static boolean topology_member_sequence_non_empty_0_1(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "topology_member_sequence_non_empty_0_1")) return false;
+    while (true) {
+      int pos_ = current_position_(builder_);
+      if (!topology_member_sequence_non_empty_0_1_0(builder_, level_ + 1)) break;
+      if (!empty_element_parsed_guard_(builder_, "topology_member_sequence_non_empty_0_1", pos_)) break;
+    }
+    return true;
+  }
+
+  // SEMICOLON | END_OF_LINE
+  private static boolean topology_member_sequence_non_empty_0_1_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "topology_member_sequence_non_empty_0_1_0")) return false;
+    boolean result_;
+    result_ = consumeToken(builder_, SEMICOLON);
+    if (!result_) result_ = consumeToken(builder_, END_OF_LINE);
+    return result_;
+  }
+
+  /* ********************************************************** */
   // [ do_expression ] ENTER qualified_identifier_state_or_choice_definition
   public static boolean transition_expression(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "transition_expression")) return false;
@@ -3925,17 +4134,19 @@ public class FPPParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // (translation_unit_member (SEMICOLON | END_OF_LINE)*)*
+  // (translation_unit_member (SEMICOLON | END_OF_LINE)*)+
   public static boolean translation_unit(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "translation_unit")) return false;
+    boolean result_;
     Marker marker_ = enter_section_(builder_, level_, _NONE_, TRANSLATION_UNIT, "<translation unit>");
-    while (true) {
+    result_ = translation_unit_0(builder_, level_ + 1);
+    while (result_) {
       int pos_ = current_position_(builder_);
       if (!translation_unit_0(builder_, level_ + 1)) break;
       if (!empty_element_parsed_guard_(builder_, "translation_unit", pos_)) break;
     }
-    exit_section_(builder_, level_, marker_, true, false, null);
-    return true;
+    exit_section_(builder_, level_, marker_, result_, false, null);
+    return result_;
   }
 
   // translation_unit_member (SEMICOLON | END_OF_LINE)*

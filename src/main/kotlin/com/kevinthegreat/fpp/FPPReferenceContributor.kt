@@ -3,7 +3,9 @@ package com.kevinthegreat.fpp
 import com.intellij.openapi.util.TextRange
 import com.intellij.patterns.PlatformPatterns
 import com.intellij.psi.*
+import com.intellij.psi.impl.source.resolve.reference.impl.providers.FileReferenceSet
 import com.intellij.util.ProcessingContext
+import com.kevinthegreat.fpp.psi.FPPIncludeSpecifier
 import com.kevinthegreat.fpp.psi.FPPPortInstanceIdentifier
 import com.kevinthegreat.fpp.psi.FPPTelemetryChannelIdentifier
 import com.kevinthegreat.fpp.psi.FPPTypes
@@ -34,6 +36,25 @@ class FPPReferenceContributor : PsiReferenceContributor() {
                     }.toTypedArray()
             }
         })
+
+        // 7.6. Include Specifiers
+        registrar.registerReferenceProvider(
+            PlatformPatterns.psiElement(FPPIncludeSpecifier::class.java), object : PsiReferenceProvider() {
+                override fun getReferencesByElement(
+                    element: PsiElement, context: ProcessingContext
+                ): Array<out PsiReference?> {
+                    element as FPPIncludeSpecifier
+
+                    return FileReferenceSet(
+                        element.stringLiteral.text.substring(1, element.stringLiteral.textLength - 1),
+                        element,
+                        9,
+                        null,
+                        true
+                    ).allReferences
+                }
+            }
+        )
 
         // 8.1. Port Instance Identifiers
         registrar.registerReferenceProvider(

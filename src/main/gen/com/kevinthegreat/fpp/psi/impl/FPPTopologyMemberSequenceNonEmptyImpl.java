@@ -8,16 +8,17 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.kevinthegreat.fpp.psi.FPPTypes.*;
+import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.kevinthegreat.fpp.psi.*;
 
-public class FPPIncludeSpecifierImpl extends FPPNavigatableElementImpl implements FPPIncludeSpecifier {
+public class FPPTopologyMemberSequenceNonEmptyImpl extends ASTWrapperPsiElement implements FPPTopologyMemberSequenceNonEmpty {
 
-  public FPPIncludeSpecifierImpl(ASTNode node) {
+  public FPPTopologyMemberSequenceNonEmptyImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull FPPVisitor visitor) {
-    visitor.visitIncludeSpecifier(this);
+    visitor.visitTopologyMemberSequenceNonEmpty(this);
   }
 
   @Override
@@ -28,8 +29,8 @@ public class FPPIncludeSpecifierImpl extends FPPNavigatableElementImpl implement
 
   @Override
   @NotNull
-  public PsiElement getStringLiteral() {
-    return findNotNullChildByType(STRING_LITERAL);
+  public List<FPPTopologyMember> getTopologyMemberList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, FPPTopologyMember.class);
   }
 
 }
