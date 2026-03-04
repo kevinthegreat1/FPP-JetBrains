@@ -36,7 +36,7 @@ public class FPPParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // TYPE identifier_definition
+  // TYPE identifier_definition !ASSIGN
   public static boolean abstract_type_definition(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "abstract_type_definition")) return false;
     if (!nextTokenIs(builder_, TYPE)) return false;
@@ -44,7 +44,18 @@ public class FPPParser implements PsiParser, LightPsiParser {
     Marker marker_ = enter_section_(builder_);
     result_ = consumeToken(builder_, TYPE);
     result_ = result_ && identifier_definition(builder_, level_ + 1);
+    result_ = result_ && abstract_type_definition_2(builder_, level_ + 1);
     exit_section_(builder_, marker_, ABSTRACT_TYPE_DEFINITION, result_);
+    return result_;
+  }
+
+  // !ASSIGN
+  private static boolean abstract_type_definition_2(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "abstract_type_definition_2")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_, level_, _NOT_);
+    result_ = !consumeToken(builder_, ASSIGN);
+    exit_section_(builder_, level_, marker_, result_, false, null);
     return result_;
   }
 
@@ -712,8 +723,8 @@ public class FPPParser implements PsiParser, LightPsiParser {
   //                   | record_specifier
   //                   | state_machine_instance_specifier
   //                   | telemetry_channel_specifier
-  //                   | alias_type_definition // Put alias type definitions first or else they will be incorrectly parsed as abstract type definitions
   //                   | abstract_type_definition
+  //                   | alias_type_definition
   //                   | array_definition
   //                   | enum_definition
   //                   | event_specifier
@@ -735,8 +746,8 @@ public class FPPParser implements PsiParser, LightPsiParser {
     if (!result_) result_ = record_specifier(builder_, level_ + 1);
     if (!result_) result_ = state_machine_instance_specifier(builder_, level_ + 1);
     if (!result_) result_ = telemetry_channel_specifier(builder_, level_ + 1);
-    if (!result_) result_ = alias_type_definition(builder_, level_ + 1);
     if (!result_) result_ = abstract_type_definition(builder_, level_ + 1);
+    if (!result_) result_ = alias_type_definition(builder_, level_ + 1);
     if (!result_) result_ = array_definition(builder_, level_ + 1);
     if (!result_) result_ = enum_definition(builder_, level_ + 1);
     if (!result_) result_ = event_specifier(builder_, level_ + 1);

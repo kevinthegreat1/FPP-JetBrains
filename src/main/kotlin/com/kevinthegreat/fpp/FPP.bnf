@@ -173,7 +173,7 @@ fpp_file ::= translation_unit
 
 // 5. Definitions
 // 5.1. Abstract Type Definitions
-abstract_type_definition ::= TYPE identifier_definition {
+abstract_type_definition ::= TYPE identifier_definition !ASSIGN {
     mixin="com.kevinthegreat.fpp.psi.impl.FPPNamedElementImpl"
     implements="com.kevinthegreat.fpp.psi.FPPNamedElement"
 }
@@ -206,8 +206,8 @@ component_member ::= constant_definition
                   | record_specifier
                   | state_machine_instance_specifier
                   | telemetry_channel_specifier
-                  | alias_type_definition // Put alias type definitions first or else they will be incorrectly parsed as abstract type definitions
                   | abstract_type_definition
+                  | alias_type_definition
                   | array_definition
                   | enum_definition
                   | event_specifier
