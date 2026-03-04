@@ -107,6 +107,11 @@ object FPPUtil {
     private fun findDefinitions(qualId: String, location: PsiElement, defTypes: List<IElementType>): List<PsiElement> =
         findDefinitions(qualId.split("."), location, defTypes)
 
+    /**
+     * @param idSplit The qualified identifier split by a dot. If the last element is empty, all accessible definitions of the correct types will be returned.
+     * @param location The location to search from.
+     * @param defTypes The definition types to search for, or empty to search for definitions of any type.
+     */
     private fun findDefinitions(idSplit: List<String>, location: PsiElement, defTypes: List<IElementType>): List<PsiElement> {
         if (idSplit.isEmpty()) return emptyList()
 
@@ -117,7 +122,7 @@ object FPPUtil {
 
         if (isDef && remainingTarget.isNotEmpty() || isCorrectDefType) {
             // Check if the identifier attached to the definition matches the current target
-            if (getUnqualifiedNameElement(location)?.textMatches(currentTarget) ?: false) {
+            if (currentTarget.isEmpty() || getUnqualifiedNameElement(location)?.textMatches(currentTarget) ?: false) {
                 return if (remainingTarget.isEmpty()) listOf(location)
                 else location.children.flatMap { findDefinitions(remainingTarget, it, defTypes) }
             }
