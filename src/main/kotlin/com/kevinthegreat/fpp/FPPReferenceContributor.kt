@@ -48,7 +48,7 @@ class FPPReferenceContributor : PsiReferenceContributor() {
                     return FileReferenceSet(
                         element.stringLiteral.text.substring(1, element.stringLiteral.textLength - 1),
                         element,
-                        9,
+                        element.stringLiteral.startOffsetInParent + 1,
                         null,
                         true
                     ).allReferences
