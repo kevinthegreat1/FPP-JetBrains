@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "com.kevinthegreat"
-version = "0.2.1"
+version = "0.3.0"
 
 repositories {
     mavenCentral()
@@ -42,7 +42,9 @@ intellijPlatform {
         }
 
         changeNotes = """
-            Add folding support<br>
+            Add code completion<br>
+            Improve error messages and highlighting<br>
+            Add include and import support<br>
             Fix various bugs
         """.trimIndent()
     }
