@@ -11,10 +11,7 @@ import com.intellij.psi.util.PsiTreeUtil
 import com.intellij.psi.util.elementType
 import com.intellij.psi.util.parents
 import com.intellij.psi.util.siblings
-import com.kevinthegreat.fpp.psi.FPPIncludeSpecifier
-import com.kevinthegreat.fpp.psi.FPPNamedElement
-import com.kevinthegreat.fpp.psi.FPPTokenSets
-import com.kevinthegreat.fpp.psi.FPPTypes
+import com.kevinthegreat.fpp.psi.*
 
 object FPPUtil {
     fun isDef(element: PsiElement): Boolean =
@@ -114,7 +111,7 @@ object FPPUtil {
         if (idSplit.isEmpty()) return emptyList()
 
         val isDef = isDef(location)
-        val isCorrectDefType = isDef && (defTypes.isEmpty() || location.elementType in defTypes)
+        val isCorrectDefType = isDef && (defTypes.isEmpty() || location.elementType in defTypes) // Empty defTypes means search for definitions of any type
         val currentTarget = idSplit.first()
         val remainingTarget = idSplit.drop(1)
 
@@ -125,11 +122,30 @@ object FPPUtil {
                 else location.children.flatMap { findDefinitions(remainingTarget, it, defTypes) }
             }
         } else if (location is FPPIncludeSpecifier) {
+            // 7.6. Include Specifiers
             val relativePath = location.stringLiteral.text.substring(1, location.stringLiteral.textLength - 1)
             val currentDir = location.containingFile.virtualFile.parent
             val targetVirtualFile = VfsUtil.findRelativeFile(currentDir, *relativePath.split("/").toTypedArray()) ?: return emptyList()
             val targetPsiFile = PsiManager.getInstance(location.project).findFile(targetVirtualFile) ?: return emptyList()
             return findDefinitions(idSplit, targetPsiFile, defTypes)
+        } else if (location is FPPInterfaceImportSpecifier) {
+            // 7.8. Interface Import Specifiers
+            // Do not allow general qual id searches (empty defTypes) for performance reasons,
+            // since this import only contains port instance specifiers and has no sub definitions.
+            if (defTypes.any { it == FPPTypes.PORT_INSTANCE_SPECIFIER || it == FPPTypes.GENERAL_PORT_INSTANCE_SPECIFIER || it == FPPTypes.SPECIAL_PORT_INSTANCE_SPECIFIER }) {
+                val importQualId = location.qualifiedIdentifierPortInterfaceDefinition.text
+                return resolveQualifiedIdentifier(importQualId, location, listOf(FPPTypes.PORT_INTERFACE_DEFINITION))
+                    .flatMap { it.children.flatMap { findDefinitions(idSplit, it, defTypes) } }
+            }
+        } else if (location is FPPTopologyImportSpecifier) {
+            // 7.19. Topology Import Specifiers
+            // Do not allow general qual id searches (empty defTypes) for performance reasons,
+            // since this import only contains component instance specifiers and connection graph specifiers and has no sub definitions.
+            if (defTypes.any { it == FPPTypes.COMPONENT_INSTANCE_SPECIFIER || it == FPPTypes.CONNECTION_GRAPH_SPECIFIER }) {
+                val importQualId = location.qualifiedIdentifierTopologyDefinition.text
+                return resolveQualifiedIdentifier(importQualId, location, listOf(FPPTypes.TOPOLOGY_DEFINITION))
+                    .flatMap { it.children.flatMap { findDefinitions(idSplit, it, defTypes) } }
+            }
         } else if (!isDef) {
             return location.children.flatMap { findDefinitions(idSplit, it, defTypes) }
         }
